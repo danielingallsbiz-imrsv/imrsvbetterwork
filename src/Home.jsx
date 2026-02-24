@@ -133,30 +133,60 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                 />
             </section>
 
-            {/* PRIVATE NETWORK */}
+            {/* THE MISSION */}
             <section className="section">
                 <span className="section-label">
-                    <InteractiveText text="01 / PRIVATE NETWORK." />
+                    <InteractiveText text="01 / THE MISSION." />
                 </span>
-                <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
+                <div className="concept-grid" style={{ marginTop: '60px' }}>
                     <div className="concept-text">
                         <h3 style={{ fontSize: '3.5rem', marginBottom: '40px', lineHeight: 1 }}>
-                            <InteractiveText text="ACCESS OVER NOISE." />
+                            <InteractiveText text="WHAT’S THE IDEA HERE?" />
                         </h3>
-                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
-                            IMRSV is a private, membership-based platform designed for access over noise.
+                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.4rem' }}>
+                            Basically, Sunday Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
-                        <p style={{ marginBottom: '20px' }}>
-                            Operated as a closed ecosystem, we provide approved members with curated experiences, local access, and share proprietary opportunity inside a protected network.
-                        </p>
-                        <p style={{ marginBottom: '20px' }}>
-                            Information is protected. Participation is intentional.
-                        </p>
-                        <p>
-                            This is not a public free-for-all. This is controlled access.
+                        <p style={{ fontSize: '1.2rem', lineHeight: 1.6 }}>
+                            We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It’s about being a good guest.
                         </p>
                     </div>
+                </div>
 
+                <div className="bucket-grid" style={{ marginTop: '80px' }}>
+                    <div className="bucket-card">
+                        <span className="bucket-num">01.</span>
+                        <h3 className="bucket-title">
+                            <InteractiveText text="How it works" />
+                        </h3>
+                        <p className="bucket-desc">
+                            We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city where it was raised and only goes to local people.
+                            <br /><br />
+                            <span
+                                onClick={handleRestorationClick}
+                                style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--text-primary)', fontWeight: 600 }}
+                            >
+                                <InteractiveText text="View the Ledger →" />
+                            </span>
+                        </p>
+                    </div>
+                    <div className="bucket-card">
+                        <span className="bucket-num">02.</span>
+                        <h3 className="bucket-title">
+                            <InteractiveText text="IRL Events" />
+                        </h3>
+                        <p className="bucket-desc">
+                            We do about 1 or 2 events a month. Sometimes it's just a chill dinner with builders, other times it’s a big night showing off what the locals are making.
+                        </p>
+                    </div>
+                    <div className="bucket-card">
+                        <span className="bucket-num">03.</span>
+                        <h3 className="bucket-title">
+                            <InteractiveText text="Staying connected" />
+                        </h3>
+                        <p className="bucket-desc">
+                            We’re all about bridging the gap. When we’re in town, we make sure our people are actually hanging with locals and spending money at the spots that define the culture.
+                        </p>
+                    </div>
                 </div>
             </section>
 
