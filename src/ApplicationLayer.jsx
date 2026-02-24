@@ -68,38 +68,28 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
 
                     <form style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '60px' }} onSubmit={handleSubmit}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                <InteractiveText text="Full Name" />
-                            </label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
                             <input required name="name" type="text" placeholder="Alex Rivera" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                <InteractiveText text="Primary Hub / City" />
-                            </label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Primary Hub / City</label>
                             <input required name="hub" type="text" placeholder="Oahu, Medellín, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                <InteractiveText text="Social Link / Portfolio" />
-                            </label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Social Link / Portfolio</label>
                             <input required name="social" type="text" placeholder="@handle or url" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                <InteractiveText text="Occupation" />
-                            </label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Occupation</label>
                             <input required name="occupation" type="text" placeholder="Architect, Builder, Creator, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', gap: '30px' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                    <InteractiveText text="Gender" />
-                                </label>
+                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Gender</label>
                                 <select required name="gender" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', color: '#1A1A1A' }}>
                                     <option value="" disabled selected>Select</option>
                                     <option value="male">Male</option>
@@ -108,24 +98,18 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                                 </select>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                    <InteractiveText text="Date of Birth" />
-                                </label>
+                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Date of Birth</label>
                                 <input required name="birthday" type="date" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '8px 0', fontSize: '1.2rem', outline: 'none', color: '#1A1A1A' }} />
                             </div>
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                <InteractiveText text="Mailing Address" />
-                            </label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Mailing Address (For physical invitations)</label>
                             <input required name="address" type="text" placeholder="Street, City, State, ZIP, Country" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                <InteractiveText text="Contribution to Sunday Collection" />
-                            </label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Contribution to Sunday Collection</label>
                             <textarea required name="contribution" placeholder="How do you intend to participate?" rows="4" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', resize: 'none' }} />
                         </div>
 
