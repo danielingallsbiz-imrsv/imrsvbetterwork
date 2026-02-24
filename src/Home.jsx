@@ -179,10 +179,37 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </div>
                     </div>
 
-                    <div className="bucket-card">
-                        <span className="bucket-num">APR. 28</span>
-                        <h3 className="bucket-title">MEDELLÍN HUBS</h3>
-                        <p className="bucket-desc">Details releasing soon for our Medellín community. Ticket prices and schedule TBA.</p>
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 28</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUBS</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
+                            Ticket: $50 (Full Fund Reinvestment)
+                        </p>
+                        <button
+                            onClick={handleApplyClick}
+                            style={{
+                                color: '#F7D031',
+                                fontSize: '0.8rem',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                fontWeight: 800,
+                                marginTop: '10px',
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                background: 'transparent',
+                                border: 'none',
+                                padding: 0,
+                                fontFamily: 'inherit'
+                            }}
+                        >
+                            apply →
+                        </button>
+                        <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>18:00 — 20:00 : ROOFTOP DINNER</div>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>20:00 — 22:00 : CREATOR SHOWCASE</div>
+                            <div style={{ fontSize: '0.8rem' }}>22:00 — 02:00 : AFTER HOURS</div>
+                        </div>
                     </div>
 
                     <div className="bucket-card" style={{ opacity: 0.3 }}>
