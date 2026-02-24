@@ -62,7 +62,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         <InteractiveText text="MEMBERSHIP APPLICATION" />
                     </span>
                     <h1 className="concept-title" style={{ fontSize: '4rem', color: '#1A1A1A', marginBottom: '40px' }}>
-                        <InteractiveText text="SUNDAY" /> <br />
+                        <InteractiveText text="JOIN SUNDAY" /> <br />
                         <InteractiveText text="COLLECTION." />
                     </h1>
 
