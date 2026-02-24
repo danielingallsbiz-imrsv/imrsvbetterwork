@@ -9,13 +9,20 @@ import AdminLayer from './AdminLayer';
 function App() {
   const [view, setView] = useState('home');
   const [showSuccess, setShowSuccess] = useState(false);
-  const [applications, setApplications] = useState([]);
+  const [applications, setApplications] = useState(() => {
+    const saved = localStorage.getItem('imrsv_applications');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('imrsv_applications', JSON.stringify(applications));
+  }, [applications]);
 
   const handleHomeNavigation = (isSuccess) => {
     setView('home');
     if (isSuccess) {
       setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 8000);
+      setTimeout(() => setShowSuccess(false), 2000);
     }
   };
 
