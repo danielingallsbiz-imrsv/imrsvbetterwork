@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
@@ -40,10 +41,14 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1A1A1A' }} onClick={() => navigateToHome(false)}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }}>
+                        <InteractiveText text="imrsv project" />
+                    </span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={() => navigateToHome(false)} style={{ cursor: 'pointer', color: '#1A1A1A' }}>{status === 'submitting' ? '...' : 'Cancel'}</span>
+                    <span onClick={() => navigateToHome(false)} style={{ cursor: 'pointer', color: '#1A1A1A' }}>
+                        <InteractiveText text={status === 'submitting' ? '...' : 'Cancel'} />
+                    </span>
                 </div>
             </nav>
 
@@ -53,33 +58,48 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
                 >
-                    <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)' }}>MEMBERSHIP APPLICATION</span>
-                    <h1 className="concept-title" style={{ fontSize: '4rem', color: '#1A1A1A', marginBottom: '40px' }}>JOIN THE <br />COLLECTIVE.</h1>
+                    <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)' }}>
+                        <InteractiveText text="MEMBERSHIP APPLICATION" />
+                    </span>
+                    <h1 className="concept-title" style={{ fontSize: '4rem', color: '#1A1A1A', marginBottom: '40px' }}>
+                        <InteractiveText text="SUNDAY" /> <br />
+                        <InteractiveText text="COLLECTION." />
+                    </h1>
 
                     <form style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '60px' }} onSubmit={handleSubmit}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                <InteractiveText text="Full Name" />
+                            </label>
                             <input required name="name" type="text" placeholder="Alex Rivera" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Primary Hub / City</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                <InteractiveText text="Primary Hub / City" />
+                            </label>
                             <input required name="hub" type="text" placeholder="Oahu, Medellín, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Social Link / Portfolio</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                <InteractiveText text="Social Link / Portfolio" />
+                            </label>
                             <input required name="social" type="text" placeholder="@handle or url" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Occupation</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                <InteractiveText text="Occupation" />
+                            </label>
                             <input required name="occupation" type="text" placeholder="Architect, Builder, Creator, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', gap: '30px' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Gender</label>
+                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                    <InteractiveText text="Gender" />
+                                </label>
                                 <select required name="gender" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', color: '#1A1A1A' }}>
                                     <option value="" disabled selected>Select</option>
                                     <option value="male">Male</option>
@@ -88,18 +108,24 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                                 </select>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Date of Birth</label>
+                                <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                    <InteractiveText text="Date of Birth" />
+                                </label>
                                 <input required name="birthday" type="date" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '8px 0', fontSize: '1.2rem', outline: 'none', color: '#1A1A1A' }} />
                             </div>
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Mailing Address (For physical invitations)</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                <InteractiveText text="Mailing Address" />
+                            </label>
                             <input required name="address" type="text" placeholder="Street, City, State, ZIP, Country" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Contribution to Sunday Collection</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>
+                                <InteractiveText text="Contribution to Sunday Collection" />
+                            </label>
                             <textarea required name="contribution" placeholder="How do you intend to participate?" rows="4" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', resize: 'none' }} />
                         </div>
 
