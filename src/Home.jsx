@@ -142,12 +142,19 @@ const Home = () => {
                         </p>
                     </div>
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                        <p style={{ marginBottom: '30px', textAlign: 'right' }}>Members help guide where that support goes.</p>
-                        <div style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)', textAlign: 'right' }}>
-                            <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4 }}>
-                                When we show up somewhere, <br />we don’t just gather. <br /><br />
-                                <span style={{ fontWeight: 800 }}>We contribute.</span>
-                            </p>
+                        <div style={{ textAlign: 'right', padding: '100px 0 0' }}>
+                            <div style={{
+                                fontSize: '1.8rem',
+                                color: 'var(--text-primary)',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em',
+                                lineHeight: 1.2,
+                                fontWeight: 500
+                            }}>
+                                <div style={{ marginBottom: '10px' }}>When we show up somewhere,</div>
+                                <div style={{ marginRight: '40px', marginBottom: '40px' }}>we don’t just gather.</div>
+                                <div style={{ fontWeight: 900, fontSize: '2.5rem' }}>We contribute.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
