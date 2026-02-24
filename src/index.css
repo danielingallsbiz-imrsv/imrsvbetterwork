@@ -3,12 +3,12 @@
 :root {
   --font-serif: "Instrument Serif", serif;
   --font-sans: "Inter", sans-serif;
-  /* Darkened Cream/Stone */
-  --bg-color: #E6E4D5;
+  /* Further Darkened Stone */
+  --bg-color: #D6D3C0;
   --accent-yellow: #F7D031;
   /* Art of Mondays Yellow */
   --text-primary: #1A1A1A;
-  --text-secondary: #5C5C5C;
+  --text-secondary: #2D2D2D;
   --accent-brown: #332822;
   --border-color: rgba(26, 26, 26, 0.1);
   --grain-opacity: 0.04;
