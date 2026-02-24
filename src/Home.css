@@ -24,20 +24,10 @@
 
 .nav-logo {
     font-family: var(--font-sans);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     color: #F7F5EA;
-    /* Matching hero off-white */
-    text-transform: uppercase;
-}
-
-.nav-logo::before {
-    content: "[ ";
-}
-
-.nav-logo::after {
-    content: " ]";
 }
 
 .nav-links {

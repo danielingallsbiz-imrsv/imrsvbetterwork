@@ -16,8 +16,10 @@ const Home = () => {
         <div className="home-container no-scrollbar">
             {/* NAVBAR */}
             <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
-                <div className="nav-logo">
-                    <img src="/logo.svg" alt="IMRSV" style={{ height: '24px', width: 'auto' }} />
+                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span>[</span>
+                    <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', marginTop: '2px' }} />
+                    <span style={{ marginLeft: '4px' }}>imrsv project ]</span>
                 </div>
                 <div className="nav-links">
                     <span>The Impact Layer</span>
@@ -167,8 +169,10 @@ const Home = () => {
             </section>
 
             <footer className="footer">
-                <div className="nav-logo">
-                    <img src="/logo.svg" alt="IMRSV" style={{ height: '20px', width: 'auto', opacity: 0.5 }} />
+                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
+                    <span>[</span>
+                    <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', marginTop: '1px' }} />
+                    <span style={{ marginLeft: '4px' }}>imrsv project ]</span>
                 </div>
                 <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
                     <span>Journal</span>
