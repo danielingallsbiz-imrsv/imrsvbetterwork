@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import './Home.css';
 
-const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToAdmin, showSuccess }) => {
+const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToAdmin, navigateToJournal, showSuccess }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
     const [isFlashing, setIsFlashing] = useState(false);
@@ -314,7 +314,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     <span style={{ marginLeft: '4px' }}>imrsv project</span>
                 </div>
                 <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
-                    <span>Journal</span>
+                    <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>Journal</span>
                     <span onClick={navigateToAdmin} style={{ cursor: 'pointer' }}>©2026</span>
                 </div>
             </footer>

@@ -5,6 +5,7 @@ import ImpactLayer from './ImpactLayer';
 import RestorationLayer from './RestorationLayer';
 import ApplicationLayer from './ApplicationLayer';
 import AdminLayer from './AdminLayer';
+import JournalLayer from './JournalLayer';
 
 function App() {
   const [view, setView] = useState('home');
@@ -44,6 +45,7 @@ function App() {
             navigateToRestoration={() => setView('restoration')}
             navigateToApply={() => setView('apply')}
             navigateToAdmin={() => setView('admin')}
+            navigateToJournal={() => setView('journal')}
             showSuccess={showSuccess}
           />
         )}
@@ -74,6 +76,12 @@ function App() {
             key="admin"
             onBack={() => setView('home')}
             applications={applications}
+          />
+        )}
+        {view === 'journal' && (
+          <JournalLayer
+            key="journal"
+            onBack={() => setView('home')}
           />
         )}
       </AnimatePresence>
