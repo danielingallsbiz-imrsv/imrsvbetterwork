@@ -62,18 +62,7 @@ const Home = () => {
                             This is not a public free-for-all. This is controlled access.
                         </p>
                     </div>
-                    <div className="gallery-item">
-                        <img
-                            src="/bar-overhead.jpg"
-                            className="gallery-img"
-                            alt="Controlled Access"
-                            style={{ borderRadius: '2px', filter: 'grayscale(0.2) contrast(1.1)' }}
-                        />
-                        <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                            <img src="/martinis.jpg" style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="Collective Moments" />
-                            <img src="/blur-bar-1.jpg" style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="Midnight Hub" />
-                        </div>
-                    </div>
+
                 </div>
             </section>
 
@@ -101,11 +90,7 @@ const Home = () => {
                         desc="To build a platform that turns travel into participation. We don’t just visit—we collaborate and reinvest."
                     />
                 </div>
-                <div className="raw-grid" style={{ marginTop: '60px' }}>
-                    <img src="/colombia-neon.jpg" style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover' }} alt="Medellín Hub" />
-                    <img src="/colosseum.jpg" style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover' }} alt="Rome Activation" />
-                    <img src="/palm-dusk.jpg" style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover' }} alt="Bali Connection" />
-                </div>
+
             </section>
 
             {/* THE GAME LAYER */}
@@ -131,14 +116,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="gallery-item">
-                        <img
-                            src="/membership-card.jpg"
-                            className="gallery-img"
-                            alt="IMRSV Membership"
-                            style={{ borderRadius: '2px', filter: 'contrast(1.2) brightness(0.9)' }}
-                        />
-                    </div>
+
                 </div>
             </section>
 
@@ -146,18 +124,7 @@ const Home = () => {
             <section className="section">
                 <span className="section-label">04 / THE CORE IDEA.</span>
                 <div className="concept-grid">
-                    <div className="gallery-item" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
-                        <img
-                            src="/lake-group.jpg"
-                            className="gallery-img"
-                            alt="The Movement"
-                            style={{ borderRadius: '2px' }}
-                        />
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                            <img src="/waterfall.jpg" style={{ width: '100%', height: '250px', objectFit: 'cover' }} alt="Participation" />
-                            <img src="/social-cards-2.jpg" style={{ width: '100%', height: '250px', objectFit: 'cover' }} alt="Restoration" />
-                        </div>
-                    </div>
+
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
                         <h2 className="concept-title" style={{ fontSize: '4rem', lineHeight: 1, marginBottom: 0 }}>
                             Participation <br />Restores.
