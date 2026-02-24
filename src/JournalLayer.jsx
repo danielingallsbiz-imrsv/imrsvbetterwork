@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const JournalLayer = ({ onBack }) => {
@@ -21,10 +22,14 @@ const JournalLayer = ({ onBack }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }}>
+                        <InteractiveText text="imrsv project" />
+                    </span>
                 </div>
                 <div className="nav-links">
-                    <span style={{ color: 'rgba(247, 245, 234, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Journal / Archives</span>
+                    <span style={{ color: 'rgba(247, 245, 234, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                        <InteractiveText text="Journal / Archives" />
+                    </span>
                 </div>
             </nav>
 
@@ -42,7 +47,7 @@ const JournalLayer = ({ onBack }) => {
                         display: 'block',
                         marginBottom: '40px'
                     }}>
-                        TRANSMISSION PENDING
+                        <InteractiveText text="SUNDAY COLLECTION" />
                     </span>
 
                     <h1 style={{
@@ -53,8 +58,8 @@ const JournalLayer = ({ onBack }) => {
                         margin: 0,
                         fontFamily: '"Outfit", sans-serif'
                     }}>
-                        JOURNAL<br />
-                        COMING SOON<span style={{ color: '#F7D031' }}>.</span>
+                        <InteractiveText text="JOURNAL" /><br />
+                        <InteractiveText text="COMING SOON." />
                     </h1>
 
                     <div style={{
@@ -106,7 +111,7 @@ const JournalLayer = ({ onBack }) => {
 
             <footer className="footer" style={{ borderTop: 'none' }}>
                 <div onClick={onBack} style={{ cursor: 'pointer', fontSize: '0.8rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                    ← Return Home
+                    <InteractiveText text="← Return Home" />
                 </div>
             </footer>
         </motion.div>
