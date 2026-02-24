@@ -38,13 +38,8 @@ const Home = () => {
 
                 <img
                     src="/hero-bg.png"
-                    alt="IMRSV Collection"
+                    alt="IMRSV Oahu"
                     className="hero-video-bg"
-                    style={{
-                        opacity: 0.8,
-                        filter: 'grayscale(0.2) contrast(1.1) brightness(0.8)',
-                        zIndex: -1
-                    }}
                 />
             </section>
 
