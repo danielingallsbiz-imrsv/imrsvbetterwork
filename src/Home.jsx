@@ -144,7 +144,7 @@ const Home = () => {
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div style={{ padding: '0 0 60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>
                             <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4, fontWeight: 800 }}>
-                                Members get to guide where <br />that support goes.
+                                Members vote where <br />that support goes.
                             </p>
                         </div>
                     </div>
