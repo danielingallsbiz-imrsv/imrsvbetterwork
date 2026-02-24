@@ -243,10 +243,21 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </div>
                     </div>
 
-                    <div className="bucket-card" style={{ opacity: 0.3 }}>
-                        <span className="bucket-num">MAY</span>
-                        <h3 className="bucket-title">BALI / ROME</h3>
-                        <p className="bucket-desc">Coming Soon. Vetted applications only.</p>
+                    <div className="bucket-card" style={{
+                        background: 'rgba(247, 245, 234, 0.4)',
+                        border: '1px solid rgba(26, 26, 26, 0.1)',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: '0 20px 40px rgba(0,0,0,0.05)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center'
+                    }}>
+                        <span className="bucket-num" style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '2rem' }}>MAY</span>
+                        <h3 className="bucket-title" style={{ color: 'rgba(26, 26, 26, 0.8)', fontSize: '1.2rem', margin: '10px 0' }}>BALI / ROME</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.5)', fontSize: '0.8rem', letterSpacing: '0.05em' }}>
+                            COMING SOON.<br />
+                            VETTED APPLICATIONS ONLY.
+                        </p>
                     </div>
                 </div>
 
