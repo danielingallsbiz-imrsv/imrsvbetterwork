@@ -180,7 +180,39 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </div>
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
-                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 19 / 26</span>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 03</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>CHICAGO HUB</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
+                            Ticket: TBD (Full Fund Reinvestment)
+                        </p>
+                        <button
+                            onClick={handleApplyClick}
+                            style={{
+                                color: '#F7D031',
+                                fontSize: '0.8rem',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                fontWeight: 800,
+                                marginTop: '10px',
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                background: 'transparent',
+                                border: 'none',
+                                padding: 0,
+                                fontFamily: 'inherit'
+                            }}
+                        >
+                            apply →
+                        </button>
+                        <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
+                            <div style={{ fontSize: '0.8rem' }}>19:00 — 23:00 : BUILDER DINNER</div>
+                        </div>
+                    </div>
+
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 17 / 31</span>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB</h3>
                         <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
                             Ticket: TBD (Full Fund Reinvestment)
@@ -206,8 +238,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             apply →
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>MAY 19 : IMRSV RUN CLUB — FREE</div>
-                            <div style={{ fontSize: '0.8rem' }}>MAY 26 : ROOFTOP DINNER / SHOWCASE / AFTER HOURS</div>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>MAY 17 : IMRSV RUN CLUB — FREE</div>
+                            <div style={{ fontSize: '0.8rem' }}>MAY 31 : ROOFTOP DINNER / SHOWCASE / AFTER HOURS</div>
                         </div>
                     </div>
 
