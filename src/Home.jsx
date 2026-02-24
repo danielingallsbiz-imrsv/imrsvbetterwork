@@ -89,7 +89,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     <span style={{ marginLeft: '4px' }}>imrsv project</span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>Sundays Collection</span>
+                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>The Impact Layer</span>
                     <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>Restoration</span>
                     <span onClick={handleApplyClick} style={{ cursor: 'pointer' }}>Apply</span>
                 </div>

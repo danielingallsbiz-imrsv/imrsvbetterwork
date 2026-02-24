@@ -25,7 +25,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                    <span className="section-label">SUNDAYS COLLECTION / OUR MISSION</span>
+                    <span className="section-label">THE IMPACT LAYER / OUR MISSION</span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px' }}>
                         RESTORING <br /> THE HUBS.
                     </h1>
