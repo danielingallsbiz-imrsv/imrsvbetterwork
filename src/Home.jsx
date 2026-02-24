@@ -183,7 +183,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 03</span>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>CHICAGO HUB</h3>
                         <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: TBD (Full Fund Reinvestment)
+                            Ticket: $20 (Full Fund Reinvestment)
                         </p>
                         <button
                             onClick={handleApplyClick}
@@ -207,7 +207,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
-                            <div style={{ fontSize: '0.8rem' }}>19:00 — 23:00 : BUILDER DINNER</div>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>12:00 — 15:00 : LUNCH + BEACH GAMES</div>
+                            <div style={{ fontSize: '0.8rem' }}>19:00 — 23:00 : AFTER HOURS DINNER (INVITE ONLY)</div>
                         </div>
                     </div>
 
