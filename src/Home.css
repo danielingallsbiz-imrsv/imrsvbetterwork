@@ -83,6 +83,7 @@
     letter-spacing: 0.2em;
     color: var(--text-secondary);
     font-weight: 600;
+    text-transform: none !important;
 }
 
 /* CONTENT SECTIONS */
