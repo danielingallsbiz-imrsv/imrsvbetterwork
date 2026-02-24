@@ -37,8 +37,8 @@ const Home = () => {
                 </motion.div>
 
                 <img
-                    src="/hero-bg.png"
-                    alt="IMRSV Oahu"
+                    src="/oahu-hero.jpg"
+                    alt="IMRSV Oahu Hero"
                     className="hero-video-bg"
                 />
             </section>
