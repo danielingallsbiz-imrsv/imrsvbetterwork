@@ -207,7 +207,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>MAY 19 : IMRSV RUN CLUB</div>
-                            <div style={{ fontSize: '0.8rem' }}>MAY 26 : ROOFTOP DINNER / SHOWCASE</div>
+                            <div style={{ fontSize: '0.8rem' }}>MAY 26 : ROOFTOP DINNER / SHOWCASE / AFTER HOURS</div>
                         </div>
                     </div>
 
