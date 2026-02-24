@@ -12,6 +12,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         const formData = new FormData(e.target);
         const appData = {
             name: formData.get('name'),
+            email: formData.get('email'),
             hub: formData.get('hub'),
             social: formData.get('social'),
             occupation: formData.get('occupation'),
@@ -70,6 +71,11 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
                             <input required name="name" type="text" placeholder="Alex Rivera" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Email Address</label>
+                            <input required name="email" type="email" placeholder="alex@example.com" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
