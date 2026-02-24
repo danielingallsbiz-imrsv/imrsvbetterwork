@@ -317,23 +317,6 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </div>
                 </div>
 
-                <div className="bucket-grid">
-                    <BucketCard
-                        num="01."
-                        title="The Activation"
-                        desc="Each activation brings together travelers, local creators, and small businesses to circulate value back into the local ecosystem."
-                    />
-                    <BucketCard
-                        num="02."
-                        title="The Connection"
-                        desc="We don’t extract value from cities. We reinvest directly into the venues and collaborators that define local culture."
-                    />
-                    <BucketCard
-                        num="03."
-                        title="The Mission"
-                        desc="To build a platform that turns travel into participation. We don’t just visit—we collaborate and reinvest."
-                    />
-                </div>
             </section>
 
             {/* THE GAME LAYER */}

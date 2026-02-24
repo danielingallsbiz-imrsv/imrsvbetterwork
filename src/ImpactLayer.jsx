@@ -3,6 +3,16 @@ import { motion } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css'; // Reusing global styles for consistency
 
+const BucketCard = ({ num, title, desc }) => (
+    <div className="bucket-card">
+        <span className="bucket-num">{num}</span>
+        <h3 className="bucket-title">
+            <InteractiveText text={title} />
+        </h3>
+        <p className="bucket-desc">{desc}</p>
+    </div>
+);
+
 const ImpactLayer = ({ onBack, navigateToRestoration }) => {
     return (
         <motion.div
@@ -39,10 +49,27 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
 
                 <div className="concept-grid" style={{ marginTop: '80px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '2rem', marginBottom: '30px' }}>
+                        <h3 style={{ fontSize: '2.5rem', marginBottom: '30px' }}>
+                            <InteractiveText text="ACCESS OVER NOISE." />
+                        </h3>
+                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
+                            IMRSV is a private, membership-based platform designed for access over noise.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            Operated as a closed ecosystem, we provide approved members with curated experiences, local access, and share proprietary opportunity inside a protected network.
+                        </p>
+                        <p>
+                            Information is protected. Participation is intentional. This is not a public free-all. This is controlled access.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="concept-grid" style={{ marginTop: '100px' }}>
+                    <div className="concept-text">
+                        <h3 style={{ fontSize: '2.5rem', marginBottom: '30px' }}>
                             <InteractiveText text="What’s the idea here?" />
                         </h3>
-                        <p style={{ marginBottom: '20px' }}>
+                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
                             Basically, Sunday Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
                         <p>
@@ -52,40 +79,21 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                 </div>
 
                 <div className="bucket-grid" style={{ marginTop: '100px' }}>
-                    <div className="bucket-card">
-                        <span className="bucket-num">01.</span>
-                        <h3 className="bucket-title">
-                            <InteractiveText text="How it works" />
-                        </h3>
-                        <p className="bucket-desc">
-                            We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city where it was raised and only goes to local people.
-                            <br /><br />
-                            <span
-                                onClick={navigateToRestoration}
-                                style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--text-primary)', fontWeight: 600 }}
-                            >
-                                <InteractiveText text="View the Restoration Ledger →" />
-                            </span>
-                        </p>
-                    </div>
-                    <div className="bucket-card">
-                        <span className="bucket-num">02.</span>
-                        <h3 className="bucket-title">
-                            <InteractiveText text="IRL Events" />
-                        </h3>
-                        <p className="bucket-desc">
-                            We do about 1 or 2 events a month. Sometimes it's just a chill dinner with builders, other times it’s a big night showing off what the locals are making.
-                        </p>
-                    </div>
-                    <div className="bucket-card">
-                        <span className="bucket-num">03.</span>
-                        <h3 className="bucket-title">
-                            <InteractiveText text="Staying connected" />
-                        </h3>
-                        <p className="bucket-desc">
-                            We’re all about bridging the gap. When we’re in town, we make sure our people are actually hanging with locals and spending money at the spots that define the culture.
-                        </p>
-                    </div>
+                    <BucketCard
+                        num="01."
+                        title="The Activation"
+                        desc="Each activation brings together travelers, local creators, and small businesses to circulate value back into the local ecosystem."
+                    />
+                    <BucketCard
+                        num="02."
+                        title="The Connection"
+                        desc="We don’t extract value from cities. We reinvest directly into the venues and collaborators that define local culture."
+                    />
+                    <BucketCard
+                        num="03."
+                        title="The Mission"
+                        desc="To build a platform that turns travel into participation. We don’t just visit—we collaborate and reinvest."
+                    />
                 </div>
 
                 <div className="concept-grid" style={{ marginTop: '120px' }}>
