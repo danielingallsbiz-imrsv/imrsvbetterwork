@@ -125,7 +125,7 @@ const Home = () => {
             {/* MEMBERSHIP */}
             <section className="section">
                 <span className="section-label">04 / MEMBERSHIP.</span>
-                <div className="concept-grid">
+                <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
                     <div className="concept-text">
                         <h3 style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: 1 }}>ONE MEMBER. <br /> ONE VOTE.</h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
@@ -141,7 +141,7 @@ const Home = () => {
                             A built-in portion is allocated to a local initiative — a small business, community project, or family in need.
                         </p>
                     </div>
-                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div style={{ padding: '0 0 60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>
                             <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4, fontWeight: 800 }}>
                                 Members guide where <br />that support goes.
