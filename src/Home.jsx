@@ -140,7 +140,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                 </span>
                 <div className="concept-grid" style={{ marginTop: '60px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '3.5rem', marginBottom: '40px', lineHeight: 1 }}>
+                        <h3 style={{ marginBottom: '40px', lineHeight: 1 }}>
                             <InteractiveText text="WHAT’S THE IDEA HERE?" />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.4rem' }}>

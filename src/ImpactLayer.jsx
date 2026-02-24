@@ -49,7 +49,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
 
                 <div className="concept-grid" style={{ marginTop: '80px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '2.5rem', marginBottom: '30px' }}>
+                        <h3 style={{ marginBottom: '30px' }}>
                             <InteractiveText text="ACCESS OVER NOISE." />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
@@ -66,7 +66,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
 
                 <div className="concept-grid" style={{ marginTop: '100px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '2.5rem', marginBottom: '30px' }}>
+                        <h3 style={{ marginBottom: '30px' }}>
                             <InteractiveText text="What’s the idea here?" />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
