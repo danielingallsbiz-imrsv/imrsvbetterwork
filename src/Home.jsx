@@ -130,7 +130,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* PRIVATE NETWORK */}
             <section className="section">
-                <span className="section-label shine-effect">
+                <span className="section-label">
                     <InteractiveText text="01 / PRIVATE NETWORK." />
                 </span>
                 <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
@@ -157,7 +157,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* WHERE WE OPERATE */}
             <section className="section">
-                <span className="section-label shine-effect">
+                <span className="section-label">
                     <InteractiveText text="02 / UPCOMING ACTIVATIONS." />
                 </span>
                 <h2 className="concept-title" style={{ maxWidth: '900px' }}>
@@ -174,7 +174,6 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <button
                             onClick={handleApplyClick}
-                            className="shine-effect"
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -208,7 +207,6 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <button
                             onClick={handleApplyClick}
-                            className="shine-effect"
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -241,7 +239,6 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <button
                             onClick={handleApplyClick}
-                            className="shine-effect"
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -305,7 +302,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* THE GAME LAYER */}
             <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA' }}>
-                <span className="section-label shine-effect" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
+                <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
                     <InteractiveText text="03 / THE GAME LAYER." />
                 </span>
                 <div className="concept-grid" style={{ alignItems: 'center' }}>
@@ -336,7 +333,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* THE CORE IDEA */}
             <section className="section">
-                <span className="section-label shine-effect">
+                <span className="section-label">
                     <InteractiveText text="04 / THE CORE IDEA." />
                 </span>
                 <div className="concept-grid">
@@ -377,7 +374,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         Entry into The IMRSV Project is via a vetted application. <br />
                         We prioritize those ready to contribute to Sunday Collection.
                     </p>
-                    <button onClick={handleApplyClick} className="gauntlet-btn shine-effect">[ Join Sunday Collection ]</button>
+                    <button onClick={handleApplyClick} className="gauntlet-btn">[ Join Sunday Collection ]</button>
                 </motion.div>
             </section>
 
