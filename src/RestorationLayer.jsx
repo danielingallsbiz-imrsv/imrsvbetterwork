@@ -4,10 +4,10 @@ import './Home.css';
 
 const RestorationLayer = ({ onBack, navigateToImpact }) => {
     const cities = [
-        { name: 'Medellín', status: '82%', fund: '$12,400', projects: ['Local Artist Studio', 'Community Garden Hub'] },
-        { name: 'Bali', status: '65%', fund: '$8,900', projects: ['Ocean Plastic Collective', 'Rice Terrace Preservation'] },
-        { name: 'Oahu', status: '41%', fund: '$5,200', projects: ['Coral Reef Restoration', 'Indigenous Hub Support'] },
-        { name: 'Rome', status: '94%', fund: '$18,100', projects: ['Artisan Workshop Grant', 'Historic Piazza Lighting'] }
+        { name: 'Oahu', status: '$2,756', fund: 'Active Allocation', projects: [], isNumeric: true },
+        { name: 'Medellín', status: 'STAGING', fund: 'Coming Soon...', projects: [] },
+        { name: 'Bali', status: 'VETTING', fund: 'Coming Soon...', projects: [] },
+        { name: 'Rome', status: 'VETTING', fund: 'Coming Soon...', projects: [] }
     ];
 
     return (
@@ -50,20 +50,23 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
                                 transition={{ delay: 0.4 + (i * 0.1) }}
                                 style={{
                                     padding: '40px',
-                                    border: '1px solid rgba(247, 245, 234, 0.05)',
+                                    border: city.isNumeric ? '1px solid rgba(247, 208, 49, 0.2)' : '1px solid rgba(247, 245, 234, 0.05)',
                                     borderRadius: '8px',
-                                    background: 'rgba(255, 255, 255, 0.02)'
+                                    background: 'rgba(255, 255, 255, 0.02)',
+                                    position: 'relative',
+                                    overflow: 'hidden'
                                 }}
                             >
+                                {city.isNumeric && <div style={{ position: 'absolute', top: 0, left: 0, width: '2px', height: '100%', backgroundColor: '#F7D031' }} />}
                                 <span style={{ fontSize: '0.8rem', opacity: 0.5, letterSpacing: '0.1em' }}>{city.name}</span>
-                                <h3 style={{ fontSize: '2.5rem', margin: '15px 0', color: '#F7F5EA' }}>{city.status}</h3>
+                                <h3 style={{ fontSize: '2.5rem', margin: '15px 0', color: city.isNumeric ? '#F7D031' : '#F7F5EA', letterSpacing: city.isNumeric ? '0.05em' : 'normal' }}>{city.status}</h3>
                                 <div style={{ marginBottom: '25px' }}>
-                                    <span style={{ fontSize: '0.9rem', color: '#F7D031' }}>Restoration Fund: {city.fund}</span>
+                                    <span style={{ fontSize: '0.9rem', color: city.isNumeric ? '#F7D031' : 'rgba(247, 245, 234, 0.4)' }}>{city.fund}</span>
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                     {city.projects.map(p => (
                                         <div key={p} style={{ fontSize: '0.8rem', opacity: 0.7, display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#F7D031' }} />
+                                            <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: city.isNumeric ? '#F7D031' : 'rgba(247, 245, 234, 0.2)' }} />
                                             {p}
                                         </div>
                                     ))}
@@ -77,10 +80,10 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
                     <div className="concept-text">
                         <h3 style={{ fontSize: '2rem', marginBottom: '30px', color: '#F7F5EA' }}>How the Ledger works</h3>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            Restoration is tracked by the "Hubs" claimed within each city. Each claim by a member triggers a micro-contribution from the central Restoration Fund directly to the associated local vendor or project.
+                            The Ledger provides transparency into the movement of the Restoration Fund. Every membership contribution and activation fee is allocated directly to verified local projects.
                         </p>
                         <p style={{ opacity: 0.8 }}>
-                            We don't just donate. We incentivize participation that naturally supports the local culture. The Ledger is a transparent view of that value transfer.
+                            We don't just donate; we invest. The Ledger tracks where capital is currently deployed and identifies the next phase of community-led restoration. It is a live view of our collective impact.
                         </p>
                     </div>
                 </div>

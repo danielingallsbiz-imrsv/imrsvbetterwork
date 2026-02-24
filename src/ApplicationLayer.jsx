@@ -25,45 +25,9 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         // Simulating network transmission
         setTimeout(() => {
             if (onSubmit) onSubmit(appData);
-            setStatus('success');
+            navigateToHome(true);
         }, 1200);
     };
-
-    useEffect(() => {
-        if (status === 'success') {
-            const interval = setInterval(() => {
-                setTimer((prev) => {
-                    if (prev <= 1) {
-                        navigateToHome(true);
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
-            return () => clearInterval(interval);
-        }
-    }, [status, navigateToHome]);
-
-    if (status === 'success') {
-        return (
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="home-container"
-                style={{ backgroundColor: '#F7F5EA', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
-            >
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <span className="section-label">TRANSMISSION RECEIVED</span>
-                    <h2 style={{ fontSize: '3rem', margin: '20px 0', color: '#1A1A1A' }}>EN ROUTE.</h2>
-                    <p style={{ opacity: 0.6 }}>Your application is being vetted by the collective hub. <br />Returning home in {timer}s...</p>
-                </motion.div>
-            </motion.div>
-        );
-    }
 
     return (
         <motion.div

@@ -20,34 +20,43 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
     };
 
     useEffect(() => {
-        return scrollY.onChange((latest) => {
+        const unsubscribe = scrollY.on("change", (latest) => {
             setIsPastHero(latest > window.innerHeight - 100);
         });
+        return () => unsubscribe();
     }, [scrollY]);
 
     return (
         <div className="home-container no-scrollbar">
             {/* APPLICATION STATUS BANNER */}
+            {/* APPLICATION STATUS POPUP */}
             <AnimatePresence>
                 {showSuccess && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         style={{
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
                             backgroundColor: '#F7D031',
                             color: '#000',
                             textAlign: 'center',
-                            padding: '12px 40px',
-                            fontSize: '0.85rem',
-                            fontWeight: 700,
-                            letterSpacing: '0.05em',
-                            position: 'relative',
-                            zIndex: 1100,
-                            overflow: 'hidden'
+                            padding: '30px 40px',
+                            fontSize: '0.9rem',
+                            fontWeight: 800,
+                            letterSpacing: '0.1em',
+                            zIndex: 2000,
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                            maxWidth: '400px',
+                            lineHeight: 1.4,
+                            pointerEvents: 'none'
                         }}
                     >
-                        APPLICATION RECEIVED. OUR COLLECTIVE HUB IS REVIEWING YOUR REQUEST. YOU WILL RECEIVE AN EMAIL SHORTLY.
+                        APPLICATION RECEIVED.<br />
+                        VETTING IN PROGRESS.
                     </motion.div>
                 )}
             </AnimatePresence>

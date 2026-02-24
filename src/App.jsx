@@ -10,8 +10,13 @@ function App() {
   const [view, setView] = useState('home');
   const [showSuccess, setShowSuccess] = useState(false);
   const [applications, setApplications] = useState(() => {
-    const saved = localStorage.getItem('imrsv_applications');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('imrsv_applications');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Local storage inhibited:", e);
+      return [];
+    }
   });
 
   useEffect(() => {
