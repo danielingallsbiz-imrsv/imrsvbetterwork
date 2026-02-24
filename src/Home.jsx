@@ -54,7 +54,8 @@ const Home = () => {
                     <div className="concept-text">
                         <p>
                             Every experience generates profit. A percentage of that profit does not stay inside the organization. <br /><br />
-                            It flows back into the local community where the immersion happens. Most travel extracts. IMRSV reinvests.
+                            It flows back into the local community where the immersion happens. Most travel extracts. <br /><br />
+                            We reinvest.
                         </p>
                     </div>
                 </div>
