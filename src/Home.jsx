@@ -319,7 +319,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
                                 <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>
-                                    <InteractiveText text="UNLOCKS" />
+                                    <InteractiveText text="UNLOCK" />
                                 </h4>
                                 <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>Partner perks, event benefits, early access, and special in-app missions.</p>
                             </div>
