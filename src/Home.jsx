@@ -122,20 +122,33 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* THE VOTING SYSTEM */}
+            {/* MEMBERSHIP */}
             <section className="section">
-                <span className="section-label">04 / The Choice.</span>
+                <span className="section-label">04 / MEMBERSHIP.</span>
                 <div className="concept-grid">
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>One member. <br />One vote.</h3>
+                        <h3 style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: 1 }}>ONE MEMBER. <br /> ONE VOTE.</h3>
+                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
+                            The Collection is application-based.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            Members get access to private events, meetups, and founder-only rooms in select cities.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            Each membership fee directly supports the city we enter.
+                        </p>
                         <p>
-                            Local candidates are nominated and vetted. Members decide where the funds are distributed.
-                            Ownership stays with the people who were there.
+                            A built-in portion is allocated to a local initiative — a small business, community project, or family in need.
                         </p>
                     </div>
-                    <div className="gallery-item" style={{ textAlign: 'right' }}>
-                        <p style={{ fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '10px' }}>Transparency. Participation. Results.</p>
-                        <div style={{ height: '1px', backgroundColor: 'var(--border-color)', width: '100%' }}></div>
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                        <p style={{ marginBottom: '30px', textAlign: 'right' }}>Members help guide where that support goes.</p>
+                        <div style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)', textAlign: 'right' }}>
+                            <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4 }}>
+                                When we show up somewhere, <br />we don’t just gather. <br /><br />
+                                <span style={{ fontWeight: 800 }}>We contribute.</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
