@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
+import PacmanGame from './components/PacmanGame';
 import './Home.css';
 
 const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToAdmin, navigateToJournal, showSuccess }) => {
@@ -320,7 +321,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
             </section>
 
             {/* THE GAME LAYER */}
-            <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA' }}>
+            <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
+                <PacmanGame />
                 <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
                     <InteractiveText text="03 / THE GAME LAYER." />
                 </span>
