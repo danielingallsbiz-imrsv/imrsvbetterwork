@@ -89,7 +89,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     <span style={{ marginLeft: '4px' }}>imrsv project</span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>The Impact Layer</span>
+                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>Sundays Collection</span>
                     <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>Restoration</span>
                     <span onClick={handleApplyClick} style={{ cursor: 'pointer' }}>Apply</span>
                 </div>
@@ -104,7 +104,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     className="hero-content"
                 >
                     <h1 className="hero-title">Participation<br />that restores.</h1>
-                    <p className="hero-subtitle">the collection by imrsv</p>
+                    <p className="hero-subtitle">Sundays Collection by imrsv</p>
                 </motion.div>
 
                 <img
@@ -302,7 +302,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     <h2 className="gauntlet-title">Request Access.</h2>
                     <p style={{ maxWidth: '600px', margin: '0 auto', opacity: 0.7, fontSize: '1.2rem', fontWeight: 500 }}>
                         Entry into The IMRSV Project is via a vetted application. <br />
-                        We prioritize those ready to contribute to the Impact Layer.
+                        We prioritize those ready to contribute to Sundays Collection.
                     </p>
                     <button onClick={handleApplyClick} className="gauntlet-btn">Begin Application</button>
                 </motion.div>

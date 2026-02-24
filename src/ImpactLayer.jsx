@@ -25,7 +25,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                    <span className="section-label">THE IMPACT LAYER / OUR MISSION</span>
+                    <span className="section-label">SUNDAYS COLLECTION / OUR MISSION</span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px' }}>
                         RESTORING <br /> THE HUBS.
                     </h1>
@@ -35,7 +35,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     <div className="concept-text">
                         <h3 style={{ fontSize: '2rem', marginBottom: '30px' }}>What’s the idea here?</h3>
                         <p style={{ marginBottom: '20px' }}>
-                            Basically, the Impact Layer is our way of making sure we’re actually helping out the places we visit.
+                            Basically, Sundays Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
                         <p>
                             We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It’s about being a good guest.
