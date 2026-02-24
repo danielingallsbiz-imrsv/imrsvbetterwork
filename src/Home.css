@@ -27,7 +27,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: var(--text-primary);
+    color: var(--text-secondary);
     text-transform: uppercase;
 }
 
@@ -46,6 +46,7 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 500;
+    color: var(--text-secondary);
 }
 
 /* HERO SECTION */
