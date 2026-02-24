@@ -97,9 +97,79 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.6;
+    opacity: 0.8;
     z-index: -1;
-    filter: grayscale(1) contrast(1.1);
+    filter: grayscale(0.2) contrast(1.1) brightness(0.8);
+    animation: kenBurns 40s infinite alternate linear;
+}
+
+@keyframes kenBurns {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+        transform: scale(1.15) translate(-1%, -1%);
+    }
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    animation: grainNoise 0.8s steps(10) infinite;
+}
+
+@keyframes grainNoise {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-1%, -1%);
+    }
+
+    20% {
+        transform: translate(-2%, 1%);
+    }
+
+    30% {
+        transform: translate(1%, -2%);
+    }
+
+    40% {
+        transform: translate(-1%, 2%);
+    }
+
+    50% {
+        transform: translate(-2%, -2%);
+    }
+
+    60% {
+        transform: translate(2%, 2%);
+    }
+
+    70% {
+        transform: translate(1%, 1%);
+    }
+
+    80% {
+        transform: translate(-2%, 1%);
+    }
+
+    90% {
+        transform: translate(2%, -1%);
+    }
 }
 
 .hero-title {
