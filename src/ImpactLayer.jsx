@@ -14,7 +14,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>
@@ -106,7 +106,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
             <footer className="footer">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>

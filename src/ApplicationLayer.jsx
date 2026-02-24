@@ -42,7 +42,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1A1A1A' }} onClick={() => navigateToHome(false)}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>

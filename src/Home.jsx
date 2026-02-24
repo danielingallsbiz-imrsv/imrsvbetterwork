@@ -87,13 +87,18 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
             <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', marginTop: '2px' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>
                 <div className="nav-links">
                     <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>
-                        <InteractiveText text="The Impact Layer" />
+                        <span className="mobile-hide">
+                            <InteractiveText text="The Impact Layer" />
+                        </span>
+                        <span className="mobile-show">
+                            <InteractiveText text="Impact" />
+                        </span>
                     </span>
                     <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>
                         <InteractiveText text="Restoration" />
@@ -385,7 +390,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
             <footer className="footer">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', marginTop: '1px' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>

@@ -14,10 +14,13 @@ const AdminLayer = ({ onBack, applications, onDelete }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">imrsv project</span>
                 </div>
                 <div className="nav-links">
-                    <span style={{ color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Admin Terminal v1.0</span>
+                    <span style={{ color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>
+                        <span className="mobile-hide">Admin Terminal v1.0</span>
+                        <span className="mobile-show">Admin</span>
+                    </span>
                 </div>
             </nav>
 

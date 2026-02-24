@@ -22,13 +22,18 @@ const JournalLayer = ({ onBack }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>
                 <div className="nav-links">
                     <span style={{ color: 'rgba(247, 245, 234, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                        <InteractiveText text="Journal / Archives" />
+                        <span className="mobile-hide">
+                            <InteractiveText text="Journal / Archives" />
+                        </span>
+                        <span className="mobile-show">
+                            <InteractiveText text="Journal" />
+                        </span>
                     </span>
                 </div>
             </nav>

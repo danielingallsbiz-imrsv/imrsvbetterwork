@@ -22,12 +22,19 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>
                 <div className="nav-links">
-                    <span style={{ color: 'rgba(247, 245, 234, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Real-time Ledger v1.0</span>
+                    <span style={{ color: 'rgba(247, 245, 234, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                        <span className="mobile-hide">
+                            <InteractiveText text="Real-time Ledger v1.0" />
+                        </span>
+                        <span className="mobile-show">
+                            <InteractiveText text="Ledger" />
+                        </span>
+                    </span>
                 </div>
             </nav>
 
@@ -99,7 +106,7 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
             <footer className="footer" style={{ borderTop: '1px solid rgba(247, 245, 234, 0.1)' }}>
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.4 }}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>
+                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
                 </div>

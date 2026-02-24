@@ -426,6 +426,63 @@
     .nav-bar {
         padding: 20px;
     }
+
+    .nav-links {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-bar {
+        padding: 15px 20px;
+    }
+
+    .nav-links {
+        gap: 12px;
+        font-size: 0.7rem;
+    }
+
+    .hero-section {
+        padding: 0 30px 60px 30px;
+    }
+
+    .hero-title {
+        font-size: 3rem !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-bar {
+        padding: 15px;
+    }
+
+    .nav-links {
+        gap: 8px;
+    }
+}
+
+.mobile-hide {
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    .mobile-hide {
+        display: none !important;
+    }
+}
+
+.mobile-show {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .mobile-show {
+        display: inline-block !important;
+    }
 }
 
 .shine-effect {
