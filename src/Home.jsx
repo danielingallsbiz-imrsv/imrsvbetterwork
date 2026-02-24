@@ -207,8 +207,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>12:00 — 15:00 : LUNCH + BEACH GAMES</div>
-                            <div style={{ fontSize: '0.8rem' }}>19:00 — 23:00 : AFTER HOURS DINNER (INVITE ONLY)</div>
+                            <div style={{ fontSize: '0.8rem' }}>12:00 — 15:00 : LUNCH + BEACH GAMES</div>
                         </div>
                     </div>
 
