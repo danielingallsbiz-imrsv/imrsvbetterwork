@@ -116,7 +116,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* PRIVATE NETWORK */}
             <section className="section">
-                <span className="section-label">01 / PRIVATE NETWORK.</span>
+                <span className="section-label shine-effect">01 / PRIVATE NETWORK.</span>
                 <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
                     <div className="concept-text">
                         <h3 style={{ fontSize: '3.5rem', marginBottom: '40px', lineHeight: 1 }}>ACCESS OVER NOISE.</h3>
@@ -139,7 +139,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* WHERE WE OPERATE */}
             <section className="section">
-                <span className="section-label">02 / UPCOMING ACTIVATIONS.</span>
+                <span className="section-label shine-effect">02 / UPCOMING ACTIVATIONS.</span>
                 <h2 className="concept-title" style={{ maxWidth: '900px' }}>
                     Mid-April 1-Day Popup. <br />
                     Oahu, Hawaii.
@@ -154,6 +154,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <button
                             onClick={handleApplyClick}
+                            className="shine-effect"
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -187,6 +188,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <button
                             onClick={handleApplyClick}
+                            className="shine-effect"
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -219,6 +221,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <button
                             onClick={handleApplyClick}
+                            className="shine-effect"
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -282,7 +285,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* THE GAME LAYER */}
             <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA' }}>
-                <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>03 / THE GAME LAYER.</span>
+                <span className="section-label shine-effect" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>03 / THE GAME LAYER.</span>
                 <div className="concept-grid" style={{ alignItems: 'center' }}>
                     <div className="concept-text">
                         <h3 style={{ fontSize: '3.5rem', marginBottom: '30px', color: '#F7F5EA' }}>COLLECT THE WORLD.</h3>
@@ -309,7 +312,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* THE CORE IDEA */}
             <section className="section">
-                <span className="section-label">04 / THE CORE IDEA.</span>
+                <span className="section-label shine-effect">04 / THE CORE IDEA.</span>
                 <div className="concept-grid">
 
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
@@ -347,7 +350,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         Entry into The IMRSV Project is via a vetted application. <br />
                         We prioritize those ready to contribute to Sunday Collection.
                     </p>
-                    <button onClick={handleApplyClick} className="gauntlet-btn">Begin Application</button>
+                    <button onClick={handleApplyClick} className="gauntlet-btn shine-effect">Begin Application</button>
                 </motion.div>
             </section>
 
