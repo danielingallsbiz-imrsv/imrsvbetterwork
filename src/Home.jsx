@@ -318,11 +318,15 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
-                                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>Unlocks</h4>
+                                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>
+                                    <InteractiveText text="UNLOCKS" />
+                                </h4>
                                 <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>Partner perks, event benefits, early access, and special in-app missions.</p>
                             </div>
                             <div>
-                                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>Status</h4>
+                                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>
+                                    <InteractiveText text="STATUS" />
+                                </h4>
                                 <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>The more you participate, the more access you unlock in the network.</p>
                             </div>
                         </div>
@@ -340,8 +344,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
                         <h2 className="concept-title" style={{ fontSize: '4rem', lineHeight: 1, marginBottom: 0 }}>
-                            <InteractiveText text="Intentional" /> <br />
-                            <InteractiveText text="Exploration." />
+                            <InteractiveText text="INTENTIONAL" /> <br />
+                            <InteractiveText text="EXPLORATION." />
                         </h2>
                         <p style={{ fontSize: '1.4rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                             Most travel platforms are transactional. IMRSV builds ongoing participation.
