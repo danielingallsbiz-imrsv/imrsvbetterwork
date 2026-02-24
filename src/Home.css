@@ -22,23 +22,22 @@
     pointer-events: none;
 }
 
-.nav-logo-container {
-    display: flex;
-    align-items: center;
+.nav-logo {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #F7F5EA;
+    /* Matching hero off-white */
+    text-transform: uppercase;
 }
 
-.brand-logo-img {
-    height: 40px;
-    /* Adjust size to fit nav bar */
-    width: auto;
-    display: block;
+.nav-logo::before {
+    content: "[ ";
 }
 
-.footer .brand-logo-img {
-    height: 30px;
-    /* Slightly smaller for footer */
-    filter: grayscale(1) brightness(1.2);
-    /* Make it feel like part of the understated footer */
+.nav-logo::after {
+    content: " ]";
 }
 
 .nav-links {
