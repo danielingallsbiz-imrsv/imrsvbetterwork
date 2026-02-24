@@ -30,9 +30,9 @@ const Home = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+                    className="hero-content"
                 >
                     <h1 className="hero-title">Participation<br />that restores.</h1>
-                    <p className="hero-subtitle">the collection by imrsv</p>
                 </motion.div>
 
                 <img
@@ -41,7 +41,7 @@ const Home = () => {
                     className="hero-video-bg"
                     style={{
                         opacity: 0.8,
-                        filter: 'grayscale(0.2) contrast(1.1) brightness(0.9)',
+                        filter: 'grayscale(0.2) contrast(1.1) brightness(0.8)',
                         zIndex: -1
                     }}
                 />
