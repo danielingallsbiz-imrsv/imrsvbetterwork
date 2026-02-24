@@ -36,40 +36,30 @@ const Home = () => {
                 </motion.div>
             </section>
 
-            {/* THE IDEA */}
+            {/* MEMBERSHIP */}
             <section className="section">
-                <span className="section-label">01 / THE IDEA.</span>
-                <h2 className="concept-title" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', lineHeight: 1 }}>
-                    Participation restores.
-                </h2>
-
-                <div className="concept-grid">
-                    <div className="gallery-item">
-                        <img
-                            src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1000&auto=format&fit=crop"
-                            className="gallery-img"
-                            alt="The Community"
-                            style={{ borderRadius: '2px' }}
-                        />
-                    </div>
-                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-                        <p style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                            IMRSV is a private collection of people who move with intention.
+                <span className="section-label">01 / MEMBERSHIP.</span>
+                <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
+                    <div className="concept-text">
+                        <h3 style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: 1 }}>ONE MEMBER. <br /> ONE VOTE.</h3>
+                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
+                            The Collection is application-based.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            Members get access to private events, meetups, and founder-only rooms in select cities.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            Each membership fee directly supports the city we enter.
                         </p>
                         <p>
-                            We enter cities. <br />
-                            We connect with culture. <br />
-                            We contribute to what already exists.
+                            A built-in portion is allocated to a local initiative — a small business, community project, or family in need.
                         </p>
-                        <p style={{ fontStyle: 'italic' }}>
-                            Not spectators. <br />
-                            Not tourists. <br /><br />
-                            Participants.
-                        </p>
-
-                        <div style={{ marginTop: '20px' }}>
-                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
-                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>join the collective</button>
+                    </div>
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <div style={{ padding: '0 0 60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>
+                            <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4, fontWeight: 800 }}>
+                                Members vote where <br />that support goes.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -124,30 +114,40 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* MEMBERSHIP */}
+            {/* THE IDEA */}
             <section className="section">
-                <span className="section-label">04 / MEMBERSHIP.</span>
-                <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
-                    <div className="concept-text">
-                        <h3 style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: 1 }}>ONE MEMBER. <br /> ONE VOTE.</h3>
-                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
-                            The Collection is application-based.
-                        </p>
-                        <p style={{ marginBottom: '20px' }}>
-                            Members get access to private events, meetups, and founder-only rooms in select cities.
-                        </p>
-                        <p style={{ marginBottom: '20px' }}>
-                            Each membership fee directly supports the city we enter.
+                <span className="section-label">04 / THE IDEA.</span>
+                <h2 className="concept-title" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', lineHeight: 1 }}>
+                    Participation restores.
+                </h2>
+
+                <div className="concept-grid">
+                    <div className="gallery-item">
+                        <img
+                            src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1000&auto=format&fit=crop"
+                            className="gallery-img"
+                            alt="The Community"
+                            style={{ borderRadius: '2px' }}
+                        />
+                    </div>
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <p style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                            IMRSV is a private collection of people who move with intention.
                         </p>
                         <p>
-                            A built-in portion is allocated to a local initiative — a small business, community project, or family in need.
+                            We enter cities. <br />
+                            We connect with culture. <br />
+                            We contribute to what already exists.
                         </p>
-                    </div>
-                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <div style={{ padding: '0 0 60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>
-                            <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4, fontWeight: 800 }}>
-                                Members vote where <br />that support goes.
-                            </p>
+                        <p style={{ fontStyle: 'italic' }}>
+                            Not spectators. <br />
+                            Not tourists. <br /><br />
+                            Participants.
+                        </p>
+
+                        <div style={{ marginTop: '20px' }}>
+                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
+                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>join the collective</button>
                         </div>
                     </div>
                 </div>
