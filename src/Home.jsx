@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import './Home.css';
 
-const Home = () => {
+const Home = ({ navigateToImpact }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
+    const [isFlashing, setIsFlashing] = useState(false);
+
+    const handleImpactClick = () => {
+        setIsFlashing(true);
+        setTimeout(() => {
+            navigateToImpact();
+            setIsFlashing(false);
+        }, 300); // Wait for flash peak
+    };
 
     useEffect(() => {
         return scrollY.onChange((latest) => {
@@ -14,6 +23,27 @@ const Home = () => {
 
     return (
         <div className="home-container no-scrollbar">
+            {/* FLASH OVERLAY */}
+            <AnimatePresence>
+                {isFlashing && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 1, 0] }}
+                        transition={{ duration: 0.6 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#fff',
+                            zIndex: 9999,
+                            pointerEvents: 'none'
+                        }}
+                    />
+                )}
+            </AnimatePresence>
+
             {/* NAVBAR */}
             <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -21,7 +51,7 @@ const Home = () => {
                     <span style={{ marginLeft: '4px' }}>imrsv project</span>
                 </div>
                 <div className="nav-links">
-                    <span>The Impact Layer</span>
+                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>The Impact Layer</span>
                     <span>Restoration</span>
                     <span>Apply</span>
                 </div>
