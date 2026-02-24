@@ -144,7 +144,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             <InteractiveText text="WHAT’S THE IDEA HERE?" />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.4rem' }}>
-                            Basically, Sunday Collection is our way of making sure we’re actually helping out the places we visit.
+                            Sunday Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
                         <p style={{ fontSize: '1.2rem', lineHeight: 1.6 }}>
                             We don’t just show up, throw a party, and dip. We make sure a real chunk of everything we do goes right back to the local artists and projects that make these cities what they are. It's about being a good guest.

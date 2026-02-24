@@ -53,7 +53,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                             <InteractiveText text="ACCESS OVER NOISE." />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
-                            IMRSV is basically a private spot created for people who value real access over all the noise.
+                            IMRSV is a private spot created for people who value real access over all the noise.
                         </p>
                         <p style={{ marginBottom: '20px' }}>
                             It’s a closed loop where members get the lowdown on curated experiences, local hooks, and proprietary opportunities within the community.
@@ -70,7 +70,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                             <InteractiveText text="GAME ON/OFF." />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
-                            We’re basically gamifying the way people move through cities to make everything more immersive.
+                            We’re gamifying the way people move through cities to make everything more immersive.
                         </p>
                         <p style={{ marginBottom: '20px' }}>
                             For travelers, it’s about hitting the right spots and earning status that unlocks real access. For locals, it’s about being part of a loop where their work actually gets supported by the community.
