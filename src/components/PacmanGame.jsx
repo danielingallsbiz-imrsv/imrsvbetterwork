@@ -41,16 +41,23 @@ const PacmanGame = () => {
                 }
             });
 
-            // Move towards dot
+            // Move towards dot (strictly orthogonal - commit to one axis)
             const dx = nearestDot.x - x;
             const dy = nearestDot.y - y;
-            const targetAngle = Math.atan2(dy, dx) * (180 / Math.PI);
 
-            // Smooth angle transition
-            angle = targetAngle;
-
-            x += Math.cos(targetAngle * (Math.PI / 180)) * speed;
-            y += Math.sin(targetAngle * (Math.PI / 180)) * speed;
+            // If we're already aligned on X, move Y. 
+            // Otherwise, get to the correct X first.
+            if (Math.abs(dx) > speed) {
+                x += dx > 0 ? speed : -speed;
+                angle = dx > 0 ? 0 : 180;
+            } else if (Math.abs(dy) > speed) {
+                y += dy > 0 ? speed : -speed;
+                angle = dy > 0 ? 90 : 270;
+            } else {
+                // We are very close to the dot, just snap to it to eat it
+                x = nearestDot.x;
+                y = nearestDot.y;
+            }
 
             // Check collision
             if (minDist < 15) {
