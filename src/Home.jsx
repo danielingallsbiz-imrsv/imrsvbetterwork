@@ -1,12 +1,21 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import './Home.css';
 
 const Home = () => {
+    const { scrollY } = useScroll();
+    const [isPastHero, setIsPastHero] = useState(false);
+
+    useEffect(() => {
+        return scrollY.onChange((latest) => {
+            setIsPastHero(latest > window.innerHeight - 100);
+        });
+    }, [scrollY]);
+
     return (
         <div className="home-container no-scrollbar">
             {/* NAVBAR */}
-            <nav className="nav-bar">
+            <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
                 <div className="nav-logo">IMRSV PROJECT</div>
                 <div className="nav-links">
                     <span>The Impact Layer</span>
@@ -25,13 +34,6 @@ const Home = () => {
                     <h1 className="hero-title">Participation<br />that restores.</h1>
                     <p className="hero-subtitle">the collection by imrsv</p>
                 </motion.div>
-
-                <img
-                    src="https://images.unsplash.com/photo-1551632432-c735e8299bc2?q=80&w=2000&auto=format&fit=crop"
-                    alt="Atmosphere"
-                    className="hero-video-bg"
-                    style={{ opacity: 0.35, filter: 'grayscale(1) contrast(1.1)' }}
-                />
             </section>
 
             {/* THE IDEA */}
