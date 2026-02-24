@@ -34,12 +34,11 @@ const Home = () => {
                 />
             </section>
 
-            {/* THE MISSION */}
+            {/* THE IDEA */}
             <section className="section">
-                <span className="section-label">01 / The Mission.</span>
-                <h2 className="concept-title">
-                    IMRSV is not just immersive membership. <br />
-                    It is participation that restores.
+                <span className="section-label">01 / THE IDEA.</span>
+                <h2 className="concept-title" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', lineHeight: 1 }}>
+                    Participation restores.
                 </h2>
 
                 <div className="concept-grid">
@@ -47,16 +46,29 @@ const Home = () => {
                         <img
                             src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1000&auto=format&fit=crop"
                             className="gallery-img"
-                            alt="Community Focus"
+                            alt="The Community"
                             style={{ borderRadius: '2px' }}
                         />
                     </div>
-                    <div className="concept-text">
-                        <p>
-                            Every experience generates profit. A percentage of that profit does not stay inside the organization. <br /><br />
-                            It flows back into the local community where the immersion happens. Most travel extracts. <br /><br />
-                            We reinvest.
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <p style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                            IMRSV is a private collection of people who move with intention.
                         </p>
+                        <p>
+                            We enter cities. <br />
+                            We connect with culture. <br />
+                            We contribute to what already exists.
+                        </p>
+                        <p style={{ fontStyle: 'italic' }}>
+                            Not spectators. <br />
+                            Not tourists. <br /><br />
+                            Participants.
+                        </p>
+
+                        <div style={{ marginTop: '20px' }}>
+                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
+                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>Join</button>
+                        </div>
                     </div>
                 </div>
             </section>
