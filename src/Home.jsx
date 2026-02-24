@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToAdmin, navigateToJournal, showSuccess }) => {
@@ -86,12 +87,20 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
             <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', marginTop: '2px' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }}>
+                        <InteractiveText text="imrsv project" />
+                    </span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>The Impact Layer</span>
-                    <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>Restoration</span>
-                    <span onClick={handleApplyClick} style={{ cursor: 'pointer' }}>Apply</span>
+                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>
+                        <InteractiveText text="The Impact Layer" />
+                    </span>
+                    <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>
+                        <InteractiveText text="Restoration" />
+                    </span>
+                    <span onClick={handleApplyClick} style={{ cursor: 'pointer' }}>
+                        <InteractiveText text="Apply" />
+                    </span>
                 </div>
             </nav>
 
@@ -103,8 +112,13 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
                     className="hero-content"
                 >
-                    <h1 className="hero-title">Participation<br />that restores.</h1>
-                    <p className="hero-subtitle">Sunday Collection By imrsv</p>
+                    <h1 className="hero-title">
+                        <InteractiveText text="Participation" /><br />
+                        <InteractiveText text="that restores." />
+                    </h1>
+                    <p className="hero-subtitle">
+                        <InteractiveText text="Sunday Collection By imrsv" />
+                    </p>
                 </motion.div>
 
                 <img
@@ -116,10 +130,14 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* PRIVATE NETWORK */}
             <section className="section">
-                <span className="section-label shine-effect">01 / PRIVATE NETWORK.</span>
+                <span className="section-label shine-effect">
+                    <InteractiveText text="01 / PRIVATE NETWORK." />
+                </span>
                 <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '3.5rem', marginBottom: '40px', lineHeight: 1 }}>ACCESS OVER NOISE.</h3>
+                        <h3 style={{ fontSize: '3.5rem', marginBottom: '40px', lineHeight: 1 }}>
+                            <InteractiveText text="ACCESS OVER NOISE." />
+                        </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
                             IMRSV is a private, membership-based platform designed for access over noise.
                         </p>
@@ -139,10 +157,12 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* WHERE WE OPERATE */}
             <section className="section">
-                <span className="section-label shine-effect">02 / UPCOMING ACTIVATIONS.</span>
+                <span className="section-label shine-effect">
+                    <InteractiveText text="02 / UPCOMING ACTIVATIONS." />
+                </span>
                 <h2 className="concept-title" style={{ maxWidth: '900px' }}>
-                    Mid-April 1-Day Popup. <br />
-                    Oahu, Hawaii.
+                    <InteractiveText text="Mid-April 1-Day Popup." /> <br />
+                    <InteractiveText text="Oahu, Hawaii." />
                 </h2>
 
                 <div className="bucket-grid" style={{ marginBottom: '80px' }}>
@@ -285,10 +305,14 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* THE GAME LAYER */}
             <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA' }}>
-                <span className="section-label shine-effect" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>03 / THE GAME LAYER.</span>
+                <span className="section-label shine-effect" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
+                    <InteractiveText text="03 / THE GAME LAYER." />
+                </span>
                 <div className="concept-grid" style={{ alignItems: 'center' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '3.5rem', marginBottom: '30px', color: '#F7F5EA' }}>COLLECT THE WORLD.</h3>
+                        <h3 style={{ fontSize: '3.5rem', marginBottom: '30px', color: '#F7F5EA' }}>
+                            <InteractiveText text="COLLECT THE WORLD." />
+                        </h3>
                         <p style={{ marginBottom: '20px', fontSize: '1.2rem', opacity: 0.9 }}>
                             IMRSV adds a real-world collection system centered around verified “Hubs.”
                         </p>
@@ -312,12 +336,15 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
             {/* THE CORE IDEA */}
             <section className="section">
-                <span className="section-label shine-effect">04 / THE CORE IDEA.</span>
+                <span className="section-label shine-effect">
+                    <InteractiveText text="04 / THE CORE IDEA." />
+                </span>
                 <div className="concept-grid">
 
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
                         <h2 className="concept-title" style={{ fontSize: '4rem', lineHeight: 1, marginBottom: 0 }}>
-                            Intentional <br />Exploration.
+                            <InteractiveText text="Intentional" /> <br />
+                            <InteractiveText text="Exploration." />
                         </h2>
                         <p style={{ fontSize: '1.4rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                             Most travel platforms are transactional. IMRSV builds ongoing participation.
@@ -357,11 +384,17 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
             <footer className="footer">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', marginTop: '1px' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }}>
+                        <InteractiveText text="imrsv project" />
+                    </span>
                 </div>
                 <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
-                    <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>Journal</span>
-                    <span onClick={navigateToAdmin} style={{ cursor: 'pointer' }}>©2026</span>
+                    <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>
+                        <InteractiveText text="Journal" />
+                    </span>
+                    <span onClick={navigateToAdmin} style={{ cursor: 'pointer' }}>
+                        <InteractiveText text="©2026" />
+                    </span>
                 </div>
             </footer>
         </div>
@@ -371,7 +404,9 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 const BucketCard = ({ num, title, desc }) => (
     <div className="bucket-card">
         <span className="bucket-num">{num}</span>
-        <h3 className="bucket-title">{title}</h3>
+        <h3 className="bucket-title">
+            <InteractiveText text={title} />
+        </h3>
         <p className="bucket-desc">{desc}</p>
     </div>
 );
