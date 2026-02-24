@@ -16,7 +16,9 @@ const Home = () => {
         <div className="home-container no-scrollbar">
             {/* NAVBAR */}
             <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
-                <div className="nav-logo">IMRSV PROJECT</div>
+                <div className="nav-logo">
+                    <img src="/logo.svg" alt="IMRSV" style={{ height: '24px', width: 'auto' }} />
+                </div>
                 <div className="nav-links">
                     <span>The Impact Layer</span>
                     <span>Restoration</span>
@@ -165,7 +167,9 @@ const Home = () => {
             </section>
 
             <footer className="footer">
-                <div className="nav-logo">IMRSV PROJECT</div>
+                <div className="nav-logo">
+                    <img src="/logo.svg" alt="IMRSV" style={{ height: '20px', width: 'auto', opacity: 0.5 }} />
+                </div>
                 <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
                     <span>Journal</span>
                     <span>©2026</span>

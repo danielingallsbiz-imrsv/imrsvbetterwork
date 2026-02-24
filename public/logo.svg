@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <filter id="deflated">
+    <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="3" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+  
+  <rect width="32" height="32" fill="transparent" />
+  
+  <!-- Top Dot -->
+  <circle cx="16" cy="11" r="5" fill="white" filter="url(#deflated)" opacity="0.95" />
+  
+  <!-- Bottom Dot -->
+  <circle cx="16" cy="21" r="6" fill="white" filter="url(#deflated)" opacity="0.98" />
+</svg>
