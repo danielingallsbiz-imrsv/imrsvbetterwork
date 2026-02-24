@@ -48,128 +48,119 @@ const Home = () => {
                 />
             </section>
 
-            {/* PRIVATE NETWORK */}
+            {/* MEMBERSHIP */}
             <section className="section">
-                <span className="section-label">01 / PRIVATE NETWORK.</span>
+                <span className="section-label">01 / MEMBERSHIP.</span>
                 <div className="concept-grid" style={{ alignItems: 'center', marginTop: '60px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: 1 }}>ACCESS OVER NOISE.</h3>
+                        <h3 style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: 1 }}>ONE MEMBER. <br /> ONE VOTE.</h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px' }}>
-                            IMRSV is a private, IP-driven ecosystem for intentional travelers.
+                            The Collection is application-based.
                         </p>
                         <p style={{ marginBottom: '20px' }}>
-                            We are not a public platform. Membership is controlled, information is protected, and participation is curated.
+                            Members get access to private events, meetups, and founder-only rooms in select cities.
                         </p>
                         <p style={{ marginBottom: '20px' }}>
-                            Members gain access to private groups, verified local connections, and status progression within our closed ecosystem.
+                            Each membership fee directly supports the city we enter.
                         </p>
                         <p>
-                            This is not a public listing site. This is controlled access.
+                            A built-in portion is allocated to a local initiative — a small business, community project, or family in need.
                         </p>
                     </div>
-                    <div className="gallery-item">
-                        <img
-                            src="/dinner.png"
-                            className="gallery-img"
-                            alt="The Collective Dinner"
-                            style={{ borderRadius: '2px', filter: 'grayscale(0.2) contrast(1.1)' }}
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* GLOBAL OPERATIONS */}
-            <section className="section">
-                <span className="section-label">02 / GLOBAL OPERATIONS.</span>
-                <h2 className="concept-title" style={{ maxWidth: '900px' }}>
-                    1–2 curated events per month. <br />
-                    Medellín. Bali. Oahu. Rome.
-                </h2>
-                <div className="bucket-grid">
-                    <BucketCard
-                        num="01."
-                        title="The Activation"
-                        desc="Revenue generated through events is partially reinvested directly into the local ecosystem—supporting operators and venues."
-                    />
-                    <BucketCard
-                        num="02."
-                        title="The Circulation"
-                        desc="We don’t extract value from cities. We circulate it by supporting the small businesses that built them."
-                    />
-                    <BucketCard
-                        num="03."
-                        title="The Mission"
-                        desc="To build a platform that turns travel into participation. We don’t just visit—we collaborate."
-                    />
-                </div>
-            </section>
-
-            {/* THE GAME LAYER */}
-            <section className="section" style={{ backgroundColor: '#1A1A1A', color: '#F7F5EA' }}>
-                <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>03 / THE GAME LAYER.</span>
-                <div className="concept-grid" style={{ alignItems: 'center' }}>
-                    <div className="gallery-item">
-                        <img
-                            src="/movement.png"
-                            className="gallery-img"
-                            alt="Intentional Movement"
-                            style={{ borderRadius: '2px', filter: 'grayscale(0.3) contrast(1.1)' }}
-                        />
-                    </div>
-                    <div className="concept-text">
-                        <h3 style={{ fontSize: '3rem', marginBottom: '30px', color: '#F7F5EA' }}>COLLECT THE WORLD.</h3>
-                        <p style={{ marginBottom: '20px', fontSize: '1.2rem', opacity: 0.9 }}>
-                            IMRSV adds a real-world collection system. Around the world are verified “Hubs”—restaurants, bars, and cultural points.
-                        </p>
-                        <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            Physically claiming these locations earns points. Unique or harder-to-reach spots reward more. This is participation currency.
-                        </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '40px' }}>
-                            <div>
-                                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>The Rewards</h4>
-                                <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>Partner perks, event benefits, and early access opportunities.</p>
-                            </div>
-                            <div>
-                                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>The Missions</h4>
-                                <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>Time-based or location-based opportunities with higher status rewards.</p>
-                            </div>
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <div style={{ padding: '0 0 60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>
+                            <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4, fontWeight: 800 }}>
+                                Members vote where <br />that support goes.
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* THE IMPACT LAYER */}
+            {/* FINANCIAL STRUCTURE */}
             <section className="section">
-                <span className="section-label">04 / THE IMPACT LAYER.</span>
+                <span className="section-label">02 / How The Money Flows.</span>
+                <div className="bucket-grid">
+                    <BucketCard
+                        num="01."
+                        title="Operational"
+                        desc="Covers event production, logistics, and sustainable growth."
+                    />
+                    <BucketCard
+                        num="02."
+                        title="Member Equity"
+                        desc="A reserve sustaining long-term expansion and member participation."
+                    />
+                    <BucketCard
+                        num="03."
+                        title="Restoration Fund"
+                        desc="The mandatory percentage allocated directly to local reinvestment."
+                    />
+                </div>
+            </section>
+
+            {/* TARGETED IMPACT */}
+            <section className="section" style={{ backgroundColor: '#000', color: '#fff' }}>
+                <span className="section-label" style={{ color: '#666' }}>03 / Targeted Restoration.</span>
+                <h2 className="concept-title" style={{ color: '#fff' }}>
+                    Restoration is not vague charity. <br />
+                    It is visible impact.
+                </h2>
+
+                <div className="raw-grid">
+                    <ImpactCard
+                        title="FAMILY BUSINESSES"
+                        desc="Funding struggling local establishments."
+                        img="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1000&auto=format&fit=crop"
+                    />
+                    <ImpactCard
+                        title="COMMUNITY CENTERS"
+                        desc="Paying for repairs and local initiatives."
+                        img="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1000&auto=format&fit=crop"
+                    />
+                    <ImpactCard
+                        title="ARTISAN COLLECTIVES"
+                        desc="Supporting local creators and youth programs."
+                        img="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop"
+                    />
+                </div>
+            </section>
+
+            {/* THE IDEA */}
+            <section className="section">
+                <span className="section-label">04 / THE IDEA.</span>
+                <h2 className="concept-title" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', lineHeight: 1 }}>
+                    Participation restores.
+                </h2>
+
                 <div className="concept-grid">
+                    <div className="gallery-item">
+                        <img
+                            src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1000&auto=format&fit=crop"
+                            className="gallery-img"
+                            alt="The Community"
+                            style={{ borderRadius: '2px' }}
+                        />
+                    </div>
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-                        <h2 className="concept-title" style={{ fontSize: '4rem', lineHeight: 1, marginBottom: 0 }}>
-                            Participation <br />Restores.
-                        </h2>
-                        <p style={{ fontSize: '1.4rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                            Most travel platforms are transactional. IMRSV builds ongoing participation.
+                        <p style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                            IMRSV is a private collection of people who move with intention.
                         </p>
                         <p>
-                            Instead of just booking and leaving, members explore, collect, connect, and earn.
-                            Travel becomes part of a larger system—not just a one-time experience.
+                            We enter cities. <br />
+                            We connect with culture. <br />
+                            We contribute to what already exists.
                         </p>
-                        <p style={{ fontStyle: 'italic', borderLeft: '2px solid var(--accent-yellow)', paddingLeft: '20px' }}>
-                            We don’t just visit cities — <br />
-                            we collaborate with them, host within them, and reinvest into them.
+                        <p style={{ fontStyle: 'italic' }}>
+                            Not spectators. <br />
+                            Not tourists. <br /><br />
+                            Participants.
                         </p>
 
                         <div style={{ marginTop: '20px' }}>
                             <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
-                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>begin application</button>
+                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>join the collective</button>
                         </div>
-                    </div>
-                    <div className="gallery-item">
-                        <img
-                            src="/restoration.png"
-                            className="gallery-img"
-                            alt="Community Restoration"
-                            style={{ borderRadius: '2px', filter: 'grayscale(0.1) contrast(1.05)' }}
-                        />
                     </div>
                 </div>
             </section>
