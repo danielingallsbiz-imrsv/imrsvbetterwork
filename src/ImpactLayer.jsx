@@ -35,7 +35,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     <div className="concept-text">
                         <h3 style={{ fontSize: '2rem', marginBottom: '30px' }}>What’s the idea here?</h3>
                         <p style={{ marginBottom: '20px' }}>
-                            Basically, Sundays Collection is our way of making sure we’re actually helping out the places we visit.
+                            Basically, Sunday Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
                         <p>
                             We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It’s about being a good guest.

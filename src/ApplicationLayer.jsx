@@ -99,7 +99,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Contribution to Sundays Collection</label>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Contribution to Sunday Collection</label>
                             <textarea required name="contribution" placeholder="How do you intend to participate?" rows="4" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', resize: 'none' }} />
                         </div>
 

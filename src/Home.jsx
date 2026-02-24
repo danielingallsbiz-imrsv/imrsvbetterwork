@@ -104,7 +104,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     className="hero-content"
                 >
                     <h1 className="hero-title">Participation<br />that restores.</h1>
-                    <p className="hero-subtitle">Sundays Collection by imrsv</p>
+                    <p className="hero-subtitle">Sunday Collection By imrsv</p>
                 </motion.div>
 
                 <img
@@ -302,7 +302,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     <h2 className="gauntlet-title">Request Access.</h2>
                     <p style={{ maxWidth: '600px', margin: '0 auto', opacity: 0.7, fontSize: '1.2rem', fontWeight: 500 }}>
                         Entry into The IMRSV Project is via a vetted application. <br />
-                        We prioritize those ready to contribute to Sundays Collection.
+                        We prioritize those ready to contribute to Sunday Collection.
                     </p>
                     <button onClick={handleApplyClick} className="gauntlet-btn">Begin Application</button>
                 </motion.div>

@@ -73,7 +73,7 @@ const JournalLayer = ({ onBack }) => {
                         lineHeight: 1.6,
                         letterSpacing: '0.02em'
                     }}>
-                        We are currently archiving the first wave of collective activations. The journal will serve as the permanent record for Sundays Collection.
+                        We are currently archiving the first wave of collective activations. The journal will serve as the permanent record for Sunday Collection.
                     </p>
                 </motion.div>
             </section>
