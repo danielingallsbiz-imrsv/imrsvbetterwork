@@ -118,7 +118,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                             className="gauntlet-btn"
                             style={{ width: '100%', marginTop: '30px', opacity: status === 'submitting' ? 0.7 : 1 }}
                         >
-                            {status === 'submitting' ? 'VERIFYING...' : 'Submit Request'}
+                            {status === 'submitting' ? 'VERIFYING...' : 'submit application'}
                         </button>
                     </form>
                 </motion.div>
