@@ -1,0 +1,100 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import './Home.css';
+
+const AdminLayer = ({ onBack, applications }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="home-container"
+            style={{ backgroundColor: '#111', color: '#F7F5EA', minHeight: '100vh' }}
+        >
+            <nav className="nav-bar">
+                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
+                    <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
+                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                </div>
+                <div className="nav-links">
+                    <span style={{ color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Admin Terminal v1.0</span>
+                </div>
+            </nav>
+
+            <section className="section" style={{ paddingTop: '160px', paddingBottom: '100px' }}>
+                <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>HUB TRANSMISSIONS / VETTING QUEUE</span>
+                    <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px', color: '#F7F5EA' }}>
+                        THE QUEUE.
+                    </h1>
+                </motion.div>
+
+                <div style={{ marginTop: '60px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '40px' }}>
+                    {(!applications || applications.length === 0) ? (
+                        <div style={{ padding: '100px 0', textAlign: 'center', opacity: 0.3 }}>
+                            <p>No active transmissions found in the queue.</p>
+                        </div>
+                    ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            {applications.map((app) => (
+                                <motion.div
+                                    key={app.id}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    style={{
+                                        padding: '40px',
+                                        border: '1px solid rgba(247, 245, 234, 0.05)',
+                                        background: 'rgba(255, 255, 255, 0.02)',
+                                        borderRadius: '8px'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
+                                        <div>
+                                            <span style={{ fontSize: '0.7rem', color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: '10px' }}>Primary Hub: {app.hub}</span>
+                                            <h4 style={{ fontSize: '2rem', color: '#F7F5EA', margin: 0, fontFamily: '"Outfit", sans-serif' }}>{app.name}</h4>
+                                            <span style={{ fontSize: '0.9rem', opacity: 0.5, marginTop: '5px', display: 'block' }}>{app.social}</span>
+                                            <span style={{ fontSize: '0.8rem', color: '#F7D031', marginTop: '5px', display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{app.occupation}</span>
+                                        </div>
+                                        <div style={{ textAlign: 'right' }}>
+                                            <span style={{ fontSize: '0.8rem', color: 'rgba(247, 245, 234, 0.4)' }}>{app.date}</span>
+                                            <div style={{ marginTop: '15px' }}>
+                                                <span style={{ padding: '6px 12px', border: '1px solid #F7D031', color: '#F7D031', fontSize: '0.7rem', borderRadius: '4px', textTransform: 'uppercase' }}>Pending Review</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '30px', borderTop: '1px solid rgba(247, 245, 234, 0.05)', paddingTop: '20px' }}>
+                                        <div>
+                                            <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Gender</span>
+                                            <p style={{ fontSize: '1rem', margin: '5px 0', textTransform: 'capitalize' }}>{app.gender}</p>
+                                        </div>
+                                        <div>
+                                            <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Birthday</span>
+                                            <p style={{ fontSize: '1rem', margin: '5px 0' }}>{app.birthday}</p>
+                                        </div>
+                                        <div style={{ gridColumn: '1 / -1' }}>
+                                            <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Mailing Address</span>
+                                            <p style={{ fontSize: '1rem', margin: '5px 0' }}>{app.address}</p>
+                                        </div>
+                                    </div>
+                                    <div style={{ borderTop: '1px solid rgba(247, 245, 234, 0.05)', paddingTop: '30px' }}>
+                                        <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Contribution Intent</span>
+                                        <p style={{ fontSize: '1.1rem', opacity: 0.8, marginTop: '15px', lineHeight: 1.6, fontStyle: 'italic' }}>
+                                            "{app.contribution}"
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
+        </motion.div>
+    );
+};
+
+export default AdminLayer;

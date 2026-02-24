@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import './Home.css';
 
-const Home = ({ navigateToImpact }) => {
+const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToAdmin, showSuccess }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
     const [isFlashing, setIsFlashing] = useState(false);
 
     const handleImpactClick = () => {
-        setIsFlashing(true);
-        setTimeout(() => {
-            navigateToImpact();
-            setIsFlashing(false);
-        }, 300); // Wait for flash peak
+        navigateToImpact();
+    };
+
+    const handleRestorationClick = () => {
+        navigateToRestoration();
+    };
+
+    const handleApplyClick = () => {
+        navigateToApply();
     };
 
     useEffect(() => {
@@ -23,6 +27,31 @@ const Home = ({ navigateToImpact }) => {
 
     return (
         <div className="home-container no-scrollbar">
+            {/* APPLICATION STATUS BANNER */}
+            <AnimatePresence>
+                {showSuccess && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        style={{
+                            backgroundColor: '#F7D031',
+                            color: '#000',
+                            textAlign: 'center',
+                            padding: '12px 40px',
+                            fontSize: '0.85rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.05em',
+                            position: 'relative',
+                            zIndex: 1100,
+                            overflow: 'hidden'
+                        }}
+                    >
+                        APPLICATION RECEIVED. OUR COLLECTIVE HUB IS REVIEWING YOUR REQUEST. YOU WILL RECEIVE AN EMAIL SHORTLY.
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* FLASH OVERLAY */}
             <AnimatePresence>
                 {isFlashing && (
@@ -52,8 +81,8 @@ const Home = ({ navigateToImpact }) => {
                 </div>
                 <div className="nav-links">
                     <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>The Impact Layer</span>
-                    <span>Restoration</span>
-                    <span>Apply</span>
+                    <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>Restoration</span>
+                    <span onClick={handleApplyClick} style={{ cursor: 'pointer' }}>Apply</span>
                 </div>
             </nav>
 
@@ -101,11 +130,59 @@ const Home = ({ navigateToImpact }) => {
 
             {/* WHERE WE OPERATE */}
             <section className="section">
-                <span className="section-label">02 / WHERE WE OPERATE.</span>
+                <span className="section-label">02 / UPCOMING ACTIVATIONS.</span>
                 <h2 className="concept-title" style={{ maxWidth: '900px' }}>
-                    1–2 curated activations per month. <br />
-                    Medellín. Bali. Oahu. Rome.
+                    Mid-April 1-Day Popup. <br />
+                    Oahu, Hawaii.
                 </h2>
+
+                <div className="bucket-grid" style={{ marginBottom: '80px' }}>
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 15</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>OAHU ACTIVATION</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
+                            Ticket: $50 (Full Fund Reinvestment)
+                        </p>
+                        <button
+                            onClick={handleApplyClick}
+                            style={{
+                                color: '#F7D031',
+                                fontSize: '0.8rem',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                fontWeight: 800,
+                                marginTop: '10px',
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                background: 'transparent',
+                                border: 'none',
+                                padding: 0,
+                                fontFamily: 'inherit'
+                            }}
+                        >
+                            apply →
+                        </button>
+                        <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>12:00 — 14:00 : CURATED NETWORKING</div>
+                            <div style={{ fontSize: '0.8rem' }}>15:00 — 21:00 : DJ SET / OPEN BAR</div>
+                        </div>
+                    </div>
+
+                    <div className="bucket-card">
+                        <span className="bucket-num">APR. 28</span>
+                        <h3 className="bucket-title">MEDELLÍN HUBS</h3>
+                        <p className="bucket-desc">Details releasing soon for our Medellín community. Ticket prices and schedule TBA.</p>
+                    </div>
+
+                    <div className="bucket-card" style={{ opacity: 0.3 }}>
+                        <span className="bucket-num">MAY</span>
+                        <h3 className="bucket-title">BALI / ROME</h3>
+                        <p className="bucket-desc">Coming Soon. Vetted applications only.</p>
+                    </div>
+                </div>
+
                 <div className="bucket-grid">
                     <BucketCard
                         num="01."
@@ -123,7 +200,6 @@ const Home = ({ navigateToImpact }) => {
                         desc="To build a platform that turns travel into participation. We don’t just visit—we collaborate and reinvest."
                     />
                 </div>
-
             </section>
 
             {/* THE GAME LAYER */}
@@ -160,7 +236,7 @@ const Home = ({ navigateToImpact }) => {
 
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
                         <h2 className="concept-title" style={{ fontSize: '4rem', lineHeight: 1, marginBottom: 0 }}>
-                            Participation <br />Restores.
+                            Intentional <br />Exploration.
                         </h2>
                         <p style={{ fontSize: '1.4rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                             Most travel platforms are transactional. IMRSV builds ongoing participation.
@@ -175,7 +251,7 @@ const Home = ({ navigateToImpact }) => {
 
                         <div style={{ marginTop: '20px' }}>
                             <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
-                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>begin application</button>
+                            <button onClick={handleApplyClick} className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>begin application</button>
                         </div>
                     </div>
                 </div>
@@ -193,7 +269,7 @@ const Home = ({ navigateToImpact }) => {
                         Entry into The IMRSV Project is via a vetted application. <br />
                         We prioritize those ready to contribute to the Impact Layer.
                     </p>
-                    <button className="gauntlet-btn">Begin Application</button>
+                    <button onClick={handleApplyClick} className="gauntlet-btn">Begin Application</button>
                 </motion.div>
             </section>
 
@@ -204,23 +280,12 @@ const Home = ({ navigateToImpact }) => {
                 </div>
                 <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
                     <span>Journal</span>
-                    <span>©2026</span>
+                    <span onClick={navigateToAdmin} style={{ cursor: 'pointer' }}>©2026</span>
                 </div>
             </footer>
         </div>
     );
 };
-
-const ImpactCard = ({ title, desc, img }) => (
-    <div className="raw-card">
-        <img src={img} alt={title} className="raw-card-img" />
-        <div className="raw-overlay">
-            <span className="raw-tag">Active Restoration</span>
-            <h3 className="raw-title">{title}</h3>
-            <p style={{ fontSize: '0.8rem', color: '#fff', opacity: 0.8 }}>{desc}</p>
-        </div>
-    </div>
-);
 
 const BucketCard = ({ num, title, desc }) => (
     <div className="bucket-card">

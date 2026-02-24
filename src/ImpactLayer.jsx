@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './Home.css'; // Reusing global styles for consistency
 
-const ImpactLayer = ({ onBack }) => {
+const ImpactLayer = ({ onBack, navigateToRestoration }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -27,7 +27,7 @@ const ImpactLayer = ({ onBack }) => {
                 >
                     <span className="section-label">THE IMPACT LAYER / OUR MISSION</span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px' }}>
-                        PARTICIPATION <br /> RESTORES.
+                        RESTORING <br /> THE HUBS.
                     </h1>
                 </motion.div>
 
@@ -49,6 +49,13 @@ const ImpactLayer = ({ onBack }) => {
                         <h3 className="bucket-title">How it works</h3>
                         <p className="bucket-desc">
                             We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city where it was raised and only goes to local people.
+                            <br /><br />
+                            <span
+                                onClick={navigateToRestoration}
+                                style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--text-primary)', fontWeight: 600 }}
+                            >
+                                View the Restoration Ledger →
+                            </span>
                         </p>
                     </div>
                     <div className="bucket-card">
@@ -71,7 +78,7 @@ const ImpactLayer = ({ onBack }) => {
                     <div className="concept-text">
                         <h3 style={{ fontSize: '2rem', marginBottom: '30px' }}>Where we're staying</h3>
                         <p style={{ marginBottom: '20px', fontStyle: 'italic' }}>
-                            "Participation that restores."
+                            "Leave it better than you found it."
                         </p>
                         <p>
                             We aren't here for a quick trip. We pick our spots—like Medellín, Bali, Oahu, and Rome—and we focus on the long-term. The goal is to build something that lasts, not just show up as tourists.
