@@ -16,7 +16,6 @@ const ImpactLayer = ({ onBack }) => {
                     <span style={{ marginLeft: '4px' }}>imrsv project</span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={onBack}>Back to Main</span>
                 </div>
             </nav>
 
