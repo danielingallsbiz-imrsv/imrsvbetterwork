@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const RestorationLayer = ({ onBack, navigateToImpact }) => {
@@ -21,7 +22,9 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }}>
+                        <InteractiveText text="imrsv project" />
+                    </span>
                 </div>
                 <div className="nav-links">
                     <span style={{ color: 'rgba(247, 245, 234, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Real-time Ledger v1.0</span>
@@ -34,9 +37,11 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                    <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>THE RESTORATION LAYER / PROOF OF IMPACT</span>
+                    <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
+                        <InteractiveText text="THE RESTORATION LAYER / PROOF OF IMPACT" />
+                    </span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px', color: '#F7F5EA' }}>
-                        THE LEDGER.
+                        <InteractiveText text="THE LEDGER." />
                     </h1>
                 </motion.div>
 
@@ -78,7 +83,9 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
 
                 <div className="concept-grid" style={{ marginTop: '100px', maxWidth: '800px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '2rem', marginBottom: '30px', color: '#F7F5EA' }}>How the Ledger works</h3>
+                        <h3 style={{ fontSize: '2rem', marginBottom: '30px', color: '#F7F5EA' }}>
+                            <InteractiveText text="How the Ledger works" />
+                        </h3>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
                             The Ledger provides transparency into the movement of the Restoration Fund. Every membership contribution and activation fee is allocated directly to verified local projects.
                         </p>
@@ -92,7 +99,9 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
             <footer className="footer" style={{ borderTop: '1px solid rgba(247, 245, 234, 0.1)' }}>
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.4 }}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto' }} />
-                    <span style={{ marginLeft: '4px' }}>imrsv project</span>
+                    <span style={{ marginLeft: '4px' }}>
+                        <InteractiveText text="imrsv project" />
+                    </span>
                 </div>
                 <div className="nav-links" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
                     <span>©2026</span>
