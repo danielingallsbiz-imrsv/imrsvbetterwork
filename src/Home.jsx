@@ -331,8 +331,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
 
                         <div style={{ marginTop: '20px' }}>
-                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
-                            <button onClick={handleApplyClick} className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>begin application</button>
+                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Participation ]</span>
+                            <button onClick={handleApplyClick} className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>[ Join Sunday Collection ]</button>
                         </div>
                     </div>
                 </div>
@@ -350,7 +350,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         Entry into The IMRSV Project is via a vetted application. <br />
                         We prioritize those ready to contribute to Sunday Collection.
                     </p>
-                    <button onClick={handleApplyClick} className="gauntlet-btn shine-effect">Begin Application</button>
+                    <button onClick={handleApplyClick} className="gauntlet-btn shine-effect">[ Join Sunday Collection ]</button>
                 </motion.div>
             </section>
 
