@@ -45,7 +45,7 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
                     <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
-                        <InteractiveText text="THE RESTORATION LAYER / PROOF OF IMPACT" />
+                        <InteractiveText text="THE LEDGER / PROOF OF IMPACT" />
                     </span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px', color: '#F7F5EA' }}>
                         <InteractiveText text="THE LEDGER." />

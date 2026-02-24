@@ -29,7 +29,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
                     <span className="section-label">
-                        <InteractiveText text="THE IMPACT LAYER / OUR MISSION" />
+                        <InteractiveText text="THE RESTORATION LAYER / OUR MISSION" />
                     </span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px' }}>
                         <InteractiveText text="RESTORING" /> <br />

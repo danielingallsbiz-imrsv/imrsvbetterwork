@@ -94,14 +94,14 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                 <div className="nav-links">
                     <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>
                         <span className="mobile-hide">
-                            <InteractiveText text="The Impact Layer" />
+                            <InteractiveText text="Restoration" />
                         </span>
                         <span className="mobile-show">
-                            <InteractiveText text="Impact" />
+                            <InteractiveText text="Restoration" />
                         </span>
                     </span>
                     <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>
-                        <InteractiveText text="Restoration" />
+                        <InteractiveText text="ledger" />
                     </span>
                     <span onClick={handleApplyClick} style={{ cursor: 'pointer' }}>
                         <InteractiveText text="Apply" />
@@ -206,7 +206,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 03</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>CHICAGO HUB / AFTER HOURS</h3>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>CHICAGO HUB</h3>
                         <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
                             Ticket: $15 (Full Fund Reinvestment)
                         </p>
@@ -232,7 +232,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
-                            <div style={{ fontSize: '0.8rem' }}>12:00 — 15:00 : LUNCH + BEACH GAMES</div>
+                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>12:00 — 15:00 : LUNCH + BEACH GAMES</div>
+                            <div style={{ fontSize: '0.8rem' }}>17:00 — 20:00 : LIVE MUSIC + SUNSET SET</div>
                         </div>
                     </div>
 
