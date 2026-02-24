@@ -142,7 +142,7 @@ const Home = () => {
                         </p>
                     </div>
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                        <div style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)', textAlign: 'right' }}>
+                        <div style={{ padding: '60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>
                             <p style={{ fontSize: '1.4rem', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1.4, fontWeight: 800 }}>
                                 Members guide where <br />that support goes.
                             </p>
