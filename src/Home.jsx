@@ -183,7 +183,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 03</span>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>CHICAGO HUB</h3>
                         <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: $20 (Full Fund Reinvestment)
+                            Ticket: $15 (Full Fund Reinvestment)
                         </p>
                         <button
                             onClick={handleApplyClick}
