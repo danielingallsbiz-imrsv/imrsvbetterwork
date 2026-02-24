@@ -26,20 +26,20 @@ const ImpactLayer = ({ onBack }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                    <span className="section-label">THE IMPACT LAYER / DOING GOOD</span>
+                    <span className="section-label">THE IMPACT LAYER / OUR MISSION</span>
                     <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px' }}>
-                        GIVING BACK. <br /> FOR REAL.
+                        PARTICIPATION <br /> RESTORES.
                     </h1>
                 </motion.div>
 
                 <div className="concept-grid" style={{ marginTop: '80px' }}>
                     <div className="concept-text">
-                        <h3 style={{ fontSize: '2rem', marginBottom: '30px' }}>Wait, what is this actually?</h3>
+                        <h3 style={{ fontSize: '2rem', marginBottom: '30px' }}>What’s the idea here?</h3>
                         <p style={{ marginBottom: '20px' }}>
-                            Basically, the Impact Layer is just our way of making sure we’re actually helping out the places we visit.
+                            Basically, the Impact Layer is our way of making sure we’re actually helping out the places we visit.
                         </p>
                         <p>
-                            We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It's about being a good guest.
+                            We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It’s about being a good guest.
                         </p>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ const ImpactLayer = ({ onBack }) => {
                 <div className="bucket-grid" style={{ marginTop: '100px' }}>
                     <div className="bucket-card">
                         <span className="bucket-num">01.</span>
-                        <h3 className="bucket-title">How we do it</h3>
+                        <h3 className="bucket-title">How it works</h3>
                         <p className="bucket-desc">
                             We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city where it was raised and only goes to local people.
                         </p>
@@ -56,7 +56,7 @@ const ImpactLayer = ({ onBack }) => {
                         <span className="bucket-num">02.</span>
                         <h3 className="bucket-title">The hangouts</h3>
                         <p className="bucket-desc">
-                            We do about 1 or 2 events a month. It’s nothing crazy—sometimes just a chill dinner with builders, other times it’s a big night showing off what the locals are making.
+                            We do about 1 or 2 events a month. Sometimes it's just a chill dinner with builders, other times it’s a big night showing off what the locals are making.
                         </p>
                     </div>
                     <div className="bucket-card">
@@ -75,7 +75,7 @@ const ImpactLayer = ({ onBack }) => {
                             "Participation that restores."
                         </p>
                         <p>
-                            We're not here for a quick trip. We pick our spots—like Medellín, Bali, Oahu, and Rome—and we commit to staying for 5 years. The goal is to build something that lasts, not just show up as tourists.
+                            We aren't here for a quick trip. We pick our spots—like Medellín, Bali, Oahu, and Rome—and we focus on the long-term. The goal is to build something that lasts, not just show up as tourists.
                         </p>
                     </div>
                 </div>
