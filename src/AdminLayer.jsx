@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './Home.css';
 
-const AdminLayer = ({ onBack, applications }) => {
+const AdminLayer = ({ onBack, applications, onDelete }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -59,9 +59,33 @@ const AdminLayer = ({ onBack, applications }) => {
                                             <span style={{ fontSize: '0.9rem', opacity: 0.5, marginTop: '5px', display: 'block' }}>{app.social}</span>
                                             <span style={{ fontSize: '0.8rem', color: '#F7D031', marginTop: '5px', display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{app.occupation}</span>
                                         </div>
-                                        <div style={{ textAlign: 'right' }}>
+                                        <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '15px' }}>
                                             <span style={{ fontSize: '0.8rem', color: 'rgba(247, 245, 234, 0.4)' }}>{app.date}</span>
-                                            <div style={{ marginTop: '15px' }}>
+                                            <div style={{ display: 'flex', gap: '10px' }}>
+                                                <button
+                                                    onClick={() => onDelete(app.id)}
+                                                    style={{
+                                                        background: 'transparent',
+                                                        border: '1px solid rgba(255, 69, 58, 0.4)',
+                                                        color: 'rgba(255, 69, 58, 0.8)',
+                                                        padding: '6px 12px',
+                                                        fontSize: '0.7rem',
+                                                        borderRadius: '4px',
+                                                        textTransform: 'uppercase',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onMouseOver={(e) => {
+                                                        e.target.style.background = 'rgba(255, 69, 58, 0.1)';
+                                                        e.target.style.borderColor = 'rgba(255, 69, 58, 0.8)';
+                                                    }}
+                                                    onMouseOut={(e) => {
+                                                        e.target.style.background = 'transparent';
+                                                        e.target.style.borderColor = 'rgba(255, 69, 58, 0.4)';
+                                                    }}
+                                                >
+                                                    Delete Transmission
+                                                </button>
                                                 <span style={{ padding: '6px 12px', border: '1px solid #F7D031', color: '#F7D031', fontSize: '0.7rem', borderRadius: '4px', textTransform: 'uppercase' }}>Pending Review</span>
                                             </div>
                                         </div>

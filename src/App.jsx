@@ -36,6 +36,10 @@ function App() {
     setApplications(prev => [...prev, { ...appData, id: Date.now(), date: new Date().toLocaleString() }]);
   };
 
+  const deleteApplication = (id) => {
+    setApplications(prev => prev.filter(app => app.id !== id));
+  };
+
   return (
     <div className="App">
       <AnimatePresence mode="wait">
@@ -76,6 +80,7 @@ function App() {
             key="admin"
             onBack={() => setView('home')}
             applications={applications}
+            onDelete={deleteApplication}
           />
         )}
         {view === 'journal' && (
