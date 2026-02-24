@@ -67,7 +67,7 @@ const Home = () => {
 
                         <div style={{ marginTop: '20px' }}>
                             <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Join The Collective ]</span>
-                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>Join</button>
+                            <button className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>join the collective</button>
                         </div>
                     </div>
                 </div>
