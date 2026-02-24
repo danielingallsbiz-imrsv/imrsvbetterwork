@@ -147,7 +147,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             Basically, Sunday Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
                         <p style={{ fontSize: '1.2rem', lineHeight: 1.6 }}>
-                            We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It’s about being a good guest.
+                            We don’t just show up, throw a party, and dip. We make sure a real chunk of everything we do goes right back to the local artists and projects that make these cities what they are. It's about being a good guest.
                         </p>
                     </div>
                 </div>
@@ -159,7 +159,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             <InteractiveText text="How it works" />
                         </h3>
                         <p className="bucket-desc">
-                            We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city where it was raised and only goes to local people.
+                            We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city and goes right to the locals—simple as that.
                             <br /><br />
                             <span
                                 onClick={handleRestorationClick}
@@ -175,7 +175,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             <InteractiveText text="IRL Events" />
                         </h3>
                         <p className="bucket-desc">
-                            We do about 1 or 2 events a month. Sometimes it's just a chill dinner with builders, other times it’s a big night showing off what the locals are making.
+                            We do about 1 or 2 events a month. Sometimes it's a chill dinner with builders, other times it’s a bigger night showing off real local talent.
                         </p>
                     </div>
                     <div className="bucket-card">
@@ -333,7 +333,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             IMRSV adds a real-world collection system centered around verified “Hubs.”
                         </p>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            Physically visiting and claiming spots like restaurants, viewpoints, and cultural hubs earns points—participation currency that unlocks perks and missions.
+                            Physically hitting and claiming spots like restaurants, viewpoints, and hidden cultural hubs earns you points—participation currency that unlocks perks and missions.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
@@ -367,14 +367,14 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                             <InteractiveText text="EXPLORATION." />
                         </h2>
                         <p style={{ fontSize: '1.4rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                            Most travel platforms are transactional. IMRSV builds ongoing participation.
+                            Most travel stuff is just transactional. IMRSV is about building actual participation.
                         </p>
                         <p>
-                            We transition from booked spectators to active contributors. By connecting creators, builders, and travelers, we ensure exploration creates real utility for the cities we enter.
+                            We’re moving from just being spectators to being active contributors. By connecting creators, builders, and travelers, we make sure that exploring a city actually does something for the people living there.
                         </p>
                         <p style={{ fontStyle: 'italic', borderLeft: '2px solid var(--border-color)', paddingLeft: '20px' }}>
                             We don’t just visit cities — <br />
-                            we collaborate with them, host within them, and reinvest into them.
+                            we collaborate with them, host stuff within them, and reinvest into them.
                         </p>
 
                         <div style={{ marginTop: '20px' }}>

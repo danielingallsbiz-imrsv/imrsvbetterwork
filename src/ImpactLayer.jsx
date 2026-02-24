@@ -53,13 +53,13 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                             <InteractiveText text="ACCESS OVER NOISE." />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
-                            IMRSV is a private, membership-based platform designed for access over noise.
+                            IMRSV is basically a private spot created for people who value real access over all the noise.
                         </p>
                         <p style={{ marginBottom: '20px' }}>
-                            Operated as a closed ecosystem, we provide approved members with curated experiences, local access, and share proprietary opportunity inside a protected network.
+                            It’s a closed loop where members get the lowdown on curated experiences, local hooks, and proprietary opportunities within the community.
                         </p>
                         <p>
-                            Information is protected. Participation is intentional. This is not a public free-all. This is controlled access.
+                            Everything here is intentional and low-key. We aren’t interested in a public free-for-all—just a protected space for our people to build and explore.
                         </p>
                     </div>
                 </div>
@@ -67,13 +67,16 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                 <div className="concept-grid" style={{ marginTop: '100px' }}>
                     <div className="concept-text">
                         <h3 style={{ marginBottom: '30px' }}>
-                            <InteractiveText text="What’s the idea here?" />
+                            <InteractiveText text="GAME ON/OFF." />
                         </h3>
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.2rem' }}>
-                            Basically, Sunday Collection is our way of making sure we’re actually helping out the places we visit.
+                            We’re basically gamifying the way people move through cities to make everything more immersive.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            For travelers, it’s about hitting the right spots and earning status that unlocks real access. For locals, it’s about being part of a loop where their work actually gets supported by the community.
                         </p>
                         <p>
-                            We don’t just throw parties and dip. We make sure a real chunk of everything we do goes straight back into the local shops, artists, and projects that make these cities what they are. It’s about being a good guest.
+                            It turns typical travel stuff into a collaborative game where everyone wins. No more boring tourist loops—just real connection and contribution. Ykwim.
                         </p>
                     </div>
                 </div>
@@ -82,17 +85,17 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     <BucketCard
                         num="01."
                         title="The Activation"
-                        desc="Each activation brings together travelers, local creators, and small businesses to circulate value back into the local ecosystem."
+                        desc="We create moments where travelers and locals actually hang out, making sure value stays in the city instead of just passing through."
                     />
                     <BucketCard
                         num="02."
                         title="The Connection"
-                        desc="We don’t extract value from cities. We reinvest directly into the venues and collaborators that define local culture."
+                        desc="No extraction. We reinvest directly into the spots and people that make local culture what it is."
                     />
                     <BucketCard
                         num="03."
                         title="The Mission"
-                        desc="To build a platform that turns travel into participation. We don’t just visit—we collaborate and reinvest."
+                        desc="Building a way to turn travel into participation. The goal is to stop just visiting and start actually contributing."
                     />
                 </div>
 
@@ -105,7 +108,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                             "Leave it better than you found it."
                         </p>
                         <p>
-                            We aren't here for a quick trip. We pick our spots—like Medellín, Bali, Oahu, and Rome—and we focus on the long-term. The goal is to build something that lasts, not just show up as tourists.
+                            We aren't here for a quick trip. We pick our spots—like Medellín, Bali, Oahu, and Rome—and we stay for the long haul. The goal is to build something that lasts, not just show up as tourists and leave.
                         </p>
                     </div>
                 </div>

@@ -94,10 +94,10 @@ const RestorationLayer = ({ onBack, navigateToImpact }) => {
                             <InteractiveText text="How the Ledger works" />
                         </h3>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            The Ledger provides transparency into the movement of the Restoration Fund. Every membership contribution and activation fee is allocated directly to verified local projects.
+                            The Ledger is just our way of keeping everything transparent. It shows exactly where the Restoration Fund is going—from membership slices to activation fees.
                         </p>
                         <p style={{ opacity: 0.8 }}>
-                            We don't just donate; we invest. The Ledger tracks where capital is currently deployed and identifies the next phase of community-led restoration. It is a live view of our collective impact.
+                            We don't just donate; we invest. The Ledger tracks where the money is currently hitting and what community projects are up next. It’s a live look at what we're actually doing.
                         </p>
                     </div>
                 </div>
