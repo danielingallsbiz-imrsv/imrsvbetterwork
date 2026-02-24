@@ -60,7 +60,7 @@ const ImpactLayer = ({ onBack, navigateToRestoration }) => {
                     </div>
                     <div className="bucket-card">
                         <span className="bucket-num">02.</span>
-                        <h3 className="bucket-title">The hangouts</h3>
+                        <h3 className="bucket-title">IRL Events</h3>
                         <p className="bucket-desc">
                             We do about 1 or 2 events a month. Sometimes it's just a chill dinner with builders, other times it’s a big night showing off what the locals are making.
                         </p>
