@@ -102,17 +102,16 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                     </div>
 
                     <h1 className="hero-title" style={{ fontSize: '4rem', color: '#F7F5EA', marginBottom: '30px', lineHeight: 1 }}>
-                        <InteractiveText text="WELCOME" /><br />
-                        <InteractiveText text="INSIDE." />
+                        <InteractiveText text="SUNDAY" /><br />
+                        <InteractiveText text="COLLECTION" />
                     </h1>
 
                     <div style={{ display: 'flex', gap: '40px', marginBottom: '60px' }}>
                         <div>
-                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Welcome</p>
-                            <p style={{ fontSize: '1.2rem', color: '#F7F5EA', fontWeight: 500, letterSpacing: '0.02em' }}>
+                            <p style={{ fontSize: '1.2rem', color: '#F7F5EA', fontWeight: 500, letterSpacing: '0.02em', marginBottom: '4px' }}>
                                 {userName || 'Accessing Portal...'}
                             </p>
-                            <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', marginTop: '4px', opacity: 0.8 }}>
+                            <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', opacity: 0.8 }}>
                                 MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
                             </p>
                         </div>
