@@ -146,7 +146,8 @@ function App() {
           <Home key="home"
             navigateToImpact={() => setView('impact')}
             navigateToRestoration={() => setView('restoration')}
-            navigateToLogin={() => setView('login')} // Map Apply to Login entry
+            navigateToApply={() => setView('apply')}
+            navigateToLogin={() => setView('login')}
             navigateToAdmin={() => setView('admin')}
             navigateToJournal={() => setView('journal')}
             showSuccess={showSuccess}

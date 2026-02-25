@@ -4,7 +4,7 @@ import InteractiveText from './components/InteractiveText';
 import PacmanGame from './components/PacmanGame';
 import './Home.css';
 
-const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, navigateToAdmin, navigateToJournal, showSuccess }) => {
+const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal, showSuccess }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
     const [isFlashing, setIsFlashing] = useState(false);
@@ -15,6 +15,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
 
     const handleRestorationClick = () => {
         navigateToRestoration();
+    };
+
+    const handleApplyClick = () => {
+        navigateToApply();
     };
 
     const handleLoginClick = () => {
@@ -215,7 +219,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                             Ticket: $50 (Full Fund Reinvestment)
                         </p>
                         <button
-                            onClick={handleLoginClick}
+                            onClick={handleApplyClick}
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -232,7 +236,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                                 fontFamily: 'inherit'
                             }}
                         >
-                            Login to secure RSVP →
+                            apply →
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
@@ -248,7 +252,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                             Ticket: $15 (Full Fund Reinvestment)
                         </p>
                         <button
-                            onClick={handleLoginClick}
+                            onClick={handleApplyClick}
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -265,7 +269,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                                 fontFamily: 'inherit'
                             }}
                         >
-                            Login to secure RSVP →
+                            apply →
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
@@ -281,7 +285,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                             Ticket: TBD (Full Fund Reinvestment)
                         </p>
                         <button
-                            onClick={handleLoginClick}
+                            onClick={handleApplyClick}
                             style={{
                                 color: '#F7D031',
                                 fontSize: '0.8rem',
@@ -298,7 +302,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                                 fontFamily: 'inherit'
                             }}
                         >
-                            Login to secure RSVP →
+                            apply →
                         </button>
                         <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
                             <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>MAY 17 : IMRSV RUN CLUB — FREE</div>
@@ -387,7 +391,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
 
                         <div style={{ marginTop: '20px' }}>
                             <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Participation ]</span>
-                            <button onClick={handleLoginClick} className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>[ Join Sunday Collection ]</button>
+                            <button onClick={handleApplyClick} className="gauntlet-btn" style={{ marginTop: 0, padding: '18px 60px' }}>[ Join Sunday Collection ]</button>
                         </div>
                     </div>
                 </div>
@@ -405,7 +409,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToLogin, naviga
                         Entry into The IMRSV Project is via a vetted application. <br />
                         We prioritize those ready to contribute to Sunday Collection.
                     </p>
-                    <button onClick={handleLoginClick} className="gauntlet-btn">[ Join Sunday Collection ]</button>
+                    <button onClick={handleApplyClick} className="gauntlet-btn">[ Join Sunday Collection ]</button>
                 </motion.div>
             </section>
 
