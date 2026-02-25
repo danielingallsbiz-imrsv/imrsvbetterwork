@@ -1,6 +1,4 @@
-export const config = {
-    runtime: 'edge', // Using Edge runtime since it's just a simple fetch request
-};
+// Using default Node.js serverless runtime flavor for reliable env variable injection
 
 export default async function handler(req) {
     if (req.method !== 'POST') {
