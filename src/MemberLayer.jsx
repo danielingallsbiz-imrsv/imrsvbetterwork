@@ -4,11 +4,21 @@ import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const MemberLayer = ({ user, userName, onLogout, onBack }) => {
-    const [showBriefing, setShowBriefing] = useState(true);
+    // Check if briefing was already acknowledged for this user
+    const briefingKey = `imrsv_briefing_acknowledged_${user?.id}`;
+    const [showBriefing, setShowBriefing] = useState(() => {
+        return !localStorage.getItem(briefingKey);
+    });
+
     const [rsvpStatus, setRsvpStatus] = useState({});
 
     const handleRSVP = (eventId) => {
         setRsvpStatus(prev => ({ ...prev, [eventId]: 'SECURED' }));
+    };
+
+    const handleAcknowledge = () => {
+        localStorage.setItem(briefingKey, 'true');
+        setShowBriefing(false);
     };
 
     return (
@@ -54,7 +64,7 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                                 A significant portion of every ticket and membership goes straight to local artists and cultural preservation projects. You are no longer just a spectator; you are a patron.
                             </p>
                             <button
-                                onClick={() => setShowBriefing(false)}
+                                onClick={handleAcknowledge}
                                 className="gauntlet-btn"
                                 style={{ padding: '15px 40px' }}
                             >
