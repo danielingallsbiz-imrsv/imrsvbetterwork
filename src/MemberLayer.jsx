@@ -108,9 +108,9 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
 
                     <div style={{ display: 'flex', gap: '40px', marginBottom: '60px' }}>
                         <div>
-                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Identity</p>
+                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Welcome</p>
                             <p style={{ fontSize: '1.2rem', color: '#F7F5EA', fontWeight: 500, letterSpacing: '0.02em' }}>
-                                {userName ? `Welcome ${userName}` : 'Accessing Portal...'}
+                                {userName || 'Accessing Portal...'}
                             </p>
                             <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', marginTop: '4px', opacity: 0.8 }}>
                                 MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
@@ -119,10 +119,6 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                         <div>
                             <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Tier</p>
                             <p style={{ fontSize: '1.1rem', color: '#F7D031', fontWeight: 600 }}>FOUNDATION MEMBER</p>
-                        </div>
-                        <div>
-                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Status</p>
-                            <p style={{ fontSize: '1.1rem', color: '#45FFC7', fontWeight: 600 }}>VERIFIED NODE</p>
                         </div>
                     </div>
 
