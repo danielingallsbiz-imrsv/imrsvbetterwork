@@ -9,6 +9,7 @@ import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
 import MemberLayer from './MemberLayer';
+import DirectoryLayer from './DirectoryLayer';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -21,6 +22,7 @@ function AppContent() {
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState('');
   const [isMember, setIsMember] = useState(false);
+  const [members, setMembers] = useState([]);
   const [dbStatus, setDbStatus] = useState('connecting');
 
   useEffect(() => {
@@ -168,6 +170,7 @@ function AppContent() {
 
       if (error) throw error;
       setApplications(data || []);
+      setMembers((data || []).filter(a => a.status === 'approved'));
       setDbStatus('connected');
     } catch (e) {
       console.warn("Supabase connection failed, using local storage:", e.message);
@@ -314,8 +317,20 @@ function AppContent() {
               <MemberLayer
                 user={user}
                 userName={userName}
+                members={members}
                 onLogout={handleLogout}
                 onBack={() => navigate('/')}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          } />
+          <Route path="/directory" element={
+            isMember ? (
+              <DirectoryLayer
+                members={members}
+                onLogout={handleLogout}
+                onBack={() => navigate('/member')}
               />
             ) : (
               <Navigate to="/login" replace />
