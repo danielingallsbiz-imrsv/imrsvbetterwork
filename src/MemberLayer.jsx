@@ -69,10 +69,13 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         setShowBriefing(false);
     };
 
-    const scrollToCollective = () => {
-        const el = document.getElementById('collective-section');
+    const scrollToMembers = () => {
+        const el = document.getElementById('members-section');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
     };
+
+    // Filter for members with active logins (or fallback to approved members if none marked yet)
+    const activeMembers = members.filter(m => m.status === 'approved');
 
     return (
         <motion.div
@@ -101,8 +104,8 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     </motion.div>
                 </div>
                 <div className="nav-links" style={{ display: 'flex', gap: '15px', alignItems: 'center', textAlign: 'right' }}>
-                    <span onClick={scrollToCollective} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em' }}>
-                        COLLECTIVE
+                    <span onClick={scrollToMembers} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em' }}>
+                        MEMBERS
                     </span>
                     <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em', lineHeight: 1 }}>
                         LOG OUT
@@ -171,15 +174,15 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </div>
                     </div>
 
-                    {/* COLLECTIVE SECTION */}
-                    <div id="collective-section" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '100px' }}>
+                    {/* MEMBERS SECTION */}
+                    <div id="members-section" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '100px' }}>
                         <div style={{ marginBottom: '60px' }}>
-                            <h2 className="concept-title" style={{ fontSize: '2.5rem', color: '#1A1A1A', margin: 0 }}>COLLECTIVE.</h2>
+                            <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
                             <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>NODES CURRENTLY IN ORBIT</p>
                         </div>
                         <div className="bucket-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
-                            {members.length > 0 ? (
-                                members.map((member, i) => (
+                            {activeMembers.length > 0 ? (
+                                activeMembers.map((member, i) => (
                                     <div
                                         key={member.id}
                                         className="bucket-card"
@@ -190,13 +193,16 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                         </p>
                                         <h3 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 600, color: '#1A1A1A' }}>{member.name}</h3>
                                         <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <span style={{ fontSize: '0.6rem', opacity: 0.3, textTransform: 'uppercase' }}>Verified {new Date(member.created_at).toLocaleDateString()}</span>
-                                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2ECC71', boxShadow: '0 0 10px rgba(46, 204, 113, 0.4)' }} />
+                                            <span style={{ fontSize: '0.6rem', opacity: 0.3, textTransform: 'uppercase' }}>Verified {new Date(member.created_at || member.date).toLocaleDateString()}</span>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                <span style={{ fontSize: '0.5rem', fontWeight: 700, color: '#2ECC71', letterSpacing: '0.05em' }}>ACTIVE NOW</span>
+                                                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2ECC71', boxShadow: '0 0 10px rgba(46, 204, 113, 0.4)' }} />
+                                            </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <p style={{ opacity: 0.3, fontSize: '0.8rem' }}>Initializing collective data...</p>
+                                <p style={{ opacity: 0.3, fontSize: '0.8rem' }}>Initializing members data...</p>
                             )}
                         </div>
                     </div>
