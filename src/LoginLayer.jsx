@@ -17,6 +17,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
