@@ -30,7 +30,7 @@ export default async function handler(req, res) {
                 html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background-color: #F7F5EA; color: #111;">
             <p style="text-transform: uppercase; font-size: 10px; letter-spacing: 0.2em; color: rgba(17, 17, 17, 0.5);">the imrsv project / Vetting Queue</p>
-            <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 30px;">Transmission Received.</h1>
+            <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 30px;">Application Received.</h1>
             <p style="font-size: 16px; line-height: 1.6;">Hello ${formData.name.split(' ')[0]},</p>
             <p style="font-size: 16px; line-height: 1.6;">Your application to join the Sunday Collection network has been routed to our vetting team. Your current status is: <strong>PENDING</strong>.</p>
             <p style="font-size: 16px; line-height: 1.6;">We carefully review every contribution to ensure we are building a collective that actually restores the communities we operate in.</p>
