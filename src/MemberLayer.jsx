@@ -84,7 +84,7 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                     </span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#F7D031' }}>
+                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 600 }}>
                         <InteractiveText text="Log Out" />
                     </span>
                 </div>
