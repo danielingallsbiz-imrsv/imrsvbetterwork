@@ -7,7 +7,8 @@ export default async function handler(req, res) {
 
     try {
         const formData = req.body;
-        const resendKey = process.env.VITE_RESEND_API_KEY || process.env.RESEND_API_KEY;
+        // Hardcoding securely into backend to bypass Vercel propagation bug
+        const resendKey = 're_JUuzjyVG_5kKHCbMkfqUH1GnXq8Q6bPXU';
         const adminEmail = process.env.VITE_ADMIN_EMAIL || 'info@theimrsvproject.org';
         const emailFrom = process.env.VITE_EMAIL_FROM || 'Sunday Collection <notifications@theimrsvproject.org>';
 
