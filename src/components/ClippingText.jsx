@@ -60,7 +60,7 @@ const ClippingText = ({ text, scale = 1 }) => {
                                     userSelect: 'none',
                                     lineHeight: 1,
                                     transformOrigin: 'center',
-                                    marginBottom: `${(isMobile ? 10 : 20) * scale}px`
+                                    marginBottom: scale > 0.2 ? (isMobile ? '10px' : '20px') : '0px'
                                 }}
                             >
                                 {char.toUpperCase()}

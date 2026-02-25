@@ -77,10 +77,10 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
             </AnimatePresence>
 
             <nav className="nav-bar">
-                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
+                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <div style={{ marginLeft: '4px', transform: 'translateY(10px)' }}>
-                        <ClippingText text="SUNDAY COLLECTION" scale={0.15} />
+                    <div style={{ display: 'flex', alignItems: 'center', height: '14px' }}>
+                        <ClippingText text="SUNDAY COLLECTION" scale={0.12} />
                     </div>
                 </div>
                 <div className="nav-links">
@@ -97,7 +97,9 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                     transition={{ duration: 0.8 }}
                 >
                     <div style={{ marginBottom: '60px' }}>
-                        <ClippingText text="WELCOME" />
+                        <h1 className="concept-title" style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', color: '#1A1A1A', lineHeight: 1, margin: 0 }}>
+                            WELCOME.
+                        </h1>
                     </div>
 
                     <div style={{ display: 'flex', gap: '60px', marginBottom: '60px', alignItems: 'flex-start' }}>
