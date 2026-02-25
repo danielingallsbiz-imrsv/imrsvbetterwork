@@ -11,5 +11,9 @@ export const supabase = (supabaseUrl && supabaseAnonKey && supabaseUrl !== 'your
             select: () => ({ order: () => Promise.resolve({ data: [], error: null }) }),
             insert: () => ({ select: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }) }),
             delete: () => ({ eq: () => Promise.resolve({ error: new Error('Supabase not configured') }) })
-        })
+        }),
+        auth: {
+            getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+            onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } })
+        }
     };
