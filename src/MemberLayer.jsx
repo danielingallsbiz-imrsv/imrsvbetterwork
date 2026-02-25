@@ -132,16 +132,17 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <button
                                 onClick={scrollToMembers}
                                 style={{
-                                    background: 'none',
-                                    border: '1px solid rgba(0,0,0,0.1)',
-                                    padding: '8px 16px',
-                                    fontSize: '0.6rem',
-                                    fontWeight: 700,
-                                    color: '#1A1A1A',
-                                    marginTop: '15px',
+                                    background: '#F7D031',
+                                    border: 'none',
+                                    padding: '12px 24px',
+                                    fontSize: '0.7rem',
+                                    fontWeight: 800,
+                                    color: '#000',
+                                    marginTop: '25px',
                                     cursor: 'pointer',
-                                    borderRadius: '2px',
-                                    letterSpacing: '0.15em'
+                                    borderRadius: '4px',
+                                    letterSpacing: '0.1em',
+                                    display: 'block'
                                 }}
                             >
                                 [ VIEW MEMBERS ]
