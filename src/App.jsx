@@ -8,6 +8,7 @@ import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
 
 import { supabase } from './lib/supabase';
+import { sendNotificationEmail } from './lib/email';
 
 function App() {
   const [view, setView] = useState('home');
@@ -63,6 +64,8 @@ function App() {
       if (error) throw error;
       if (data) {
         setApplications(prev => [data[0], ...prev]);
+        // Trigger the notification email
+        sendNotificationEmail(data[0]);
       }
     } catch (e) {
       console.error("Error adding application:", e);
