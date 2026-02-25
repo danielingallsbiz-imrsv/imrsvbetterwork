@@ -103,7 +103,26 @@ function AppContent() {
   };
 
   const handleLogin = async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        if (error.message.includes('Email not confirmed')) {
+          return { status: 'CONFIRMATION_REQUIRED' };
+        }
+        throw error;
+      }
+      return { status: 'COMPLETE' };
+    } catch (err) {
+      console.error("Login error:", err);
+      throw err;
+    }
+  };
+
+  const handleResendConfirmation = async (email) => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+    });
     if (error) throw error;
   };
 
@@ -253,6 +272,7 @@ function AppContent() {
               onNavigateToApply={() => navigate('/apply')}
               onLogin={handleLogin}
               onSignup={handleSignup}
+              onResendConfirmation={handleResendConfirmation}
               initialMode="login"
             />
           } />
@@ -262,6 +282,7 @@ function AppContent() {
               onNavigateToApply={() => navigate('/apply')}
               onLogin={handleLogin}
               onSignup={handleSignup}
+              onResendConfirmation={handleResendConfirmation}
               initialMode="signup"
             />
           } />
