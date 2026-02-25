@@ -45,11 +45,10 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin }) => {
                     transition={{ duration: 0.6 }}
                 >
                     <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)' }}>
-                        MEMBERSHIP / ACCESS
+                        SUNDAY COLLECTION
                     </span>
                     <h1 className="concept-title" style={{ fontSize: '3rem', color: '#1A1A1A', marginBottom: '40px', lineHeight: 1.1 }}>
-                        <InteractiveText text="CLAIM YOUR" /><br />
-                        <InteractiveText text="SESSION." />
+                        <InteractiveText text="LOGIN" />
                     </h1>
 
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '40px' }}>
