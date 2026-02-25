@@ -5,15 +5,11 @@ const ClippingText = ({ text }) => {
     const words = text.split(' ');
 
     const colors = [
-        '#E74C3C', // Red (Classic)
-        '#C0392B', // Deep Red
-        '#E67E22', // Orange
+        '#E74C3C', // Red
         '#3498DB', // Blue
         '#F1C40F', // Yellow
         '#2ECC71', // Green
         '#9B59B6', // Purple
-        '#E74C3C', // Extra Red for weight
-        '#C0392B', // Extra Red for weight
         '#ECF0F1', // White/Cream
         '#34495E'  // Dark Charcoal
     ];
@@ -29,14 +25,14 @@ const ClippingText = ({ text }) => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? '12px' : '30px', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? '15px' : '40px', alignItems: 'flex-start' }}>
             {words.map((word, wIndex) => (
-                <div key={wIndex} style={{ display: 'flex', gap: isMobile ? '2px' : '6px', whiteSpace: 'nowrap' }}>
+                <div key={wIndex} style={{ display: 'flex', gap: isMobile ? '3px' : '8px', whiteSpace: 'nowrap' }}>
                     {word.split('').map((char, index) => {
                         const randomColor = colors[Math.floor(Math.random() * colors.length)];
                         const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
                         const randomRotation = (Math.random() * 8 - 4).toFixed(2);
-                        const isDark = ['#34495E', '#C0392B', '#E74C3C', '#3498DB', '#9B59B6'].includes(randomColor);
+                        const isDark = ['#34495E', '#E74C3C', '#3498DB', '#9B59B6'].includes(randomColor);
 
                         return (
                             <motion.div
@@ -47,17 +43,17 @@ const ClippingText = ({ text }) => {
                                 style={{
                                     background: randomColor,
                                     color: isDark ? '#FFF' : '#000',
-                                    padding: isMobile ? '4px 6px' : '8px 12px',
+                                    padding: isMobile ? '6px 10px' : '12px 18px',
                                     fontFamily: randomFont,
-                                    fontSize: isMobile ? '1.25rem' : '2.5rem',
+                                    fontSize: isMobile ? '1.75rem' : '3.5rem',
                                     fontWeight: 900,
                                     display: 'inline-block',
-                                    boxShadow: '1px 2px 0px rgba(0,0,0,0.1)',
+                                    boxShadow: '2px 4px 0px rgba(0,0,0,0.15)',
                                     border: '1px solid rgba(0,0,0,0.05)',
                                     userSelect: 'none',
                                     lineHeight: 1,
                                     transformOrigin: 'center',
-                                    marginBottom: isMobile ? '6px' : '10px'
+                                    marginBottom: isMobile ? '10px' : '20px'
                                 }}
                             >
                                 {char.toUpperCase()}
