@@ -136,6 +136,8 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     loop
                     muted
                     playsInline
+                    webkit-playsinline="true"
+                    disablePictureInPicture
                     className="hero-video-bg"
                     style={{ pointerEvents: 'none' }}
                     poster="/hawaii-party-hero.jpg"
