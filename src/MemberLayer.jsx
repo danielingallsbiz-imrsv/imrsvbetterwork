@@ -79,8 +79,8 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <div style={{ display: 'flex', alignItems: 'center', height: '14px', transform: 'translateY(-6px)' }}>
-                        <ClippingText text="SUNDAY COLLECTION" scale={0.28} />
+                    <div style={{ display: 'flex', alignItems: 'center', height: '14px', transform: 'translateY(-3px)' }}>
+                        <ClippingText text="SUNDAY COLLECTION" scale={0.32} />
                     </div>
                 </div>
                 <div className="nav-links">
