@@ -50,12 +50,18 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         }
     };
 
-    const submitForm = () => {
+    const submitForm = async () => {
         setStatus('submitting');
-        setTimeout(() => {
-            if (onSubmit) onSubmit(formData);
+        try {
+            if (onSubmit) {
+                await onSubmit(formData);
+            }
             navigateToHome(true);
-        }, 1200);
+        } catch (error) {
+            console.error("Submission failed:", error);
+            setStatus('idle');
+            // You could add an error message here based on your UI needs
+        }
     };
 
     const renderStep = () => {

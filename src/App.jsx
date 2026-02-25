@@ -7,22 +7,40 @@ import ApplicationLayer from './ApplicationLayer';
 import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
 
+import { supabase } from './lib/supabase';
+
 function App() {
   const [view, setView] = useState('home');
   const [showSuccess, setShowSuccess] = useState(false);
-  const [applications, setApplications] = useState(() => {
-    try {
-      const saved = localStorage.getItem('imrsv_applications');
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      console.error("Local storage inhibited:", e);
-      return [];
-    }
-  });
+  const [applications, setApplications] = useState([]);
+  const [dbStatus, setDbStatus] = useState('connecting'); // connecting, connected, offline
 
   useEffect(() => {
-    localStorage.setItem('imrsv_applications', JSON.stringify(applications));
-  }, [applications]);
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = async () => {
+    try {
+      if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'your_supabase_project_url') {
+        throw new Error("Supabase URL not configured");
+      }
+
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setApplications(data || []);
+      setDbStatus('connected');
+    } catch (e) {
+      console.warn("Supabase connection failed, using local storage:", e.message);
+      setDbStatus('offline');
+      // Fallback to local storage
+      const saved = localStorage.getItem('imrsv_applications');
+      if (saved) setApplications(JSON.parse(saved));
+    }
+  };
 
   const handleHomeNavigation = (isSuccess) => {
     setView('home');
@@ -32,12 +50,44 @@ function App() {
     }
   };
 
-  const addApplication = (appData) => {
-    setApplications(prev => [...prev, { ...appData, id: Date.now(), date: new Date().toLocaleString() }]);
+  const addApplication = async (appData) => {
+    try {
+      const { data, error } = await supabase
+        .from('applications')
+        .insert([{
+          ...appData,
+          created_at: new Date().toISOString()
+        }])
+        .select();
+
+      if (error) throw error;
+      if (data) {
+        setApplications(prev => [data[0], ...prev]);
+      }
+    } catch (e) {
+      console.error("Error adding application:", e);
+      // Fallback to local storage
+      const newApp = { ...appData, id: Date.now(), date: new Date().toLocaleString() };
+      const updated = [newApp, ...applications];
+      setApplications(updated);
+      localStorage.setItem('imrsv_applications', JSON.stringify(updated));
+    }
   };
 
-  const deleteApplication = (id) => {
-    setApplications(prev => prev.filter(app => app.id !== id));
+  const deleteApplication = async (id) => {
+    try {
+      const { error } = await supabase
+        .from('applications')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      setApplications(prev => prev.filter(app => app.id !== id));
+    } catch (e) {
+      console.error("Error deleting application:", e);
+      setApplications(prev => prev.filter(app => app.id !== id));
+      localStorage.setItem('imrsv_applications', JSON.stringify(applications.filter(app => app.id !== id)));
+    }
   };
 
   return (
@@ -81,6 +131,7 @@ function App() {
             onBack={() => setView('home')}
             applications={applications}
             onDelete={deleteApplication}
+            dbStatus={dbStatus}
           />
         )}
         {view === 'journal' && (

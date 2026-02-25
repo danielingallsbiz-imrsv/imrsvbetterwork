@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './Home.css';
 
-const AdminLayer = ({ onBack, applications, onDelete }) => {
+const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -16,7 +16,19 @@ const AdminLayer = ({ onBack, applications, onDelete }) => {
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
                     <span style={{ marginLeft: '4px' }} className="mobile-hide">imrsv project</span>
                 </div>
-                <div className="nav-links">
+                <div className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div style={{
+                        fontSize: '0.6rem',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        backgroundColor: dbStatus === 'connected' ? 'rgba(0, 255, 0, 0.1)' : 'rgba(255, 0, 0, 0.1)',
+                        color: dbStatus === 'connected' ? '#00FF00' : '#FF453A',
+                        border: `1px solid ${dbStatus === 'connected' ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'}`,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                    }}>
+                        {dbStatus === 'connected' ? '● CLOUD SYNC ACTIVE' : '○ OFFLINE (LOCAL ONLY)'}
+                    </div>
                     <span style={{ color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>
                         <span className="mobile-hide">Admin Terminal v1.0</span>
                         <span className="mobile-show">Admin</span>
@@ -30,10 +42,50 @@ const AdminLayer = ({ onBack, applications, onDelete }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>HUB TRANSMISSIONS / VETTING QUEUE</span>
-                    <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px', color: '#F7F5EA' }}>
-                        THE QUEUE.
-                    </h1>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                        <div>
+                            <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>HUB TRANSMISSIONS / VETTING QUEUE</span>
+                            <h1 className="concept-title" style={{ fontSize: '5rem', lineHeight: 1, marginTop: '20px', color: '#F7F5EA' }}>
+                                THE QUEUE.
+                            </h1>
+                        </div>
+                        <button
+                            onClick={() => {
+                                const headers = ["Name", "Email", "Hub", "Occupation", "Social", "Date"];
+                                const rows = applications.map(app => [
+                                    app.name,
+                                    app.email,
+                                    app.hub,
+                                    app.occupation,
+                                    app.social,
+                                    app.created_at || app.date
+                                ]);
+                                const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+                                const blob = new Blob([csvContent], { type: 'text/csv' });
+                                const url = window.URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.setAttribute('hidden', '');
+                                a.setAttribute('href', url);
+                                a.setAttribute('download', 'imrsv-applications.csv');
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                            }}
+                            style={{
+                                background: 'transparent',
+                                border: '1px solid #F7D031',
+                                color: '#F7D031',
+                                padding: '10px 20px',
+                                fontSize: '0.8rem',
+                                textTransform: 'uppercase',
+                                cursor: 'pointer',
+                                letterSpacing: '0.1em',
+                                marginBottom: '10px'
+                            }}
+                        >
+                            Export to CSV
+                        </button>
+                    </div>
                 </motion.div>
 
                 <div style={{ marginTop: '60px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '40px' }}>
@@ -63,7 +115,9 @@ const AdminLayer = ({ onBack, applications, onDelete }) => {
                                             <span style={{ fontSize: '0.8rem', color: '#F7D031', marginTop: '5px', display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{app.occupation}</span>
                                         </div>
                                         <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '15px' }}>
-                                            <span style={{ fontSize: '0.8rem', color: 'rgba(247, 245, 234, 0.4)' }}>{app.date}</span>
+                                            <span style={{ fontSize: '0.8rem', color: 'rgba(247, 245, 234, 0.4)' }}>
+                                                {app.created_at ? new Date(app.created_at).toLocaleString() : app.date}
+                                            </span>
                                             <div style={{ display: 'flex', gap: '10px' }}>
                                                 <button
                                                     onClick={() => onDelete(app.id)}
