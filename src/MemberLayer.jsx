@@ -96,12 +96,6 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
-                        <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)', margin: 0 }}>
-                            MEMBER / SESSION ACTIVE
-                        </span>
-                    </div>
-
                     <div style={{ marginBottom: '60px' }}>
                         <ClippingText text="SUNDAY COLLECTION" />
                     </div>

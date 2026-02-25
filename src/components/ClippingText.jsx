@@ -22,10 +22,12 @@ const ClippingText = ({ text }) => {
         '"Inter", sans-serif'
     ];
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? '4px' : '8px', alignItems: 'center' }}>
             {letters.map((char, index) => {
-                if (char === ' ') return <div key={index} style={{ width: '20px' }} />;
+                if (char === ' ') return <div key={index} style={{ width: isMobile ? '10px' : '20px' }} />;
 
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
@@ -41,12 +43,12 @@ const ClippingText = ({ text }) => {
                         style={{
                             background: randomColor,
                             color: isDark ? '#FFF' : '#000',
-                            padding: '8px 12px',
+                            padding: isMobile ? '4px 8px' : '8px 12px',
                             fontFamily: randomFont,
-                            fontSize: '2.5rem',
+                            fontSize: isMobile ? '1.5rem' : '2.5rem',
                             fontWeight: 900,
                             display: 'inline-block',
-                            boxShadow: '2px 3px 0px rgba(0,0,0,0.2)',
+                            boxShadow: '2px 3px 0px rgba(0,0,0,0.15)',
                             border: '1px solid rgba(0,0,0,0.05)',
                             userSelect: 'none',
                             lineHeight: 1,
