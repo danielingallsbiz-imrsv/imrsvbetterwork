@@ -103,9 +103,24 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     </motion.div>
                 </div>
                 <div className="nav-links">
-                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 800, fontSize: '0.6rem', letterSpacing: '0.1em' }}>
+                    <motion.span
+                        onClick={onLogout}
+                        whileHover={{
+                            opacity: 1,
+                            textShadow: 'none'
+                        }}
+                        style={{
+                            cursor: 'pointer',
+                            color: '#1A1A1A',
+                            fontWeight: 800,
+                            fontSize: '0.6rem',
+                            letterSpacing: '0.1em',
+                            opacity: 0.7,
+                            textShadow: 'none'
+                        }}
+                    >
                         LOG OUT
-                    </span>
+                    </motion.span>
                 </div>
             </nav>
 
