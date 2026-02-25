@@ -1,18 +1,18 @@
 // Using default Node.js serverless runtime flavor for reliable env variable injection
 
-export default async function handler(req) {
+export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const formData = await req.json();
+        const formData = req.body;
         const resendKey = process.env.VITE_RESEND_API_KEY || process.env.RESEND_API_KEY;
         const adminEmail = process.env.VITE_ADMIN_EMAIL || 'info@theimrsvproject.org';
         const emailFrom = process.env.VITE_EMAIL_FROM || 'Sunday Collection <notifications@theimrsvproject.org>';
 
         if (!resendKey) {
-            return new Response(JSON.stringify({ error: 'Resend API Key missing in environment' }), { status: 500 });
+            return res.status(500).json({ error: 'Resend API Key missing in environment' });
         }
 
         // 1. Send Admin Notification
@@ -78,10 +78,10 @@ export default async function handler(req) {
         if (!adminResponse.ok) console.error("Admin format failed", await adminResponse.text());
         if (!userResponse.ok) console.error("User auto-response failed", await userResponse.text());
 
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
+        return res.status(200).json({ success: true });
 
     } catch (error) {
         console.error("Backend endpoint error:", error.message);
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        return res.status(500).json({ error: error.message });
     }
 }
