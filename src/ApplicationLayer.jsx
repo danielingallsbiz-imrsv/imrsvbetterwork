@@ -182,7 +182,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)' }}>
                             <InteractiveText text={steps[currentStep].label} />
                         </span>
-                        <h1 className="concept-title" style={{ fontSize: '3.5rem', color: '#1A1A1A', marginBottom: '40px', lineHeight: 1.1 }}>
+                        <h1 className="concept-title" style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', color: '#1A1A1A', marginBottom: '40px', lineHeight: 1.1 }}>
                             <InteractiveText text={steps[currentStep].title} />
                         </h1>
 
