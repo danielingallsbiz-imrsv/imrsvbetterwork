@@ -89,25 +89,24 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 {showBriefing && <WelcomeBriefing onAcknowledge={handleAcknowledge} />}
             </AnimatePresence>
 
-            <nav className="nav-bar">
-                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
+            <nav className="nav-bar" style={{ justifyContent: 'space-between', padding: '15px 20px' }}>
+                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1A1A1A', flexShrink: 0 }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', filter: 'invert(1)' }} />
                     <motion.div
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            transform: 'translateY(2px)',
                             opacity: brandingOpacity
                         }}
                     >
-                        <ClippingText text="SUNDAY COLLECTION" scale={0.28} />
+                        <ClippingText text="SUNDAY COLLECTION" scale={0.18} />
                     </motion.div>
                 </div>
-                <div className="nav-links" style={{ display: 'flex', gap: '15px', alignItems: 'center', textAlign: 'right' }}>
-                    <span onClick={scrollToMembers} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em' }}>
+                <div className="nav-links" style={{ display: 'flex', gap: '12px', alignItems: 'center', textAlign: 'right', flexShrink: 0 }}>
+                    <span onClick={scrollToMembers} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 800, fontSize: '0.55rem', letterSpacing: '0.1em' }}>
                         MEMBERS
                     </span>
-                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em', lineHeight: 1 }}>
+                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 800, fontSize: '0.55rem', letterSpacing: '0.1em' }}>
                         LOG OUT
                     </span>
                 </div>
