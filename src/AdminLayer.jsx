@@ -33,6 +33,19 @@ const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
                         <span className="mobile-hide">Admin Terminal v1.0</span>
                         <span className="mobile-show">Admin</span>
                     </span>
+                    {/* DEBUG INDICATOR FOR VERCEL */}
+                    <div style={{
+                        fontSize: '0.5rem',
+                        padding: '2px 4px',
+                        borderRadius: '2px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                    }}>
+                        URL: {(!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'your_supabase_project_url') ? 'Missing' : `Configured (${import.meta.env.VITE_SUPABASE_URL.length} chars)`}
+                    </div>
                 </div>
             </nav>
 
