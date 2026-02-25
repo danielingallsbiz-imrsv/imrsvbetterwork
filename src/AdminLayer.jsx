@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './Home.css';
 
-const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
+const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatus }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -30,10 +30,9 @@ const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
                         {dbStatus === 'connected' ? '● CLOUD SYNC ACTIVE' : '○ OFFLINE (LOCAL ONLY)'}
                     </div>
                     <span style={{ color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>
-                        <span className="mobile-hide">Admin Terminal v1.0</span>
+                        <span className="mobile-hide">Admin Terminal v1.1</span>
                         <span className="mobile-show">Admin</span>
                     </span>
-                    {/* DEBUG INDICATOR FOR VERCEL */}
                     <div style={{
                         fontSize: '0.5rem',
                         padding: '2px 4px',
@@ -44,7 +43,7 @@ const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em'
                     }}>
-                        URL: {(!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'your_supabase_project_url') ? 'Missing' : `Configured (${import.meta.env.VITE_SUPABASE_URL.length} chars)`}
+                        Streamlined
                     </div>
                 </div>
             </nav>
@@ -64,10 +63,11 @@ const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
                         </div>
                         <button
                             onClick={() => {
-                                const headers = ["Name", "Email", "Hub", "Occupation", "Social", "Date"];
+                                const headers = ["Name", "Email", "Status", "Hub", "Occupation", "Social", "Date"];
                                 const rows = applications.map(app => [
                                     app.name,
                                     app.email,
+                                    app.status || 'pending',
                                     app.hub,
                                     app.occupation,
                                     app.social,
@@ -131,9 +131,49 @@ const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
                                             <span style={{ fontSize: '0.8rem', color: 'rgba(247, 245, 234, 0.4)' }}>
                                                 {app.created_at ? new Date(app.created_at).toLocaleString() : app.date}
                                             </span>
-                                            <div style={{ display: 'flex', gap: '10px' }}>
+                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                                {(!app.status || app.status === 'pending') && (
+                                                    <>
+                                                        <button
+                                                            onClick={() => onApprove(app.id)}
+                                                            style={{
+                                                                background: 'rgba(0, 255, 0, 0.1)',
+                                                                border: '1px solid rgba(0, 255, 0, 0.4)',
+                                                                color: '#00FF00',
+                                                                padding: '6px 12px',
+                                                                fontSize: '0.7rem',
+                                                                borderRadius: '4px',
+                                                                textTransform: 'uppercase',
+                                                                cursor: 'pointer',
+                                                                transition: 'all 0.2s ease'
+                                                            }}
+                                                        >
+                                                            Approve
+                                                        </button>
+                                                        <button
+                                                            onClick={() => onDeny(app.id)}
+                                                            style={{
+                                                                background: 'rgba(255, 165, 0, 0.1)',
+                                                                border: '1px solid rgba(255, 165, 0, 0.4)',
+                                                                color: '#FFA500',
+                                                                padding: '6px 12px',
+                                                                fontSize: '0.7rem',
+                                                                borderRadius: '4px',
+                                                                textTransform: 'uppercase',
+                                                                cursor: 'pointer',
+                                                                transition: 'all 0.2s ease'
+                                                            }}
+                                                        >
+                                                            Deny
+                                                        </button>
+                                                    </>
+                                                )}
                                                 <button
-                                                    onClick={() => onDelete(app.id)}
+                                                    onClick={() => {
+                                                        if (window.confirm("Are you sure you want to delete this transmission permanently?")) {
+                                                            onDelete(app.id);
+                                                        }
+                                                    }}
                                                     style={{
                                                         background: 'transparent',
                                                         border: '1px solid rgba(255, 69, 58, 0.4)',
@@ -145,18 +185,20 @@ const AdminLayer = ({ onBack, applications, onDelete, dbStatus }) => {
                                                         cursor: 'pointer',
                                                         transition: 'all 0.2s ease'
                                                     }}
-                                                    onMouseOver={(e) => {
-                                                        e.target.style.background = 'rgba(255, 69, 58, 0.1)';
-                                                        e.target.style.borderColor = 'rgba(255, 69, 58, 0.8)';
-                                                    }}
-                                                    onMouseOut={(e) => {
-                                                        e.target.style.background = 'transparent';
-                                                        e.target.style.borderColor = 'rgba(255, 69, 58, 0.4)';
-                                                    }}
                                                 >
-                                                    Delete Transmission
+                                                    Delete
                                                 </button>
-                                                <span style={{ padding: '6px 12px', border: '1px solid #F7D031', color: '#F7D031', fontSize: '0.7rem', borderRadius: '4px', textTransform: 'uppercase' }}>Pending Review</span>
+                                                <span style={{
+                                                    padding: '6px 12px',
+                                                    border: `1px solid ${app.status === 'approved' ? '#00FF00' : app.status === 'denied' ? '#FF453A' : '#F7D031'}`,
+                                                    color: app.status === 'approved' ? '#00FF00' : app.status === 'denied' ? '#FF453A' : '#F7D031',
+                                                    fontSize: '0.7rem',
+                                                    borderRadius: '4px',
+                                                    textTransform: 'uppercase',
+                                                    backgroundColor: app.status === 'approved' ? 'rgba(0, 255, 0, 0.05)' : app.status === 'denied' ? 'rgba(255, 69, 58, 0.05)' : 'transparent'
+                                                }}>
+                                                    {app.status || 'Pending Review'}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

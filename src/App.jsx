@@ -89,7 +89,52 @@ function App() {
     } catch (e) {
       console.error("Error deleting application:", e);
       setApplications(prev => prev.filter(app => app.id !== id));
-      localStorage.setItem('imrsv_applications', JSON.stringify(applications.filter(app => app.id !== id)));
+      const saved = JSON.parse(localStorage.getItem('imrsv_applications') || '[]');
+      localStorage.setItem('imrsv_applications', JSON.stringify(saved.filter(app => app.id !== id)));
+    }
+  };
+
+  const approveApplication = async (id) => {
+    try {
+      const appToUpdate = applications.find(a => a.id === id);
+      if (!appToUpdate) return;
+
+      const { data, error } = await supabase
+        .from('applications')
+        .update({ status: 'approved' })
+        .eq('id', id)
+        .select();
+
+      if (error) throw error;
+
+      setApplications(prev => prev.map(app => app.id === id ? { ...app, status: 'approved' } : app));
+
+      // Send Approval Email
+      sendNotificationEmail({ ...appToUpdate, type: 'approval' });
+    } catch (e) {
+      console.error("Error approving application:", e);
+    }
+  };
+
+  const denyApplication = async (id) => {
+    try {
+      const appToUpdate = applications.find(a => a.id === id);
+      if (!appToUpdate) return;
+
+      const { data, error } = await supabase
+        .from('applications')
+        .update({ status: 'denied' })
+        .eq('id', id)
+        .select();
+
+      if (error) throw error;
+
+      setApplications(prev => prev.map(app => app.id === id ? { ...app, status: 'denied' } : app));
+
+      // Send Denial Email
+      sendNotificationEmail({ ...appToUpdate, type: 'denial' });
+    } catch (e) {
+      console.error("Error denying application:", e);
     }
   };
 
@@ -134,6 +179,8 @@ function App() {
             onBack={() => setView('home')}
             applications={applications}
             onDelete={deleteApplication}
+            onApprove={approveApplication}
+            onDeny={denyApplication}
             dbStatus={dbStatus}
           />
         )}
