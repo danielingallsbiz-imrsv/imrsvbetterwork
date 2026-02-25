@@ -31,7 +31,7 @@ export default async function handler(req, res) {
           <p style="font-size: 16px; line-height: 1.6;">Stay tuned for a follow-up transmission with details on our next physical activation and how to secure your RSVP.</p>
           <br/>
           <div style="margin: 20px 0;">
-            <a href="https://sundaycollection.theimrsvproject.org" style="background-color: #F7D031; color: #000; padding: 16px 32px; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;">Claim Your Node & Login</a>
+            <a href="https://sundaycollection.theimrsvproject.org?mode=claim" style="background-color: #F7D031; color: #000; padding: 16px 32px; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;">Claim Your Node & Login</a>
           </div>
           <br/>
           <p style="font-size: 16px; font-weight: bold;">Welcome to the project.</p>

@@ -3,17 +3,32 @@ import { motion } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
-const LoginLayer = ({ onBack, onNavigateToApply, onLogin }) => {
+const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
+    const [mode, setMode] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('mode') === 'claim' ? 'signup' : 'login';
+    });
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // Placeholder for Supabase Auth call
-        if (onLogin) await onLogin(email, password);
-        setLoading(false);
+        setError(null);
+
+        try {
+            if (mode === 'login') {
+                if (onLogin) await onLogin(email, password);
+            } else {
+                if (onSignup) await onSignup(email, password);
+            }
+        } catch (err) {
+            setError(err.message || 'Authentication failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -48,10 +63,16 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin }) => {
                         SUNDAY COLLECTION
                     </span>
                     <h1 className="concept-title" style={{ fontSize: '3rem', color: '#1A1A1A', marginBottom: '40px', lineHeight: 1.1 }}>
-                        <InteractiveText text="LOGIN" />
+                        <InteractiveText text={mode === 'login' ? "LOGIN" : "CLAIM NODE"} />
                     </h1>
 
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '40px' }}>
+                        {error && (
+                            <div style={{ backgroundColor: 'rgba(255, 69, 58, 0.1)', color: '#FF453A', padding: '15px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '3px solid #FF453A' }}>
+                                {error.toUpperCase()}
+                            </div>
+                        )}
+
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Email</label>
                             <input
@@ -84,14 +105,26 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin }) => {
                                 padding: '18px'
                             }}
                         >
-                            {loading ? 'AUTHENTICATING...' : 'Login to Node'}
+                            {loading ? 'AUTHENTICATING...' : mode === 'login' ? 'Login to Node' : 'Initialize Session'}
                         </button>
                     </form>
 
-                    <div style={{ marginTop: '40px', textAlign: 'center' }}>
+                    <div style={{ marginTop: '40px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         <p style={{ fontSize: '0.9rem', opacity: 0.6 }}>
-                            Not a member? <span onClick={onNavigateToApply} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000', fontWeight: 700 }}>Apply for access</span>
+                            {mode === 'login' ? "First time inside?" : "Already have access?"}{' '}
+                            <span
+                                onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+                                style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000', fontWeight: 700 }}
+                            >
+                                {mode === 'login' ? "Claim your account" : "Login here"}
+                            </span>
                         </p>
+
+                        {mode === 'login' && (
+                            <p style={{ fontSize: '0.9rem', opacity: 0.6 }}>
+                                Not a member? <span onClick={onNavigateToApply} style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000', fontWeight: 700 }}>Apply for access</span>
+                            </p>
+                        )}
                     </div>
                 </motion.div>
             </section>

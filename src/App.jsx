@@ -7,6 +7,7 @@ import ApplicationLayer from './ApplicationLayer';
 import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
+import MemberLayer from './MemberLayer';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -15,7 +16,87 @@ function App() {
   const [view, setView] = useState('home');
   const [showSuccess, setShowSuccess] = useState(false);
   const [applications, setApplications] = useState([]);
+  const [user, setUser] = useState(null);
+  const [isMember, setIsMember] = useState(false);
   const [dbStatus, setDbStatus] = useState('connecting'); // connecting, connected, offline
+
+  useEffect(() => {
+    // Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setUser(session.user);
+        checkMembership(session.user.email);
+      }
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const newUser = session?.user ?? null;
+      setUser(newUser);
+      if (newUser) {
+        checkMembership(newUser.email);
+      } else {
+        setIsMember(false);
+        setView('home');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const checkMembership = async (email) => {
+    try {
+      const { data, error } = await supabase
+        .from('applications')
+        .select('status')
+        .eq('email', email)
+        .single();
+
+      if (data && data.status === 'approved') {
+        setIsMember(true);
+        setView('member');
+      } else {
+        setIsMember(false);
+      }
+    } catch (err) {
+      console.error("Membership check failed:", err);
+    }
+  };
+
+  const handleSignup = async (email, password) => {
+    // Check if approved first
+    const { data: appData } = await supabase
+      .from('applications')
+      .select('status')
+      .eq('email', email)
+      .single();
+
+    if (!appData || appData.status !== 'approved') {
+      throw new Error("ACCESS DENIED. YOUR APPLICATION IS NOT YET APPROVED.");
+    }
+
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) throw error;
+  };
+
+  const handleLogin = async (email, password) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
+
+  useEffect(() => {
+    // Check for deep links (e.g., from approval email)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'claim') {
+      setView('login');
+      // Clean up the URL without refreshing
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   useEffect(() => {
     fetchApplications();
@@ -191,10 +272,16 @@ function App() {
             key="login"
             onBack={() => setView('home')}
             onNavigateToApply={() => setView('apply')}
-            onLogin={(email, pass) => {
-              console.log("Login attempt:", email);
-              // Future auth logic here
-            }}
+            onLogin={handleLogin}
+            onSignup={handleSignup}
+          />
+        )}
+        {view === 'member' && (
+          <MemberLayer
+            key="member"
+            user={user}
+            onLogout={handleLogout}
+            onBack={() => setView('home')}
           />
         )}
         {view === 'journal' && (
