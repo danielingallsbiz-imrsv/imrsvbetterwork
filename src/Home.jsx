@@ -131,19 +131,12 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </p>
                 </motion.div>
 
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    webkit-playsinline="true"
-                    disablePictureInPicture
+                <img
+                    src="/hawaii-party-hero.jpg"
+                    alt="Sunday Collection Hero"
                     className="hero-video-bg"
-                    style={{ pointerEvents: 'none' }}
-                    poster="/hawaii-party-hero.jpg"
-                >
-                    <source src="https://v1.mixkit.co/videos/download/mixkit-top-view-of-a-luxury-pool-party-43305-large.mp4" type="video/mp4" />
-                </video>
+                    style={{ pointerEvents: 'none', objectFit: 'cover' }}
+                />
             </section>
 
             {/* THE MISSION */}
