@@ -1,7 +1,9 @@
 export const sendNotificationEmail = async (formData) => {
-  const resendKey = import.meta.env.VITE_RESEND_API_KEY;
+  const resendKey = import.meta.env.VITE_RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'info@theimrsvproject.org';
+  const emailFrom = import.meta.env.VITE_EMAIL_FROM || 'Sunday Collection <notifications@theimrsvproject.org>';
 
-  if (!resendKey || resendKey === 'your_resend_api_key') {
+  if (!resendKey) {
     console.warn("Resend API Key not configured. Skipping email.");
     return;
   }
@@ -14,8 +16,8 @@ export const sendNotificationEmail = async (formData) => {
         'Authorization': `Bearer ${resendKey}`
       },
       body: JSON.stringify({
-        from: 'Sunday Collection <notifications@theimrsvproject.org>', // Using your verified domain
-        to: ['danielingallsbiz@gmail.com'], // Update this to your real email address
+        from: emailFrom, // Using your verified domain
+        to: [adminEmail], // Update this to your real email address
         subject: `New Sunday Collection Application: ${formData.name}`,
         html: `
           <h1>New Application Received</h1>
