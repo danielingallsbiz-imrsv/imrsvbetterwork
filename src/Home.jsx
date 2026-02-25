@@ -133,9 +133,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     muted
                     playsInline
                     className="hero-video-bg"
+                    style={{ pointerEvents: 'none' }}
                     poster="/hawaii-party-hero.jpg"
                 >
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-luxury-pool-party-43305-large.mp4" type="video/mp4" />
+                    <source src="https://v1.mixkit.co/videos/download/mixkit-top-view-of-a-luxury-pool-party-43305-large.mp4" type="video/mp4" />
                 </video>
             </section>
 
