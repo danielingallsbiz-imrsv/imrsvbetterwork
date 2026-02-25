@@ -1,8 +1,51 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import './Home.css';
+
+const WelcomeBriefing = ({ onAcknowledge }) => (
+    <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(247, 245, 234, 0.98)',
+            zIndex: 3000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '40px'
+        }}
+    >
+        <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            style={{ maxWidth: '500px', textAlign: 'center', color: '#1A1A1A' }}
+        >
+            <span className="section-label" style={{ color: '#F7D031' }}>PROTOCOL / INITIATION</span>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '30px', lineHeight: 1 }}>WELCOME TO THE INSIDE.</h2>
+            <p style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: '20px' }}>
+                As a member of the Sunday Collection, your participation directly fuels the restoration of the communities we visit.
+            </p>
+            <p style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: '40px' }}>
+                A significant portion of every ticket and membership goes straight to local artists and cultural preservation projects. You are no longer just a spectator; you are a patron.
+            </p>
+            <button
+                onClick={onAcknowledge}
+                className="gauntlet-btn"
+                style={{ padding: '15px 40px' }}
+            >
+                [ ACKNOWLEDGE & ENTER ]
+            </button>
+        </motion.div>
+    </motion.div>
+);
 
 const MemberLayer = ({ user, userName, onLogout, onBack }) => {
     // Check if briefing was already acknowledged for this user
@@ -12,6 +55,10 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
     });
 
     const [rsvpStatus, setRsvpStatus] = useState({});
+
+    const { scrollY } = useScroll();
+    // Start fading after 200px (past the header) and fully gone by 350px
+    const brandingOpacity = useTransform(scrollY, [200, 350], [1, 0]);
 
     const handleRSVP = (eventId) => {
         setRsvpStatus(prev => ({ ...prev, [eventId]: 'SECURED' }));
@@ -30,58 +77,21 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
             className="home-container"
             style={{ backgroundColor: '#F7F5EA', minHeight: '100vh', color: '#1A1A1A', display: 'flex', flexDirection: 'column', position: 'relative' }}
         >
-            {/* WELCOME BRIEFING OVERLAY */}
             <AnimatePresence>
-                {showBriefing && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(247, 245, 234, 0.98)',
-                            zIndex: 3000,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: '40px'
-                        }}
-                    >
-                        <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            style={{ maxWidth: '500px', textAlign: 'center', color: '#1A1A1A' }}
-                        >
-                            <span className="section-label" style={{ color: '#F7D031' }}>PROTOCOL / INITIATION</span>
-                            <h2 style={{ fontSize: '2.5rem', marginBottom: '30px', lineHeight: 1 }}>WELCOME TO THE INSIDE.</h2>
-                            <p style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: '20px' }}>
-                                As a member of the Sunday Collection, your participation directly fuels the restoration of the communities we visit.
-                            </p>
-                            <p style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: '40px' }}>
-                                A significant portion of every ticket and membership goes straight to local artists and cultural preservation projects. You are no longer just a spectator; you are a patron.
-                            </p>
-                            <button
-                                onClick={handleAcknowledge}
-                                className="gauntlet-btn"
-                                style={{ padding: '15px 40px' }}
-                            >
-                                [ ACKNOWLEDGE & ENTER ]
-                            </button>
-                        </motion.div>
-                    </motion.div>
-                )}
+                {showBriefing && <WelcomeBriefing onAcknowledge={handleAcknowledge} />}
             </AnimatePresence>
 
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <div style={{ display: 'flex', alignItems: 'center', transform: 'translateY(2px)' }}>
+                    <motion.div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        transform: 'translateY(2px)',
+                        opacity: brandingOpacity
+                    }}>
                         <ClippingText text="SUNDAY COLLECTION" scale={0.32} />
-                    </div>
+                    </motion.div>
                 </div>
                 <div className="nav-links">
                     <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 600 }}>
