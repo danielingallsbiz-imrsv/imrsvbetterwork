@@ -19,6 +19,7 @@ function AppContent() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [applications, setApplications] = useState([]);
   const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState('');
   const [isMember, setIsMember] = useState(false);
   const [dbStatus, setDbStatus] = useState('connecting');
 
@@ -64,14 +65,16 @@ function AppContent() {
     try {
       const { data, error } = await supabase
         .from('applications')
-        .select('status')
+        .select('status, name')
         .ilike('email', email.trim())
         .eq('status', 'approved');
 
       if (data && data.length > 0) {
         setIsMember(true);
+        setUserName(data[0].name || '');
       } else {
         setIsMember(false);
+        setUserName('');
       }
     } catch (err) {
       console.error("Membership check failed:", err);
@@ -308,6 +311,7 @@ function AppContent() {
             isMember ? (
               <MemberLayer
                 user={user}
+                userName={userName}
                 onLogout={handleLogout}
                 onBack={() => navigate('/')}
               />

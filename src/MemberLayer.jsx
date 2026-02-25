@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
-const MemberLayer = ({ user, onLogout, onBack }) => {
+const MemberLayer = ({ user, userName, onLogout, onBack }) => {
     const [showBriefing, setShowBriefing] = useState(true);
     const [rsvpStatus, setRsvpStatus] = useState({});
 
@@ -99,9 +99,11 @@ const MemberLayer = ({ user, onLogout, onBack }) => {
                     <div style={{ display: 'flex', gap: '40px', marginBottom: '60px' }}>
                         <div>
                             <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Identity</p>
-                            <p style={{ fontSize: '1.1rem', color: '#F7F5EA', fontWeight: 500 }}>{user?.email}</p>
+                            <p style={{ fontSize: '1.2rem', color: '#F7F5EA', fontWeight: 500, letterSpacing: '0.02em' }}>
+                                {userName ? `Welcome ${userName}` : 'Accessing Portal...'}
+                            </p>
                             <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', marginTop: '4px', opacity: 0.8 }}>
-                                MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'} [ SECURE NODE AUTHENTICATOR ]
+                                MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
                             </p>
                         </div>
                         <div>
