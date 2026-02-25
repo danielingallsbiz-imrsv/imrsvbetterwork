@@ -88,9 +88,8 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
-                    <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
+                    <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', filter: 'invert(1)' }} />
                     <motion.div
-                        className="mobile-hide"
                         style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -98,14 +97,14 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             opacity: brandingOpacity
                         }}
                     >
-                        <ClippingText text="SUNDAY COLLECTION" scale={0.32} />
+                        <ClippingText text="SUNDAY COLLECTION" scale={0.28} />
                     </motion.div>
                 </div>
-                <div className="nav-links" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                    <span onClick={scrollToCollective} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.15em' }}>
+                <div className="nav-links" style={{ display: 'flex', gap: '15px', alignItems: 'center', textAlign: 'right' }}>
+                    <span onClick={scrollToCollective} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em' }}>
                         COLLECTIVE
                     </span>
-                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.15em' }}>
+                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.15em', lineHeight: 1 }}>
                         LOG OUT
                     </span>
                 </div>
