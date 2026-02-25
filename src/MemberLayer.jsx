@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
+import ClippingText from './components/ClippingText';
 import './Home.css';
 
 const MemberLayer = ({ user, userName, onLogout, onBack }) => {
@@ -27,7 +28,7 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="home-container"
-            style={{ backgroundColor: '#000', minHeight: '100vh', color: '#F7F5EA', display: 'flex', flexDirection: 'column', position: 'relative' }}
+            style={{ backgroundColor: '#F7F5EA', minHeight: '100vh', color: '#1A1A1A', display: 'flex', flexDirection: 'column', position: 'relative' }}
         >
             {/* WELCOME BRIEFING OVERLAY */}
             <AnimatePresence>
@@ -42,7 +43,7 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            backgroundColor: 'rgba(0,0,0,0.95)',
+                            backgroundColor: 'rgba(247, 245, 234, 0.98)',
                             zIndex: 3000,
                             display: 'flex',
                             alignItems: 'center',
@@ -53,7 +54,7 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                         <motion.div
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            style={{ maxWidth: '500px', textAlign: 'center' }}
+                            style={{ maxWidth: '500px', textAlign: 'center', color: '#1A1A1A' }}
                         >
                             <span className="section-label" style={{ color: '#F7D031' }}>PROTOCOL / INITIATION</span>
                             <h2 style={{ fontSize: '2.5rem', marginBottom: '30px', lineHeight: 1 }}>WELCOME TO THE INSIDE.</h2>
@@ -76,8 +77,8 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
             </AnimatePresence>
 
             <nav className="nav-bar">
-                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
-                    <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
+                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
+                    <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
                     <span style={{ marginLeft: '4px' }} className="mobile-hide">
                         <InteractiveText text="imrsv project" />
                     </span>
@@ -95,60 +96,59 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px' }}>
-                        <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)', margin: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
+                        <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)', margin: 0 }}>
                             MEMBER / SESSION ACTIVE
                         </span>
                     </div>
 
-                    <h1 className="hero-title" style={{ fontSize: '4rem', color: '#F7F5EA', marginBottom: '30px', lineHeight: 1 }}>
-                        <InteractiveText text="SUNDAY" /><br />
-                        <InteractiveText text="COLLECTION" />
-                    </h1>
+                    <div style={{ marginBottom: '60px' }}>
+                        <ClippingText text="SUNDAY COLLECTION" />
+                    </div>
 
-                    <div style={{ display: 'flex', gap: '40px', marginBottom: '60px' }}>
+                    <div style={{ display: 'flex', gap: '60px', marginBottom: '60px', alignItems: 'flex-start' }}>
                         <div>
-                            <p style={{ fontSize: '1.2rem', color: '#F7F5EA', fontWeight: 500, letterSpacing: '0.02em', marginBottom: '4px' }}>
+                            <p style={{ fontSize: '1.2rem', color: '#1A1A1A', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '4px' }}>
                                 {userName || 'Accessing Portal...'}
                             </p>
-                            <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', opacity: 0.8 }}>
+                            <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700 }}>
                                 MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
                             </p>
                         </div>
                         <div>
                             <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Tier</p>
-                            <p style={{ fontSize: '1.1rem', color: '#F7D031', fontWeight: 600 }}>FOUNDATION MEMBER</p>
+                            <p style={{ fontSize: '1.1rem', color: '#1A1A1A', fontWeight: 600 }}>FOUNDATION MEMBER</p>
                         </div>
                     </div>
 
                     <div className="bucket-grid">
-                        <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031' }}>01.</span>
-                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>UPCOMING SESSIONS</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.6)' }}>
+                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>01.</span>
+                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING SESSIONS</h3>
+                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
                                 Oahu Hub Activation — April 12.
                                 <br />Private location revealed 24h prior.
                             </p>
                             <button
                                 onClick={() => handleRSVP('oahu-apr')}
                                 className="gauntlet-btn"
-                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: rsvpStatus['oahu-apr'] ? '#45FFC7' : '#F7D031', color: '#000' }}
+                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: rsvpStatus['oahu-apr'] ? '#2ECC71' : '#F7D031', color: '#000' }}
                             >
                                 {rsvpStatus['oahu-apr'] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $50 ]'}
                             </button>
                         </div>
-                        <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031' }}>02.</span>
-                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>TICKET SHOP</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.6)' }}>
+                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
+                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>TICKET SHOP</h3>
+                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
                                 Limited Edition 'Restoration' physical collection. Only available to verified nodes.
                             </p>
                             <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ ACCESS SHOP ]</button>
                         </div>
-                        <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031' }}>03.</span>
-                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>RESTORE LEDGER</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.6)' }}>
+                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>03.</span>
+                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>RESTORE LEDGER</h3>
+                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
                                 Interactive tracking of Oahu Hub reinvestment into local lei artists and surfers.
                             </p>
                             <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ OPEN LEDGER ]</button>
@@ -157,9 +157,9 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                 </motion.div>
             </section>
 
-            <footer className="footer" style={{ borderTop: '1px solid rgba(247, 245, 234, 0.1)' }}>
-                <div style={{ opacity: 0.4, fontSize: '0.7rem' }}>the imrsv project / secure session access</div>
-                <div style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem' }}>PROTOCOL: VERSION 2.0.4</div>
+            <footer className="footer" style={{ borderTop: '1px solid rgba(0, 0, 0, 0.05)' }}>
+                <div style={{ opacity: 0.4, fontSize: '0.7rem', color: '#1A1A1A' }}>the imrsv project / secure session access</div>
+                <div style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '0.7rem' }}>PROTOCOL: VERSION 2.0.4</div>
             </footer>
         </motion.div>
     );
