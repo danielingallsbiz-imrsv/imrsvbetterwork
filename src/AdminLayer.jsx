@@ -188,17 +188,19 @@ const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatu
                                                 >
                                                     Delete
                                                 </button>
-                                                <span style={{
-                                                    padding: '6px 12px',
-                                                    border: `1px solid ${app.status === 'approved' ? '#00FF00' : app.status === 'denied' ? '#FF453A' : '#F7D031'}`,
-                                                    color: app.status === 'approved' ? '#00FF00' : app.status === 'denied' ? '#FF453A' : '#F7D031',
-                                                    fontSize: '0.7rem',
-                                                    borderRadius: '4px',
-                                                    textTransform: 'uppercase',
-                                                    backgroundColor: app.status === 'approved' ? 'rgba(0, 255, 0, 0.05)' : app.status === 'denied' ? 'rgba(255, 69, 58, 0.05)' : 'transparent'
-                                                }}>
-                                                    {app.status || 'Pending Review'}
-                                                </span>
+                                                {app.status && app.status !== 'pending' && (
+                                                    <span style={{
+                                                        padding: '6px 12px',
+                                                        border: `1px solid ${app.status === 'approved' ? '#00FF00' : '#FF453A'}`,
+                                                        color: app.status === 'approved' ? '#00FF00' : '#FF453A',
+                                                        fontSize: '0.7rem',
+                                                        borderRadius: '4px',
+                                                        textTransform: 'uppercase',
+                                                        backgroundColor: app.status === 'approved' ? 'rgba(0, 255, 0, 0.05)' : 'rgba(255, 69, 58, 0.05)'
+                                                    }}>
+                                                        {app.status}
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
