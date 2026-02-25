@@ -127,11 +127,16 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </p>
                 </motion.div>
 
-                <img
-                    src="/hawaii-party-hero.jpg"
-                    alt="IMRSV Hawaii Party"
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     className="hero-video-bg"
-                />
+                    poster="/hawaii-party-hero.jpg"
+                >
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-luxury-pool-party-43305-large.mp4" type="video/mp4" />
+                </video>
             </section>
 
             {/* THE MISSION */}
