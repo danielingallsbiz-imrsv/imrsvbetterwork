@@ -31,7 +31,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
                 const result = await onLogin(email, password);
                 if (result?.status === 'CONFIRMATION_REQUIRED') {
                     setError("EMAIL NOT CONFIRMED. PLEASE INITIALIZE YOUR NODE.");
-                    setSuccess("WE'VE ALREADY SENT A LINK. IF YOU CAN'T FIND IT, USE THE BUTTON BELOW TO RESEND.");
+                    setSuccess("WE'VE SENT A LINK TO YOUR INBOX. IF YOU CAN'T FIND IT, USE THE BUTTON BELOW TO RESEND.");
                 }
             } else {
                 if (password !== confirmPassword) {
@@ -39,18 +39,18 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
                 }
                 const result = await onSignup(email, password);
                 if (result?.status === 'CONFIRMATION_SENT') {
-                    setSuccess("PROTOCOL INITIATED. CHECK YOUR INBOX TO INITIALIZE YOUR NODE.");
+                    setSuccess("CHECK YOUR EMAIL. WE'VE SENT A CONFIRMATION LINK TO INITIALIZE YOUR NODE.");
                 }
             }
         } catch (err) {
             let msg = err.message || 'Authentication failed. Please try again.';
             if (msg.includes('User already registered')) {
-                msg = "NODE ALREADY INITIALIZED. PLEASE LOG IN INSTEAD.";
+                msg = "YOU ALREADY HAVE AN ACCOUNT. PLEASE LOG IN INSTEAD.";
             }
             setError(msg);
 
             if (msg.includes('RATE LIMIT')) {
-                setSuccess("NOTE: YOU MAY ALREADY HAVE A LINK. PLEASE CHECK YOUR INBOX.");
+                setSuccess("NOTE: YOU MAY ALREADY HAVE A CONFIRMATION LINK IN YOUR INBOX. PLEASE CHECK YOUR EMAIL.");
             }
         } finally {
             setLoading(false);
