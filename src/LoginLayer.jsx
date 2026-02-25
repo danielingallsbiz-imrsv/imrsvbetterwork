@@ -128,11 +128,6 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
                             </div>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                                {error === "EMAIL NOT CONFIRMED. PLEASE INITIALIZE YOUR NODE." && !resendStatus && (
-                                    <button onClick={handleResend} className="gauntlet-btn" style={{ padding: '18px', backgroundColor: '#F7D031', color: '#000', fontWeight: 800 }}>
-                                        RESEND CONFIRMATION LINK
-                                    </button>
-                                )}
                                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
                                     <button onClick={onBack} className="gauntlet-btn" style={{ flex: 1, padding: '15px 30px', fontSize: '0.7rem' }}>
                                         RETURN HOME
@@ -146,8 +141,21 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
                     ) : (
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: mode === 'signup' ? '10px' : '40px' }}>
                             {error && (
-                                <div style={{ backgroundColor: 'rgba(255, 69, 58, 0.1)', color: '#FF453A', padding: '15px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '3px solid #FF453A' }}>
-                                    {error.toUpperCase()}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    <div style={{ backgroundColor: 'rgba(255, 69, 58, 0.1)', color: '#FF453A', padding: '15px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '3px solid #FF453A' }}>
+                                        {error.toUpperCase()}
+                                    </div>
+                                    {(error.includes('CONFIRMED') || error.includes('INITIALIZE')) && (
+                                        <button
+                                            type="button"
+                                            onClick={handleResend}
+                                            disabled={loading}
+                                            className="gauntlet-btn"
+                                            style={{ padding: '12px', fontSize: '0.7rem', backgroundColor: '#F7D031', color: '#000', fontWeight: 800 }}
+                                        >
+                                            {loading ? 'SENDING...' : 'RESEND CONFIRMATION LINK'}
+                                        </button>
+                                    )}
                                 </div>
                             )}
 
