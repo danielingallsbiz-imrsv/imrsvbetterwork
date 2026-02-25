@@ -93,7 +93,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    opacity: 0.95;
     z-index: -1;
     filter: saturate(1.5) contrast(1.1) brightness(0.95) sepia(0.1) hue-rotate(-4deg);
 }
@@ -107,7 +107,7 @@
     width: 100%;
     height: 100%;
     background: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.12;
+    opacity: 0.05;
     z-index: 1;
     pointer-events: none;
     mix-blend-mode: overlay;
