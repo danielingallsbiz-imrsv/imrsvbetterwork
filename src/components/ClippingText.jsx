@@ -5,7 +5,10 @@ const ClippingText = ({ text }) => {
     const words = text.split(' ');
 
     const colors = [
-        '#E74C3C', // Red
+        '#E74C3C', // Classic Red
+        '#C0392B', // Pomegranate (Deep Red)
+        '#B71C1C', // Dark Red
+        '#D32F2F', // Crimson
         '#3498DB', // Blue
         '#F1C40F', // Yellow
         '#2ECC71', // Green
@@ -32,7 +35,7 @@ const ClippingText = ({ text }) => {
                         const randomColor = colors[Math.floor(Math.random() * colors.length)];
                         const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
                         const randomRotation = (Math.random() * 8 - 4).toFixed(2);
-                        const isDark = ['#34495E', '#E74C3C', '#3498DB', '#9B59B6'].includes(randomColor);
+                        const isDark = ['#34495E', '#E74C3C', '#C0392B', '#B71C1C', '#D32F2F', '#3498DB', '#9B59B6'].includes(randomColor);
 
                         return (
                             <motion.div
