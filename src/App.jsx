@@ -6,6 +6,7 @@ import RestorationLayer from './RestorationLayer';
 import ApplicationLayer from './ApplicationLayer';
 import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
+import LoginLayer from './LoginLayer';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -145,7 +146,7 @@ function App() {
           <Home key="home"
             navigateToImpact={() => setView('impact')}
             navigateToRestoration={() => setView('restoration')}
-            navigateToApply={() => setView('apply')}
+            navigateToLogin={() => setView('login')} // Map Apply to Login entry
             navigateToAdmin={() => setView('admin')}
             navigateToJournal={() => setView('journal')}
             showSuccess={showSuccess}
@@ -182,6 +183,17 @@ function App() {
             onApprove={approveApplication}
             onDeny={denyApplication}
             dbStatus={dbStatus}
+          />
+        )}
+        {view === 'login' && (
+          <LoginLayer
+            key="login"
+            onBack={() => setView('home')}
+            onNavigateToApply={() => setView('apply')}
+            onLogin={(email, pass) => {
+              console.log("Login attempt:", email);
+              // Future auth logic here
+            }}
           />
         )}
         {view === 'journal' && (
