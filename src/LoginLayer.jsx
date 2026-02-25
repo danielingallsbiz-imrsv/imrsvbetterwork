@@ -8,8 +8,12 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
         const params = new URLSearchParams(window.location.search);
         return params.get('mode') === 'claim' ? 'signup' : 'login';
     });
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('email') || '';
+    });
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -22,6 +26,9 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
             if (mode === 'login') {
                 if (onLogin) await onLogin(email, password);
             } else {
+                if (password !== confirmPassword) {
+                    throw new Error("PASSWORDS DO NOT MATCH.");
+                }
                 if (onSignup) await onSignup(email, password);
             }
         } catch (err) {
@@ -47,7 +54,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
                     </span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={onBack} style={{ cursor: 'pointer', color: '#1A1A1A' }}>
+                    <span onClick={onBack} style={{ cursor: 'pointer', color: '#000' }}>
                         <InteractiveText text="Back" />
                     </span>
                 </div>
@@ -59,14 +66,20 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)' }}>
+                    <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)', textTransform: 'uppercase' }}>
                         SUNDAY COLLECTION
                     </span>
-                    <h1 className="concept-title" style={{ fontSize: '3rem', color: '#1A1A1A', marginBottom: '40px', lineHeight: 1.1 }}>
-                        <InteractiveText text={mode === 'login' ? "LOGIN" : "CLAIM NODE"} />
+                    <h1 className="concept-title" style={{ fontSize: '3rem', color: '#1A1A1A', marginBottom: '10px', lineHeight: 1.1 }}>
+                        <InteractiveText text={mode === 'login' ? "LOGIN" : "CREATE ACCOUNT"} />
                     </h1>
 
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '40px' }}>
+                    {mode === 'signup' && (
+                        <p style={{ fontSize: '0.9rem', opacity: 0.5, marginBottom: '30px' }}>
+                            Initialize your node by setting a secure password.
+                        </p>
+                    )}
+
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: mode === 'signup' ? '10px' : '40px' }}>
                         {error && (
                             <div style={{ backgroundColor: 'rgba(255, 69, 58, 0.1)', color: '#FF453A', padding: '15px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '3px solid #FF453A' }}>
                                 {error.toUpperCase()}
@@ -74,7 +87,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
                         )}
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Email</label>
+                            <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Email Address</label>
                             <input
                                 required
                                 type="email"
@@ -91,10 +104,24 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
+                                placeholder={mode === 'login' ? "Enter your password" : "Set your password"}
                                 style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
                             />
                         </div>
+
+                        {mode === 'signup' && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Confirm Password</label>
+                                <input
+                                    required
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    placeholder="Confirm your password"
+                                    style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
+                                />
+                            </div>
+                        )}
 
                         <button
                             disabled={loading}
@@ -105,18 +132,18 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
                                 padding: '18px'
                             }}
                         >
-                            {loading ? 'AUTHENTICATING...' : mode === 'login' ? 'Login to Node' : 'Initialize Session'}
+                            {loading ? 'PROCESSING...' : mode === 'login' ? 'Login' : 'Create Account'}
                         </button>
                     </form>
 
                     <div style={{ marginTop: '40px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         <p style={{ fontSize: '0.9rem', opacity: 0.6 }}>
-                            {mode === 'login' ? "First time inside?" : "Already have access?"}{' '}
+                            {mode === 'login' ? "First time here?" : "Already have access?"}{' '}
                             <span
                                 onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
                                 style={{ cursor: 'pointer', textDecoration: 'underline', color: '#000', fontWeight: 700 }}
                             >
-                                {mode === 'login' ? "Claim your account" : "Login here"}
+                                {mode === 'login' ? "Create an account" : "Login here"}
                             </span>
                         </p>
 

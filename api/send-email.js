@@ -28,10 +28,11 @@ export default async function handler(req, res) {
           <p style="font-size: 16px; line-height: 1.6;">Hello ${firstName},</p>
           <p style="font-size: 16px; line-height: 1.6;">We are pleased to inform you that your application to join the Sunday Collection network has been <strong>APPROVED</strong>.</p>
           <p style="font-size: 16px; line-height: 1.6;">We were impressed by your contribution intent and believe you will be a valuable addition to our collective. You now have priority access to upcoming activations and community initiatives.</p>
-          <p style="font-size: 16px; line-height: 1.6;">Stay tuned for a follow-up transmission with details on our next physical activation and how to secure your RSVP.</p>
+          <p style="font-size: 16px; line-height: 1.6;">Stay tuned for follow-up transmissions with details on physical activations and how to secure your RSVP.</p>
+          <p style="font-size: 16px; line-height: 1.6;"><strong>Next Step:</strong> You must now create your member account using this email address to secure your position in the network.</p>
           <br/>
           <div style="margin: 20px 0;">
-            <a href="https://sundaycollection.theimrsvproject.org?mode=claim" style="background-color: #F7D031; color: #000; padding: 16px 32px; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;">Claim Your Node & Login</a>
+            <a href="https://theimrsvproject.org/login?mode=claim&email=${formData.email}" style="background-color: #F7D031; color: #000; padding: 16px 32px; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;">Create Your Member Account</a>
           </div>
           <br/>
           <p style="font-size: 16px; font-weight: bold;">Welcome to the project.</p>

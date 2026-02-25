@@ -32,18 +32,34 @@ const MemberLayer = ({ user, onLogout, onBack }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
-                        MEMBER / SESSION ACTIVE
-                    </span>
-                    <h1 className="hero-title" style={{ fontSize: '4rem', color: '#F7F5EA', marginBottom: '40px', lineHeight: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px' }}>
+                        <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)', margin: 0 }}>
+                            MEMBER / SESSION ACTIVE
+                        </span>
+                        <span style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 600 }}>
+                            NODE ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
+                        </span>
+                    </div>
+
+                    <h1 className="hero-title" style={{ fontSize: '4rem', color: '#F7F5EA', marginBottom: '30px', lineHeight: 1 }}>
                         <InteractiveText text="WELCOME" /><br />
                         <InteractiveText text="INSIDE." />
                     </h1>
 
-                    <p style={{ fontSize: '1.2rem', opacity: 0.6, maxWidth: '600px', marginBottom: '60px' }}>
-                        Node identified: <span style={{ color: '#F7D031', fontWeight: 600 }}>{user?.email}</span>. <br />
-                        You now have priority access to all Sunday Collection activations and the global restoration ledger.
-                    </p>
+                    <div style={{ display: 'flex', gap: '40px', marginBottom: '60px' }}>
+                        <div>
+                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Identity</p>
+                            <p style={{ fontSize: '1.1rem', color: '#F7F5EA', fontWeight: 500 }}>{user?.email}</p>
+                        </div>
+                        <div>
+                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Tier</p>
+                            <p style={{ fontSize: '1.1rem', color: '#F7D031', fontWeight: 600 }}>FOUNDATION MEMBER</p>
+                        </div>
+                        <div>
+                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Status</p>
+                            <p style={{ fontSize: '1.1rem', color: '#45FFC7', fontWeight: 600 }}>VERIFIED NODE</p>
+                        </div>
+                    </div>
 
                     <div className="bucket-grid">
                         <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
