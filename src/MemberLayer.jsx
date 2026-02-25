@@ -89,21 +89,24 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <motion.div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        transform: 'translateY(2px)',
-                        opacity: brandingOpacity
-                    }}>
+                    <motion.div
+                        className="mobile-hide"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            transform: 'translateY(2px)',
+                            opacity: brandingOpacity
+                        }}
+                    >
                         <ClippingText text="SUNDAY COLLECTION" scale={0.32} />
                     </motion.div>
                 </div>
-                <div className="nav-links" style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                    <span onClick={scrollToCollective} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 600, fontSize: '0.8rem', letterSpacing: '0.1em' }}>
-                        <InteractiveText text="COLLECTIVE" />
+                <div className="nav-links" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                    <span onClick={scrollToCollective} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.15em' }}>
+                        COLLECTIVE
                     </span>
-                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 600, fontSize: '0.8rem', letterSpacing: '0.1em' }}>
-                        <InteractiveText text="Log Out" />
+                    <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.15em' }}>
+                        LOG OUT
                     </span>
                 </div>
             </nav>

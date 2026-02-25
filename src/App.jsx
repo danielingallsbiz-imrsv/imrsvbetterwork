@@ -176,7 +176,11 @@ function AppContent() {
       console.warn("Supabase connection failed, using local storage:", e.message);
       setDbStatus('offline');
       const saved = localStorage.getItem('imrsv_applications');
-      if (saved) setApplications(JSON.parse(saved));
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setApplications(parsed);
+        setMembers(parsed.filter(a => a.status === 'approved'));
+      }
     }
   };
 
