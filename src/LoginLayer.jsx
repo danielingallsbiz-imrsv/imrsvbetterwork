@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
-const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode = 'login' }) => {
+const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConfirmation, initialMode = 'login' }) => {
     const [mode, setMode] = useState(() => {
         if (initialMode === 'signup') return 'signup';
         const params = new URLSearchParams(window.location.search);
@@ -18,37 +18,53 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
+    const [resendStatus, setResendStatus] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setResendStatus(null);
 
         try {
             if (mode === 'login') {
-                if (onLogin) await onLogin(email, password);
+                const result = await onLogin(email, password);
+                if (result?.status === 'CONFIRMATION_REQUIRED') {
+                    setError("EMAIL NOT CONFIRMED. PLEASE INITIALIZE YOUR NODE.");
+                    setSuccess("WE'VE ALREADY SENT A LINK. IF YOU CAN'T FIND IT, USE THE BUTTON BELOW TO RESEND.");
+                }
             } else {
                 if (password !== confirmPassword) {
                     throw new Error("PASSWORDS DO NOT MATCH.");
                 }
-                if (onSignup) {
-                    const result = await onSignup(email, password);
-                    if (result?.status === 'CONFIRMATION_SENT') {
-                        setSuccess("CHECK YOUR EMAIL. WE'VE SENT A CONFIRMATION LINK TO INITIALIZE YOUR NODE.");
-                    }
+                const result = await onSignup(email, password);
+                if (result?.status === 'CONFIRMATION_SENT') {
+                    setSuccess("PROTOCOL INITIATED. CHECK YOUR INBOX TO INITIALIZE YOUR NODE.");
                 }
             }
         } catch (err) {
             let msg = err.message || 'Authentication failed. Please try again.';
             if (msg.includes('User already registered')) {
-                msg = "YOU ALREADY HAVE AN ACCOUNT. PLEASE LOG IN INSTEAD.";
+                msg = "NODE ALREADY INITIALIZED. PLEASE LOG IN INSTEAD.";
             }
             setError(msg);
 
-            // If rate limited, we can proactively suggest checking email
             if (msg.includes('RATE LIMIT')) {
-                setSuccess("NOTE: YOU MAY ALREADY HAVE A CONFIRMATION LINK IN YOUR INBOX. PLEASE CHECK YOUR EMAIL TO INITIALIZE YOUR NODE.");
+                setSuccess("NOTE: YOU MAY ALREADY HAVE A LINK. PLEASE CHECK YOUR INBOX.");
             }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleResend = async () => {
+        setLoading(true);
+        try {
+            await onResendConfirmation(email);
+            setResendStatus("NEW LINK SENT. CHECK YOUR INBOX.");
+            setSuccess(null);
+        } catch (err) {
+            setError(err.message);
         } finally {
             setLoading(false);
         }
@@ -95,19 +111,36 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
                         </p>
                     )}
 
-                    {success ? (
+                    {success || resendStatus ? (
                         <div style={{ marginTop: '40px', textAlign: 'center' }}>
-                            <div style={{ backgroundColor: 'rgba(69, 255, 199, 0.1)', color: '#27ae60', padding: '30px', borderLeft: '3px solid #45FFC7', textAlign: 'left', marginBottom: '30px' }}>
-                                <p style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '10px' }}>SUCCESS / INITIALIZATION PENDING</p>
-                                <p style={{ fontSize: '0.8rem', opacity: 0.8, lineHeight: 1.6 }}>{success}</p>
+                            <div style={{
+                                backgroundColor: resendStatus ? 'rgba(247, 208, 49, 0.1)' : 'rgba(69, 255, 199, 0.1)',
+                                color: resendStatus ? '#B8860B' : '#27ae60',
+                                padding: '30px',
+                                borderLeft: `3px solid ${resendStatus ? '#F7D031' : '#45FFC7'}`,
+                                textAlign: 'left',
+                                marginBottom: '30px'
+                            }}>
+                                <p style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '10px' }}>
+                                    {resendStatus ? 'TRANSMISSION SENT' : 'INITIALIZATION PENDING'}
+                                </p>
+                                <p style={{ fontSize: '0.8rem', opacity: 0.8, lineHeight: 1.6 }}>{resendStatus || success}</p>
                             </div>
-                            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-                                <button onClick={onBack} className="gauntlet-btn" style={{ padding: '15px 30px', fontSize: '0.7rem' }}>
-                                    RETURN HOME
-                                </button>
-                                <button onClick={() => { setMode('login'); setSuccess(null); setError(null); }} className="gauntlet-btn" style={{ padding: '15px 30px', fontSize: '0.7rem', backgroundColor: '#F7D031', color: '#000' }}>
-                                    LOGIN INSTEAD
-                                </button>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                {error === "EMAIL NOT CONFIRMED. PLEASE INITIALIZE YOUR NODE." && !resendStatus && (
+                                    <button onClick={handleResend} className="gauntlet-btn" style={{ padding: '18px', backgroundColor: '#F7D031', color: '#000', fontWeight: 800 }}>
+                                        RESEND CONFIRMATION LINK
+                                    </button>
+                                )}
+                                <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+                                    <button onClick={onBack} className="gauntlet-btn" style={{ flex: 1, padding: '15px 30px', fontSize: '0.7rem' }}>
+                                        RETURN HOME
+                                    </button>
+                                    <button onClick={() => { setMode('login'); setSuccess(null); setError(null); setResendStatus(null); }} className="gauntlet-btn" style={{ flex: 1, padding: '15px 30px', fontSize: '0.7rem', backgroundColor: 'rgba(247, 208, 49, 0.1)', color: '#000' }}>
+                                        TRY LOGIN AGAIN
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ) : (
