@@ -16,7 +16,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +30,12 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
                 if (password !== confirmPassword) {
                     throw new Error("PASSWORDS DO NOT MATCH.");
                 }
-                if (onSignup) await onSignup(email, password);
+                if (onSignup) {
+                    const result = await onSignup(email, password);
+                    if (result?.status === 'CONFIRMATION_SENT') {
+                        setSuccess("CHECK YOUR EMAIL. WE'VE SENT A CONFIRMATION LINK TO INITIALIZE YOUR NODE.");
+                    }
+                }
             }
         } catch (err) {
             setError(err.message || 'Authentication failed. Please try again.');
@@ -80,62 +85,74 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
                         </p>
                     )}
 
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: mode === 'signup' ? '10px' : '40px' }}>
-                        {error && (
-                            <div style={{ backgroundColor: 'rgba(255, 69, 58, 0.1)', color: '#FF453A', padding: '15px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '3px solid #FF453A' }}>
-                                {error.toUpperCase()}
+                    {success ? (
+                        <div style={{ marginTop: '40px', textAlign: 'center' }}>
+                            <div style={{ backgroundColor: 'rgba(69, 255, 199, 0.1)', color: '#27ae60', padding: '30px', borderLeft: '3px solid #45FFC7', textAlign: 'left', marginBottom: '30px' }}>
+                                <p style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '10px' }}>SUCCESS / INITIALIZATION PENDING</p>
+                                <p style={{ fontSize: '0.8rem', opacity: 0.8, lineHeight: 1.6 }}>{success}</p>
                             </div>
-                        )}
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Email Address</label>
-                            <input
-                                required
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="alex@example.com"
-                                style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
-                            />
+                            <button onClick={onBack} className="gauntlet-btn" style={{ padding: '15px 40px' }}>
+                                RETURN HOME
+                            </button>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Password</label>
-                            <input
-                                required
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder={mode === 'login' ? "Enter your password" : "Set your password"}
-                                style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
-                            />
-                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: mode === 'signup' ? '10px' : '40px' }}>
+                            {error && (
+                                <div style={{ backgroundColor: 'rgba(255, 69, 58, 0.1)', color: '#FF453A', padding: '15px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '3px solid #FF453A' }}>
+                                    {error.toUpperCase()}
+                                </div>
+                            )}
 
-                        {mode === 'signup' && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Confirm Password</label>
+                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Email Address</label>
                                 <input
                                     required
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    placeholder="Confirm your password"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="alex@example.com"
                                     style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
                                 />
                             </div>
-                        )}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Password</label>
+                                <input
+                                    required
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder={mode === 'login' ? "Enter your password" : "Set your password"}
+                                    style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
+                                />
+                            </div>
 
-                        <button
-                            disabled={loading}
-                            className="gauntlet-btn"
-                            style={{
-                                marginTop: '20px',
-                                opacity: loading ? 0.3 : 1,
-                                padding: '18px'
-                            }}
-                        >
-                            {loading ? 'PROCESSING...' : mode === 'login' ? 'Login' : 'Create Account'}
-                        </button>
-                    </form>
+                            {mode === 'signup' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800 }}>Confirm Password</label>
+                                    <input
+                                        required
+                                        type="password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        placeholder="Confirm your password"
+                                        style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }}
+                                    />
+                                </div>
+                            )}
+
+                            <button
+                                disabled={loading}
+                                className="gauntlet-btn"
+                                style={{
+                                    marginTop: '20px',
+                                    opacity: loading ? 0.3 : 1,
+                                    padding: '18px'
+                                }}
+                            >
+                                {loading ? 'PROCESSING...' : mode === 'login' ? 'Login' : 'Create Account'}
+                            </button>
+                        </form>
+                    )}
 
                     <div style={{ marginTop: '40px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         <p style={{ fontSize: '0.9rem', opacity: 0.6 }}>

@@ -54,7 +54,9 @@ function AppContent() {
 
       if (data && data.length > 0) {
         setIsMember(true);
-        if (location.pathname === '/login' || location.pathname === '/') {
+        // Ensure all auth-related paths redirect to the portal once verified
+        const authPaths = ['/login', '/createaccount', '/signup', '/'];
+        if (authPaths.includes(location.pathname)) {
           navigate('/member');
         }
       } else {
@@ -66,18 +68,38 @@ function AppContent() {
   };
 
   const handleSignup = async (email, password) => {
-    const { data: appData } = await supabase
-      .from('applications')
-      .select('status')
-      .ilike('email', email.trim())
-      .eq('status', 'approved');
+    try {
+      const { data: appData } = await supabase
+        .from('applications')
+        .select('status')
+        .ilike('email', email.trim())
+        .eq('status', 'approved');
 
-    if (!appData || appData.length === 0) {
-      throw new Error("ACCESS DENIED. YOUR APPLICATION IS NOT YET APPROVED.");
+      if (!appData || appData.length === 0) {
+        throw new Error("ACCESS DENIED. YOUR APPLICATION IS NOT YET APPROVED.");
+      }
+
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        if (error.status === 429) {
+          throw new Error("RATE LIMIT EXCEEDED. PLEASE WAIT A MOMENT BEFORE TRYING AGAIN.");
+        }
+        throw error;
+      }
+
+      // If the user is logged in immediately (confirmation off), the session will be in 'data'
+      if (data.session) {
+        setUser(data.session.user);
+        checkMembership(data.session.user.email);
+        return { status: 'COMPLETE' };
+      }
+
+      // If confirmation is on, we tell the UI to show the 'Check Email' message
+      return { status: 'CONFIRMATION_SENT' };
+    } catch (err) {
+      console.error("Signup error:", err);
+      throw err;
     }
-
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
   };
 
   const handleLogin = async (email, password) => {

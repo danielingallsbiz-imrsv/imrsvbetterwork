@@ -1,17 +1,70 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const MemberLayer = ({ user, onLogout, onBack }) => {
+    const [showBriefing, setShowBriefing] = useState(true);
+    const [rsvpStatus, setRsvpStatus] = useState({});
+
+    const handleRSVP = (eventId) => {
+        setRsvpStatus(prev => ({ ...prev, [eventId]: 'SECURED' }));
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="home-container"
-            style={{ backgroundColor: '#000', minHeight: '100vh', color: '#F7F5EA', display: 'flex', flexDirection: 'column' }}
+            style={{ backgroundColor: '#000', minHeight: '100vh', color: '#F7F5EA', display: 'flex', flexDirection: 'column', position: 'relative' }}
         >
+            {/* WELCOME BRIEFING OVERLAY */}
+            <AnimatePresence>
+                {showBriefing && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(0,0,0,0.95)',
+                            zIndex: 3000,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '40px'
+                        }}
+                    >
+                        <motion.div
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            style={{ maxWidth: '500px', textAlign: 'center' }}
+                        >
+                            <span className="section-label" style={{ color: '#F7D031' }}>PROTOCOL / INITIATION</span>
+                            <h2 style={{ fontSize: '2.5rem', marginBottom: '30px', lineHeight: 1 }}>WELCOME TO THE INSIDE.</h2>
+                            <p style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: '20px' }}>
+                                As a member of the Sunday Collection, your participation directly fuels the restoration of the communities we visit.
+                            </p>
+                            <p style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: '40px' }}>
+                                A significant portion of every ticket and membership goes straight to local artists and cultural preservation projects. You are no longer just a spectator; you are a patron.
+                            </p>
+                            <button
+                                onClick={() => setShowBriefing(false)}
+                                className="gauntlet-btn"
+                                style={{ padding: '15px 40px' }}
+                            >
+                                [ ACKNOWLEDGE & ENTER ]
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto' }} />
@@ -64,27 +117,34 @@ const MemberLayer = ({ user, onLogout, onBack }) => {
                     <div className="bucket-grid">
                         <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
                             <span className="bucket-num" style={{ color: '#F7D031' }}>01.</span>
-                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MY SESSIONS</h3>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>UPCOMING SESSIONS</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.6)' }}>
-                                Your upcoming RSVPs and secured tickets for IMRSV activations.
+                                Oahu Hub Activation — April 12.
+                                <br />Private location revealed 24h prior.
                             </p>
-                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>View Tickets</button>
+                            <button
+                                onClick={() => handleRSVP('oahu-apr')}
+                                className="gauntlet-btn"
+                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: rsvpStatus['oahu-apr'] ? '#45FFC7' : '#F7D031', color: '#000' }}
+                            >
+                                {rsvpStatus['oahu-apr'] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $50 ]'}
+                            </button>
                         </div>
                         <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
                             <span className="bucket-num" style={{ color: '#F7D031' }}>02.</span>
-                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>HUB INTEL</h3>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>TICKET SHOP</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.6)' }}>
-                                Exclusive coordinates and timing for the next Oahu activation.
+                                Limited Edition 'Restoration' physical collection. Only available to verified nodes.
                             </p>
-                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>Reveal Intel</button>
+                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ ACCESS SHOP ]</button>
                         </div>
                         <div className="bucket-card" style={{ background: '#111', border: '1px solid rgba(247, 245, 234, 0.1)' }}>
                             <span className="bucket-num" style={{ color: '#F7D031' }}>03.</span>
-                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>RESTORE</h3>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>RESTORE LEDGER</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.6)' }}>
-                                Track how your participation is directly impacting local artists.
+                                Interactive tracking of Oahu Hub reinvestment into local lei artists and surfers.
                             </p>
-                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>Open Ledger</button>
+                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ OPEN LEDGER ]</button>
                         </div>
                     </div>
                 </motion.div>
