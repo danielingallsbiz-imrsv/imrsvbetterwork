@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         // Hardcoding securely into backend to bypass Vercel propagation bug
         const resendKey = 're_JUuzjyVG_5kKHCbMkfqUH1GnXq8Q6bPXU';
         const adminEmail = process.env.VITE_ADMIN_EMAIL || 'info@theimrsvproject.org';
-        const emailFrom = process.env.VITE_EMAIL_FROM || 'Sunday Collection <notifications@theimrsvproject.org>';
+        const emailFrom = process.env.VITE_EMAIL_FROM || 'Sunday Collection <sundaycollection@theimrsvproject.org>';
 
         if (!resendKey) {
             return res.status(500).json({ error: 'Resend API Key missing in environment' });
