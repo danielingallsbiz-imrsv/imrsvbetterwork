@@ -39,7 +39,16 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
                 }
             }
         } catch (err) {
-            setError(err.message || 'Authentication failed. Please try again.');
+            let msg = err.message || 'Authentication failed. Please try again.';
+            if (msg.includes('User already registered')) {
+                msg = "YOU ALREADY HAVE AN ACCOUNT. PLEASE LOG IN INSTEAD.";
+            }
+            setError(msg);
+
+            // If rate limited, we can proactively suggest checking email
+            if (msg.includes('RATE LIMIT')) {
+                setSuccess("NOTE: YOU MAY ALREADY HAVE A CONFIRMATION LINK IN YOUR INBOX. PLEASE CHECK YOUR EMAIL TO INITIALIZE YOUR NODE.");
+            }
         } finally {
             setLoading(false);
         }
@@ -92,9 +101,14 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode 
                                 <p style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '10px' }}>SUCCESS / INITIALIZATION PENDING</p>
                                 <p style={{ fontSize: '0.8rem', opacity: 0.8, lineHeight: 1.6 }}>{success}</p>
                             </div>
-                            <button onClick={onBack} className="gauntlet-btn" style={{ padding: '15px 40px' }}>
-                                RETURN HOME
-                            </button>
+                            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+                                <button onClick={onBack} className="gauntlet-btn" style={{ padding: '15px 30px', fontSize: '0.7rem' }}>
+                                    RETURN HOME
+                                </button>
+                                <button onClick={() => { setMode('login'); setSuccess(null); setError(null); }} className="gauntlet-btn" style={{ padding: '15px 30px', fontSize: '0.7rem', backgroundColor: '#F7D031', color: '#000' }}>
+                                    LOGIN INSTEAD
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginTop: mode === 'signup' ? '10px' : '40px' }}>
