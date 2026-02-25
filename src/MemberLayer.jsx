@@ -74,7 +74,7 @@ const MemberLayer = ({ user, onLogout, onBack }) => {
                 </div>
                 <div className="nav-links">
                     <span onClick={onLogout} style={{ cursor: 'pointer', color: '#F7D031' }}>
-                        <InteractiveText text="Disconnect Node" />
+                        <InteractiveText text="Log Out" />
                     </span>
                 </div>
             </nav>
@@ -89,9 +89,6 @@ const MemberLayer = ({ user, onLogout, onBack }) => {
                         <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)', margin: 0 }}>
                             MEMBER / SESSION ACTIVE
                         </span>
-                        <span style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 600 }}>
-                            NODE ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
-                        </span>
                     </div>
 
                     <h1 className="hero-title" style={{ fontSize: '4rem', color: '#F7F5EA', marginBottom: '30px', lineHeight: 1 }}>
@@ -103,6 +100,9 @@ const MemberLayer = ({ user, onLogout, onBack }) => {
                         <div>
                             <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Identity</p>
                             <p style={{ fontSize: '1.1rem', color: '#F7F5EA', fontWeight: 500 }}>{user?.email}</p>
+                            <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', marginTop: '4px', opacity: 0.8 }}>
+                                MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'} [ SECURE NODE AUTHENTICATOR ]
+                            </p>
                         </div>
                         <div>
                             <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Tier</p>

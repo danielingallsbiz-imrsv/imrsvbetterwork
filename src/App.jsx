@@ -37,12 +37,28 @@ function AppContent() {
         checkMembership(newUser.email);
       } else {
         setIsMember(false);
-        if (location.pathname === '/member') navigate('/');
       }
     });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  // Dedicated Redirection Logic - Prevents Stale Closures
+  useEffect(() => {
+    const authPaths = ['/login', '/createaccount', '/signup'];
+
+    if (user && isMember) {
+      // Redirect members AWAY from auth pages, but NOT away from the landing page
+      if (authPaths.includes(location.pathname)) {
+        navigate('/member');
+      }
+    } else if (!user && !isMember) {
+      // Redirect unauthenticated users AWAY from the member portal
+      if (location.pathname === '/member') {
+        navigate('/');
+      }
+    }
+  }, [user, isMember, location.pathname, navigate]);
 
   const checkMembership = async (email) => {
     try {
@@ -54,11 +70,6 @@ function AppContent() {
 
       if (data && data.length > 0) {
         setIsMember(true);
-        // Ensure all auth-related paths redirect to the portal once verified
-        const authPaths = ['/login', '/createaccount', '/signup', '/'];
-        if (authPaths.includes(location.pathname)) {
-          navigate('/member');
-        }
       } else {
         setIsMember(false);
       }
@@ -79,7 +90,13 @@ function AppContent() {
         throw new Error("ACCESS DENIED. YOUR APPLICATION IS NOT YET APPROVED.");
       }
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          redirectTo: 'https://theimrsvproject.org/login'
+        }
+      });
       if (error) {
         if (error.status === 429) {
           throw new Error("RATE LIMIT EXCEEDED. PLEASE WAIT A MOMENT BEFORE TRYING AGAIN.");
