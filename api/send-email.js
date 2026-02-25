@@ -32,7 +32,7 @@ export default async function handler(req, res) {
           <p style="font-size: 16px; line-height: 1.6;"><strong>Next Step:</strong> You must now create your member account using this email address to secure your position in the network.</p>
           <br/>
           <div style="margin: 20px 0;">
-            <a href="https://theimrsvproject.org/login?mode=claim&email=${formData.email}" style="background-color: #F7D031; color: #000; padding: 16px 32px; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;">Create Your Member Account</a>
+            <a href="https://theimrsvproject.org/createaccount?email=${formData.email}" style="background-color: #F7D031; color: #000; padding: 16px 32px; text-decoration: none; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block; text-transform: uppercase; letter-spacing: 0.1em;">Create Your Member Account</a>
           </div>
           <br/>
           <p style="font-size: 16px; font-weight: bold;">Welcome to the project.</p>

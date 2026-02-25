@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
-const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup }) => {
+const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, initialMode = 'login' }) => {
     const [mode, setMode] = useState(() => {
+        if (initialMode === 'signup') return 'signup';
         const params = new URLSearchParams(window.location.search);
         return params.get('mode') === 'claim' ? 'signup' : 'login';
     });

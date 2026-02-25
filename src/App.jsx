@@ -50,9 +50,9 @@ function AppContent() {
         .from('applications')
         .select('status')
         .ilike('email', email.trim())
-        .single();
+        .eq('status', 'approved');
 
-      if (data && data.status === 'approved') {
+      if (data && data.length > 0) {
         setIsMember(true);
         if (location.pathname === '/login' || location.pathname === '/') {
           navigate('/member');
@@ -70,9 +70,9 @@ function AppContent() {
       .from('applications')
       .select('status')
       .ilike('email', email.trim())
-      .single();
+      .eq('status', 'approved');
 
-    if (!appData || appData.status !== 'approved') {
+    if (!appData || appData.length === 0) {
       throw new Error("ACCESS DENIED. YOUR APPLICATION IS NOT YET APPROVED.");
     }
 
@@ -231,8 +231,19 @@ function AppContent() {
               onNavigateToApply={() => navigate('/apply')}
               onLogin={handleLogin}
               onSignup={handleSignup}
+              initialMode="login"
             />
           } />
+          <Route path="/createaccount" element={
+            <LoginLayer
+              onBack={() => navigate('/')}
+              onNavigateToApply={() => navigate('/apply')}
+              onLogin={handleLogin}
+              onSignup={handleSignup}
+              initialMode="signup"
+            />
+          } />
+          <Route path="/signup" element={<Navigate to="/createaccount" replace />} />
           <Route path="/member" element={
             isMember ? (
               <MemberLayer
