@@ -79,9 +79,9 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
             <nav className="nav-bar">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
-                        <InteractiveText text="imrsv project" />
-                    </span>
+                    <div style={{ marginLeft: '4px', transform: 'translateY(10px)' }}>
+                        <ClippingText text="SUNDAY COLLECTION" scale={0.15} />
+                    </div>
                 </div>
                 <div className="nav-links">
                     <span onClick={onLogout} style={{ cursor: 'pointer', color: '#1A1A1A', fontWeight: 600 }}>
@@ -97,7 +97,7 @@ const MemberLayer = ({ user, userName, onLogout, onBack }) => {
                     transition={{ duration: 0.8 }}
                 >
                     <div style={{ marginBottom: '60px' }}>
-                        <ClippingText text="SUNDAY COLLECTION" />
+                        <ClippingText text="WELCOME" />
                     </div>
 
                     <div style={{ display: 'flex', gap: '60px', marginBottom: '60px', alignItems: 'flex-start' }}>

@@ -201,10 +201,12 @@ function AppContent() {
         sendNotificationEmail(data[0]);
       }
     } catch (e) {
+      console.warn("Database sync failed, saving locally:", e);
       const newApp = { ...appData, id: Date.now(), date: new Date().toLocaleString() };
       const updated = [newApp, ...applications];
       setApplications(updated);
       localStorage.setItem('imrsv_applications', JSON.stringify(updated));
+      alert("NOTE: Your application has been saved to your local browser storage because the cloud database is currently unreachable. Our team will not see it until sync is restored.");
     }
   };
 

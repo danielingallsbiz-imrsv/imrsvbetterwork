@@ -87,7 +87,11 @@ export default async function handler(req, res) {
       })
     });
 
-    if (!emailResponse.ok) console.error("Resend API error:", await emailResponse.text());
+    if (!emailResponse.ok) {
+      const errorText = await emailResponse.text();
+      console.error("Resend API error:", errorText);
+      return res.status(500).json({ error: 'Failed to send email notification', details: errorText });
+    }
 
     return res.status(200).json({ success: true });
 

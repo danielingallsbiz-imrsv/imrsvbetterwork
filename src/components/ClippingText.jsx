@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const ClippingText = ({ text }) => {
+const ClippingText = ({ text, scale = 1 }) => {
     const words = text.split(' ');
 
     const colors = [
@@ -26,11 +26,15 @@ const ClippingText = ({ text }) => {
     ];
 
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const baseFontSize = isMobile ? 1.75 : 3.5;
+    const basePadding = isMobile ? { y: 6, x: 10 } : { y: 12, x: 18 };
+    const baseGap = isMobile ? 15 : 40;
+    const baseCharGap = isMobile ? 3 : 8;
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? '15px' : '40px', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: `${baseGap * scale}px`, alignItems: 'flex-start' }}>
             {words.map((word, wIndex) => (
-                <div key={wIndex} style={{ display: 'flex', gap: isMobile ? '3px' : '8px', whiteSpace: 'nowrap' }}>
+                <div key={wIndex} style={{ display: 'flex', gap: `${baseCharGap * scale}px`, whiteSpace: 'nowrap' }}>
                     {word.split('').map((char, index) => {
                         const randomColor = colors[Math.floor(Math.random() * colors.length)];
                         const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
@@ -46,17 +50,17 @@ const ClippingText = ({ text }) => {
                                 style={{
                                     background: randomColor,
                                     color: isDark ? '#FFF' : '#000',
-                                    padding: isMobile ? '6px 10px' : '12px 18px',
+                                    padding: `${basePadding.y * scale}px ${basePadding.x * scale}px`,
                                     fontFamily: randomFont,
-                                    fontSize: isMobile ? '1.75rem' : '3.5rem',
+                                    fontSize: `${baseFontSize * scale}rem`,
                                     fontWeight: 900,
                                     display: 'inline-block',
-                                    boxShadow: '2px 4px 0px rgba(0,0,0,0.15)',
+                                    boxShadow: `${2 * scale}px ${4 * scale}px 0px rgba(0,0,0,0.15)`,
                                     border: '1px solid rgba(0,0,0,0.05)',
                                     userSelect: 'none',
                                     lineHeight: 1,
                                     transformOrigin: 'center',
-                                    marginBottom: isMobile ? '10px' : '20px'
+                                    marginBottom: `${(isMobile ? 10 : 20) * scale}px`
                                 }}
                             >
                                 {char.toUpperCase()}
