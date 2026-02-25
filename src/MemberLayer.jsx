@@ -47,9 +47,7 @@ const WelcomeBriefing = ({ onAcknowledge }) => (
     </motion.div>
 );
 
-// Protocol Version: 2.1.0
 const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
-    // ... rest of component
     // Check if briefing was already acknowledged for this user
     const briefingKey = `imrsv_briefing_acknowledged_${user?.id}`;
     const [showBriefing, setShowBriefing] = useState(() => {
