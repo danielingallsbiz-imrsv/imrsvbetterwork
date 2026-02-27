@@ -1,5 +1,6 @@
 import React from 'react';
-import InteractiveText from './components/InteractiveText';
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import './Home.css'; // Reusing global styles for consistency
 
 const BucketCard = ({ num, title, desc }) => (

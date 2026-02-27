@@ -1,5 +1,6 @@
 import React from 'react';
-import './Home.css';
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
 const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatus }) => {
     return (

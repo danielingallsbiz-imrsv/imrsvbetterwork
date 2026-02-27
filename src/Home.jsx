@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
 import PacmanGame from './components/PacmanGame';
 import './Home.css';
