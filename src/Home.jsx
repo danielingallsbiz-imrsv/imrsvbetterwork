@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import PacmanGame from './components/PacmanGame';
 import './Home.css';
