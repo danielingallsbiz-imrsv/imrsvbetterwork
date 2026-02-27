@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const ClippingText = ({ text, scale = 1 }) => {
     const words = text.split(' ');

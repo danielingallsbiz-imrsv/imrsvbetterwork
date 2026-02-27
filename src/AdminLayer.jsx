@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import './Home.css';
 
 const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatus }) => {

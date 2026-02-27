@@ -1,9 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import InteractiveText from './components/InteractiveText';
 import './Home.css';
+import InteractiveText from './components/InteractiveText';
 
-const RestorationLayer = ({ onBack, navigateToImpact }) => {
+const RestorationLayer = ({ onBack }) => {
     const cities = [
         { name: 'Oahu', status: '$2,756', fund: 'Active Allocation', projects: [], isNumeric: true },
         { name: 'Medellín', status: 'STAGING', fund: 'Coming Soon...', projects: [] },

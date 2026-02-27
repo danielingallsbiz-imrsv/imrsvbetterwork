@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 
 const PacmanGame = () => {
     const [dots, setDots] = useState([]);
@@ -19,9 +19,9 @@ const PacmanGame = () => {
         }));
         setDots(initialDots);
         dotsRef.current = initialDots;
-    }, []);
+    }, [animate]);
 
-    const animate = (time) => {
+    const animate = useCallback(() => {
         if (!containerRef.current) return;
         const rect = containerRef.current.getBoundingClientRect();
 
@@ -72,12 +72,12 @@ const PacmanGame = () => {
         setPacman({ x, y, angle });
 
         requestRef.current = requestAnimationFrame(animate);
-    };
+    }, []);
 
     useEffect(() => {
         requestRef.current = requestAnimationFrame(animate);
         return () => cancelAnimationFrame(requestRef.current);
-    }, []);
+    }, [animate]);
 
     return (
         <div ref={containerRef} className="pacman-container">

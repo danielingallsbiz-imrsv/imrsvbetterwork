@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { useScroll, AnimatePresence } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import PacmanGame from './components/PacmanGame';
 import './Home.css';
 
-const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal, navigateToSundayCollection, showSuccess }) => {
+const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
-    const [isFlashing, setIsFlashing] = useState(false);
-
-    const handleImpactClick = () => {
-        navigateToImpact();
-    };
-
-    const handleRestorationClick = () => {
-        navigateToRestoration();
-    };
 
     const handleApplyClick = () => {
         navigateToApply();
-    };
-
-    const handleSundayClick = () => {
-        navigateToSundayCollection();
     };
 
     const handleLoginClick = () => {
@@ -40,57 +27,6 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
         <div className="home-container no-scrollbar">
             {/* APPLICATION STATUS BANNER */}
             {/* APPLICATION STATUS POPUP */}
-            <AnimatePresence>
-                {showSuccess && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        style={{
-                            position: 'fixed',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            backgroundColor: '#F7D031',
-                            color: '#000',
-                            textAlign: 'center',
-                            padding: '30px 40px',
-                            fontSize: '0.9rem',
-                            fontWeight: 800,
-                            letterSpacing: '0.1em',
-                            zIndex: 2000,
-                            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-                            maxWidth: '400px',
-                            lineHeight: 1.4,
-                            pointerEvents: 'none'
-                        }}
-                    >
-                        APPLICATION RECEIVED.<br />
-                        VETTING IN PROGRESS.
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* FLASH OVERLAY */}
-            <AnimatePresence>
-                {isFlashing && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{ duration: 0.6 }}
-                        style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: '#fff',
-                            zIndex: 9999,
-                            pointerEvents: 'none'
-                        }}
-                    />
-                )}
-            </AnimatePresence>
 
             {/* NAVBAR */}
             <nav className={`nav-bar ${isPastHero ? 'nav-hidden' : ''}`}>
@@ -113,10 +49,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         <InteractiveText text="Login" />
                     </span>
                 </div>
-            </nav>
+            </nav >
 
             {/* HERO */}
-            <section className="hero-section">
+            < section className="hero-section" >
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -138,10 +74,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     className="hero-video-bg"
                     style={{ pointerEvents: 'none', objectFit: 'cover' }}
                 />
-            </section>
+            </section >
 
             {/* THE MISSION */}
-            <section className="section">
+            < section className="section" >
                 <span className="section-label">
                     <InteractiveText text="01 / THE MISSION." />
                 </span>
@@ -188,10 +124,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </p>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* WHERE WE OPERATE */}
-            <section className="section">
+            < section className="section" >
                 <span className="section-label">
                     <InteractiveText text="02 / UPCOMING DROPS." />
                 </span>
@@ -257,10 +193,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </button>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* THE GAME LAYER */}
-            <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
+            < section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
                 <PacmanGame />
                 <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
                     <InteractiveText text="03 / THE GAME LAYER." />
@@ -293,10 +229,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </div>
 
                 </div>
-            </section>
+            </section >
 
             {/* THE CORE IDEA */}
-            <section className="section">
+            < section className="section" >
                 <span className="section-label">
                     <InteractiveText text="04 / THE CORE IDEA." />
                 </span>
@@ -324,10 +260,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* THE GAUNTLET / JOIN */}
-            <section className="gauntlet-section" id="apply">
+            < section className="gauntlet-section" id="apply" >
                 <motion.div
                     whileInView={{ opacity: 1, y: 0 }}
                     initial={{ opacity: 0, y: 30 }}
@@ -340,7 +276,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </p>
                     <button onClick={handleApplyClick} className="gauntlet-btn">[ Join Sunday Collection ]</button>
                 </motion.div>
-            </section>
+            </section >
 
             <footer className="footer">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
@@ -358,7 +294,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </span>
                 </div>
             </footer>
-        </div >
+        </div>
     );
 };
 

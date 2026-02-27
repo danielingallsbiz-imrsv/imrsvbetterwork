@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import './Home.css';
@@ -49,7 +49,7 @@ const WelcomeBriefing = ({ onAcknowledge }) => (
 
 const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     // Check if briefing was already acknowledged for this user
-    const briefingKey = `imrsv_briefing_acknowledged_${user?.id}`;
+    const briefingKey = `imrsv_briefing_acknowledged_${user?.id} `;
     const [showBriefing, setShowBriefing] = useState(() => {
         return !localStorage.getItem(briefingKey);
     });
@@ -203,7 +203,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </div>
                         <div className="bucket-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
                             {activeMembers.length > 0 ? (
-                                activeMembers.map((member, i) => (
+                                activeMembers.map((member) => (
                                     <div
                                         key={member.id}
                                         className="bucket-card"

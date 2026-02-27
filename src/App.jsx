@@ -65,7 +65,7 @@ function AppContent() {
 
   const checkMembership = async (email) => {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('applications')
         .select('status, name')
         .ilike('email', email.trim())
@@ -222,7 +222,7 @@ function AppContent() {
       const { error } = await supabase.from('applications').delete().eq('id', id);
       if (error) throw error;
       setApplications(prev => prev.filter(app => app.id !== id));
-    } catch (e) {
+    } catch  {
       setApplications(prev => prev.filter(app => app.id !== id));
     }
   };

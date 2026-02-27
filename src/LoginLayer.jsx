@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css';
 

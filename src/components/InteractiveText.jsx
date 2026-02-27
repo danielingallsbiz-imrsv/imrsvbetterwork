@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const InteractiveText = ({ text, style, className }) => {
     // Split text into words first to maintain word grouping on mobile

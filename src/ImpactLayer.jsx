@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import './Home.css'; // Reusing global styles for consistency
 
@@ -13,7 +12,7 @@ const BucketCard = ({ num, title, desc }) => (
     </div>
 );
 
-const ImpactLayer = ({ onBack, navigateToRestoration }) => {
+const ImpactLayer = ({ onBack }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
