@@ -4,7 +4,7 @@ import InteractiveText from './components/InteractiveText';
 import PacmanGame from './components/PacmanGame';
 import './Home.css';
 
-const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal, showSuccess }) => {
+const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal, navigateToSundayCollection, showSuccess }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
     const [isFlashing, setIsFlashing] = useState(false);
@@ -19,6 +19,10 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
 
     const handleApplyClick = () => {
         navigateToApply();
+    };
+
+    const handleSundayClick = () => {
+        navigateToSundayCollection();
     };
 
     const handleLoginClick = () => {
@@ -199,130 +203,70 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
             {/* WHERE WE OPERATE */}
             <section className="section">
                 <span className="section-label">
-                    <InteractiveText text="02 / UPCOMING ACTIVATIONS." />
+                    <InteractiveText text="02 / UPCOMING DROPS." />
                 </span>
                 <h2 className="concept-title" style={{ maxWidth: '900px' }}>
-                    <InteractiveText text="Mid-April 1-Day Popup." /> <br />
-                    <InteractiveText text="Oahu, Hawaii." />
+                    <InteractiveText text="Medellín Drop Sequence." /> <br />
+                    <InteractiveText text="Medellín, Colombia." />
                 </h2>
 
                 <div className="bucket-grid" style={{ marginBottom: '80px' }}>
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
-                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 12</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>OAHU HUB</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: $50 (Full Fund Reinvestment)
-                        </p>
-                        <button
-                            onClick={handleApplyClick}
-                            style={{
-                                color: '#F7D031',
-                                fontSize: '0.8rem',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.1em',
-                                fontWeight: 800,
-                                marginTop: '10px',
-                                textDecoration: 'underline',
-                                cursor: 'pointer',
-                                textAlign: 'left',
-                                background: 'transparent',
-                                border: 'none',
-                                padding: 0,
-                                fontFamily: 'inherit'
-                            }}
-                        >
-                            apply →
-                        </button>
-                        <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>12:00 — 14:00 : CURATED NETWORKING</div>
-                            <div style={{ fontSize: '0.8rem' }}>15:00 — 21:00 : DJ SET / OPEN BAR</div>
-                        </div>
-                    </div>
-
-                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
-                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 03</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>CHICAGO HUB</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: $15 (Full Fund Reinvestment)
-                        </p>
-                        <button
-                            onClick={handleApplyClick}
-                            style={{
-                                color: '#F7D031',
-                                fontSize: '0.8rem',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.1em',
-                                fontWeight: 800,
-                                marginTop: '10px',
-                                textDecoration: 'underline',
-                                cursor: 'pointer',
-                                textAlign: 'left',
-                                background: 'transparent',
-                                border: 'none',
-                                padding: 0,
-                                fontFamily: 'inherit'
-                            }}
-                        >
-                            apply →
-                        </button>
-                        <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>09:00 — 11:00 : IMRSV RUN CLUB</div>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>12:00 — 15:00 : LUNCH + BEACH GAMES</div>
-                            <div style={{ fontSize: '0.8rem' }}>17:00 — 20:00 : LIVE MUSIC + SUNSET SET</div>
-                        </div>
-                    </div>
-
-                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
-                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAY 17 / 31</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB</h3>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAR. 29</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (OPENING)</h3>
                         <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
                             Ticket: TBD (Full Fund Reinvestment)
                         </p>
                         <button
                             onClick={handleApplyClick}
-                            style={{
-                                color: '#F7D031',
-                                fontSize: '0.8rem',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.1em',
-                                fontWeight: 800,
-                                marginTop: '10px',
-                                textDecoration: 'underline',
-                                cursor: 'pointer',
-                                textAlign: 'left',
-                                background: 'transparent',
-                                border: 'none',
-                                padding: 0,
-                                fontFamily: 'inherit'
-                            }}
+                            className="apply-link-btn"
                         >
                             apply →
                         </button>
-                        <div style={{ marginTop: '20px', borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '20px' }}>
-                            <div style={{ fontSize: '0.8rem', marginBottom: '10px' }}>MAY 17 : IMRSV RUN CLUB — FREE</div>
-                            <div style={{ fontSize: '0.8rem' }}>MAY 31 : ROOFTOP DINNER / SHOWCASE / AFTER HOURS</div>
-                        </div>
                     </div>
 
-                    <div className="bucket-card" style={{
-                        background: 'rgba(247, 245, 234, 0.4)',
-                        border: '1px solid rgba(26, 26, 26, 0.1)',
-                        backdropFilter: 'blur(10px)',
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.05)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center'
-                    }}>
-                        <span className="bucket-num" style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '2rem' }}>MAY</span>
-                        <h3 className="bucket-title" style={{ color: 'rgba(26, 26, 26, 0.8)', fontSize: '1.2rem', margin: '10px 0' }}>BALI / ROME</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.5)', fontSize: '0.8rem', letterSpacing: '0.05em' }}>
-                            COMING SOON.<br />
-                            VETTED APPLICATIONS ONLY.
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 05</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (PRESENCE)</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
+                            Ticket: TBD (Full Fund Reinvestment)
                         </p>
+                        <button
+                            onClick={handleApplyClick}
+                            className="apply-link-btn"
+                        >
+                            apply →
+                        </button>
+                    </div>
+
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 12</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (DROP)</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
+                            Ticket: TBD (Full Fund Reinvestment)
+                        </p>
+                        <button
+                            onClick={handleApplyClick}
+                            className="apply-link-btn"
+                        >
+                            apply →
+                        </button>
+                    </div>
+
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 19</span>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (CLOSING)</h3>
+                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
+                            Ticket: TBD (Full Fund Reinvestment)
+                        </p>
+                        <button
+                            onClick={handleApplyClick}
+                            className="apply-link-btn"
+                        >
+                            apply →
+                        </button>
                     </div>
                 </div>
-
             </section>
 
             {/* THE GAME LAYER */}
@@ -424,7 +368,7 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </span>
                 </div>
             </footer>
-        </div>
+        </div >
     );
 };
 

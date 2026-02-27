@@ -14,6 +14,10 @@ export const supabase = (supabaseUrl && supabaseAnonKey && supabaseUrl !== 'your
         }),
         auth: {
             getSession: () => Promise.resolve({ data: { session: null }, error: null }),
-            onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } })
+            onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
+            signInWithPassword: () => Promise.resolve({ data: { user: null, session: null }, error: new Error('Supabase not configured (Check .env)') }),
+            signUp: () => Promise.resolve({ data: { user: null, session: null }, error: new Error('Supabase not configured (Check .env)') }),
+            resend: () => Promise.resolve({ data: { user: null, session: null }, error: new Error('Supabase not configured (Check .env)') }),
+            signOut: () => Promise.resolve({ error: null })
         }
     };

@@ -263,6 +263,7 @@ function AppContent() {
               navigateToLogin={() => navigate('/login')}
               navigateToAdmin={() => navigate('/admin')}
               navigateToJournal={() => navigate('/journal')}
+              navigateToSundayCollection={() => navigate('/sundaycollection')}
               showSuccess={showSuccess}
             />
           } />
