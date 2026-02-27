@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import './Home.css';
@@ -55,6 +55,49 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     });
 
     const [rsvpStatus, setRsvpStatus] = useState({});
+    const [selectedSession, setSelectedSession] = useState(null);
+
+    const SESSIONS = [
+        {
+            id: 'project-culture',
+            num: '01.',
+            title: 'PROJECT CULTURE',
+            location: 'Medellín',
+            date: 'March 29 — April 19',
+            shortDesc: 'Medellín Hub Opening. Full 4-week drop sequence unlocked.',
+            details: {
+                where: 'IMRSV Medellín Hub & Secret Urban Locations',
+                what: 'A 4-week immersion into the intersection of technology, street art, and urban restoration.',
+                how: 'Access granted via Foundation Pass. Weekly drops include private gallery openings, mural restorations, and hardware laboratory sessions.'
+            }
+        },
+        {
+            id: 'hardware-lab',
+            num: '03.',
+            title: 'HARDWARE LAB',
+            location: 'Medellín',
+            date: 'April 19',
+            shortDesc: 'Final week activation. Urban tech prototype showcase.',
+            details: {
+                where: 'IMRSV Hardware Laboratory, Comuna 13',
+                what: 'Demonstration of the new restoration node hardware and community distribution protocol.',
+                how: 'Invitation only for Active Nodes. Live demo and technical briefing.'
+            }
+        },
+        {
+            id: 'medellin-hub',
+            num: '02.',
+            title: 'HUB OPENING',
+            location: 'Medellín',
+            date: 'March 29',
+            shortDesc: 'Official ribbon cutting and inaugural node synchronization.',
+            details: {
+                where: 'IMRSV Main Hub, El Poblado',
+                what: 'Foundation gathering to celebrate the activation of our permanent Medellín presence.',
+                how: 'One-night-only activation. RSVP required for entry.'
+            }
+        }
+    ];
 
     const { scrollY } = useScroll();
     // Start fading after 200px (past the header) and fully gone by 350px
@@ -170,23 +213,78 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     </div>
 
                     <div className="bucket-grid" style={{ marginBottom: '120px' }}>
-                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>01.</span>
-                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING SESSIONS</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                Medellín Hub Opening — March 29.
-                                <br />Full 4-week drop sequence unlocked.
-                            </p>
-                            <button
-                                onClick={() => handleRSVP('medellin-mar')}
-                                className="gauntlet-btn"
-                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: rsvpStatus['medellin-mar'] ? '#2ECC71' : '#F7D031', color: '#000' }}
+                        {SESSIONS.map((session) => (
+                            <div
+                                key={session.id}
+                                className="bucket-card"
+                                style={{
+                                    background: '#FFF',
+                                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                                    boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.2s ease',
+                                    position: 'relative'
+                                }}
+                                onClick={() => setSelectedSession(selectedSession === session.id ? null : session.id)}
                             >
-                                {rsvpStatus['medellin-mar'] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $TBD ]'}
-                            </button>
-                        </div>
+                                <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>{session.num}</span>
+                                <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>{session.title}</h3>
+                                <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
+                                    {session.location} — {session.date}
+                                    <br />{session.shortDesc}
+                                </p>
+
+                                <AnimatePresence>
+                                    {selectedSession === session.id && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            style={{ overflow: 'hidden' }}
+                                        >
+                                            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                                <div style={{ marginBottom: '15px' }}>
+                                                    <p style={{ fontSize: '0.6rem', fontWeight: 800, color: '#F7D031', marginBottom: '4px', letterSpacing: '0.1em' }}>WHERE</p>
+                                                    <p style={{ fontSize: '0.8rem', color: '#1A1A1A', opacity: 0.8 }}>{session.details.where}</p>
+                                                </div>
+                                                <div style={{ marginBottom: '15px' }}>
+                                                    <p style={{ fontSize: '0.6rem', fontWeight: 800, color: '#F7D031', marginBottom: '4px', letterSpacing: '0.1em' }}>WHAT</p>
+                                                    <p style={{ fontSize: '0.8rem', color: '#1A1A1A', opacity: 0.8 }}>{session.details.what}</p>
+                                                </div>
+                                                <div style={{ marginBottom: '15px' }}>
+                                                    <p style={{ fontSize: '0.6rem', fontWeight: 800, color: '#F7D031', marginBottom: '4px', letterSpacing: '0.1em' }}>HOW</p>
+                                                    <p style={{ fontSize: '0.8rem', color: '#1A1A1A', opacity: 0.8 }}>{session.details.how}</p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleRSVP(session.id);
+                                    }}
+                                    className="gauntlet-btn"
+                                    style={{
+                                        fontSize: '0.7rem',
+                                        padding: '12px 20px',
+                                        marginTop: '20px',
+                                        backgroundColor: rsvpStatus[session.id] ? '#2ECC71' : '#F7D031',
+                                        color: '#000',
+                                        width: '100%'
+                                    }}
+                                >
+                                    {rsvpStatus[session.id] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $TBD ]'}
+                                </button>
+                                <p style={{ fontSize: '0.5rem', marginTop: '10px', opacity: 0.3, textAlign: 'center', fontWeight: 700 }}>
+                                    {selectedSession === session.id ? 'CLICK TO COLLAPSE' : 'CLICK FOR DETAILS'}
+                                </p>
+                            </div>
+                        ))}
+
                         <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
+                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>03.</span>
                             <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>TICKET SHOP</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
                                 Limited Edition 'Restoration' physical collection. Only available to verified nodes.
