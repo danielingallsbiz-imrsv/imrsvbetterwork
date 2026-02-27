@@ -101,16 +101,13 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                     </span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={handleImpactClick} style={{ cursor: 'pointer' }}>
+                    <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>
                         <span className="mobile-hide">
-                            <InteractiveText text="Restoration" />
+                            <InteractiveText text="Journal." />
                         </span>
                         <span className="mobile-show">
-                            <InteractiveText text="Restoration" />
+                            <InteractiveText text="Journal." />
                         </span>
-                    </span>
-                    <span onClick={handleRestorationClick} style={{ cursor: 'pointer' }}>
-                        <InteractiveText text="ledger" />
                     </span>
                     <span onClick={handleLoginClick} style={{ cursor: 'pointer' }}>
                         <InteractiveText text="Login" />
@@ -170,13 +167,6 @@ const Home = ({ navigateToImpact, navigateToRestoration, navigateToApply, naviga
                         </h3>
                         <p className="bucket-desc">
                             We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city and goes right to the locals—simple as that.
-                            <br /><br />
-                            <span
-                                onClick={handleRestorationClick}
-                                style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--text-primary)', fontWeight: 600 }}
-                            >
-                                <InteractiveText text="View the Ledger →" />
-                            </span>
                         </p>
                     </div>
                     <div className="bucket-card">

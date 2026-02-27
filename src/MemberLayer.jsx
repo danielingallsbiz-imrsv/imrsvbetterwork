@@ -193,14 +193,6 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </p>
                             <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ ACCESS SHOP ]</button>
                         </div>
-                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>03.</span>
-                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>RESTORE LEDGER</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                Interactive tracking of Medellín Hub reinvestment into local coffee growers and artisans.
-                            </p>
-                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ OPEN LEDGER ]</button>
-                        </div>
                     </div>
 
                     {/* MEMBERS SECTION */}
