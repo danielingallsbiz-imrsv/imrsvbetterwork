@@ -49,10 +49,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         <InteractiveText text="Login" />
                     </span>
                 </div>
-            </nav >
+            </nav>
 
             {/* HERO */}
-            < section className="hero-section" >
+            <section className="hero-section" >
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -74,10 +74,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     className="hero-video-bg"
                     style={{ pointerEvents: 'none', objectFit: 'cover' }}
                 />
-            </section >
+            </section>
 
             {/* THE MISSION */}
-            < section className="section" >
+            <section className="section" >
                 <span className="section-label">
                     <InteractiveText text="01 / THE MISSION." />
                 </span>
@@ -124,10 +124,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </p>
                     </div>
                 </div>
-            </section >
+            </section>
 
             {/* WHERE WE OPERATE */}
-            < section className="section" >
+            <section className="section" >
                 <span className="section-label">
                     <InteractiveText text="02 / UPCOMING DROPS." />
                 </span>
@@ -193,10 +193,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </button>
                     </div>
                 </div>
-            </section >
+            </section>
 
             {/* THE GAME LAYER */}
-            < section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
+            <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
                 <PacmanGame />
                 <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
                     <InteractiveText text="03 / THE GAME LAYER." />
@@ -229,10 +229,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     </div>
 
                 </div>
-            </section >
+            </section>
 
             {/* THE CORE IDEA */}
-            < section className="section" >
+            <section className="section" >
                 <span className="section-label">
                     <InteractiveText text="04 / THE CORE IDEA." />
                 </span>
@@ -260,10 +260,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
 
             {/* THE GAUNTLET / JOIN */}
-            < section className="gauntlet-section" id="apply" >
+            <section className="gauntlet-section" id="apply" >
                 <motion.div
                     whileInView={{ opacity: 1, y: 0 }}
                     initial={{ opacity: 0, y: 30 }}
@@ -276,7 +276,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     </p>
                     <button onClick={handleApplyClick} className="gauntlet-btn">[ Join Sunday Collection ]</button>
                 </motion.div>
-            </section >
+            </section>
 
             <footer className="footer">
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
