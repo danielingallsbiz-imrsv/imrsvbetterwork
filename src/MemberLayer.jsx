@@ -57,9 +57,15 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     const [rsvpStatus, setRsvpStatus] = useState({});
     const [showSessionsModal, setShowSessionsModal] = useState(false);
     const [expandedSession, setExpandedSession] = useState(null);
+    const [showTripsModal, setShowTripsModal] = useState(false);
+    const [expandedTrip, setExpandedTrip] = useState(null);
 
     const toggleSession = (index) => {
         setExpandedSession(expandedSession === index ? null : index);
+    };
+
+    const toggleTrip = (index) => {
+        setExpandedTrip(expandedTrip === index ? null : index);
     };
 
     const { scrollY } = useScroll();
@@ -193,11 +199,17 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </div>
                         <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
                             <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
-                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>TICKET SHOP</h3>
+                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING TRIPS</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                Limited Edition 'Restoration' physical collection. Only available to verified nodes.
+                                This is our high-ticket offer. Access exclusive global trips and itineraries reserved for verified nodes.
                             </p>
-                            <button className="gauntlet-btn" style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px' }}>[ ACCESS SHOP ]</button>
+                            <button
+                                onClick={() => setShowTripsModal(true)}
+                                className="gauntlet-btn"
+                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: '#F7D031', color: '#000' }}
+                            >
+                                [ VIEW TRIPS & ITINERARIES ]
+                            </button>
                         </div>
                     </div>
 
@@ -333,6 +345,160 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                     style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '30px', width: '100%', backgroundColor: rsvpStatus['project-culture'] ? '#2ECC71' : '#F7D031', color: '#000' }}
                                                 >
                                                     {rsvpStatus['project-culture'] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $TBD ]'}
+                                                </button>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* TRIPS MODAL */}
+            <AnimatePresence>
+                {showTripsModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(247, 245, 234, 0.98)',
+                            zIndex: 4000,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '40px',
+                            overflowY: 'auto'
+                        }}
+                    >
+                        <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%', position: 'relative', paddingTop: '40px', paddingBottom: '100px' }}>
+                            <button
+                                onClick={() => setShowTripsModal(false)}
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    background: 'none',
+                                    border: 'none',
+                                    fontSize: '0.8rem',
+                                    fontWeight: 800,
+                                    letterSpacing: '0.1em',
+                                    color: '#1A1A1A',
+                                    cursor: 'pointer',
+                                    opacity: 0.5,
+                                    padding: '10px'
+                                }}
+                            >
+                                [ CLOSE ]
+                            </button>
+
+                            <ClippingText text="TRIPS." scale={0.6} style={{ color: '#1A1A1A', margin: 0, marginBottom: '10px' }} />
+                            <p style={{ opacity: 0.5, fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '60px', fontWeight: 600 }}>SELECT A TRIP FOR ITINERARY</p>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                {/* TRIP 1: KYOTO CULTURAL IMMERSION */}
+                                <div style={{ border: '1px solid rgba(0,0,0,0.1)', background: '#FFF', padding: '30px' }}>
+                                    <div
+                                        onClick={() => toggleTrip(1)}
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                    >
+                                        <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600, color: '#1A1A1A' }}>01. KYOTO CULTURAL IMMERSION</h3>
+                                        <span style={{ fontSize: '1.2rem', color: '#F7D031', fontWeight: 300 }}>
+                                            {expandedTrip === 1 ? '—' : '+'}
+                                        </span>
+                                    </div>
+
+                                    <AnimatePresence>
+                                        {expandedTrip === 1 && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                animate={{ height: 'auto', opacity: 1, marginTop: '30px' }}
+                                                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                style={{ overflow: 'hidden' }}
+                                            >
+                                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '30px' }}>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHERE</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            Kyoto, Japan. Traditional Machiya stay with exclusive temple access.
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHAT</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            A 7-day high-ticket intensive. Restoring centuries-old artisan crafts and connecting directly with local masters.
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>HOW</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            Secure your spot via the portal. Only 10 seats available per quarter.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleRSVP('trip-kyoto'); }}
+                                                    className="gauntlet-btn"
+                                                    style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '30px', width: '100%', backgroundColor: rsvpStatus['trip-kyoto'] ? '#2ECC71' : '#F7D031', color: '#000' }}
+                                                >
+                                                    {rsvpStatus['trip-kyoto'] ? '[ SECURED ]' : '[ DEPOSIT — $2500 ]'}
+                                                </button>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                                {/* TRIP 2: PATAGONIA EXPEDITION */}
+                                <div style={{ border: '1px solid rgba(0,0,0,0.1)', background: '#FFF', padding: '30px' }}>
+                                    <div
+                                        onClick={() => toggleTrip(2)}
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                    >
+                                        <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600, color: '#1A1A1A' }}>02. PATAGONIA EXPEDITION</h3>
+                                        <span style={{ fontSize: '1.2rem', color: '#F7D031', fontWeight: 300 }}>
+                                            {expandedTrip === 2 ? '—' : '+'}
+                                        </span>
+                                    </div>
+
+                                    <AnimatePresence>
+                                        {expandedTrip === 2 && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                animate={{ height: 'auto', opacity: 1, marginTop: '30px' }}
+                                                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                style={{ overflow: 'hidden' }}
+                                            >
+                                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '30px' }}>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHERE</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            Patagonia, Argentina/Chile. Deep wilderness basecamp.
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHAT</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            A 10-day high-ticket journey. Direct reforestation efforts with local conservationists alongside mountain excursions.
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>HOW</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            Secure your spot via the portal. Rigorous physical requirements apply.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleRSVP('trip-patagonia'); }}
+                                                    className="gauntlet-btn"
+                                                    style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '30px', width: '100%', backgroundColor: rsvpStatus['trip-patagonia'] ? '#2ECC71' : '#F7D031', color: '#000' }}
+                                                >
+                                                    {rsvpStatus['trip-patagonia'] ? '[ SECURED ]' : '[ DEPOSIT — $2500 ]'}
                                                 </button>
                                             </motion.div>
                                         )}

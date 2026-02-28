@@ -8,9 +8,8 @@ const PacmanGame = () => {
     const pacmanPos = useRef({ x: 100, y: 100, angle: 0 });
     const dotsRef = useRef([]);
 
-    const animate = useCallback(() => {
+    const animate = useCallback(function loop() {
         if (!containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
 
         let { x, y, angle } = pacmanPos.current;
         const speed = 2.5;
@@ -60,7 +59,7 @@ const PacmanGame = () => {
         setPacman({ x, y, angle });
         pacmanPos.current = { x, y, angle };
 
-        requestRef.current = requestAnimationFrame(animate);
+        requestRef.current = requestAnimationFrame(loop);
     }, []);
 
     // Initialize dots
