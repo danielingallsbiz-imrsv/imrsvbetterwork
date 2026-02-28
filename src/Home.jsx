@@ -116,7 +116,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="IRL Events" />
                         </h3>
                         <p className="bucket-desc">
-                            We run events twice a month across three different countries.
+                            We run events twice a month across three different countries, and host exclusive global trips once a month.
                         </p>
                     </div>
                     <div className="bucket-card">
