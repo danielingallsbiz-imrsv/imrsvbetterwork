@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, useScroll, useTransform, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
+import { supabase } from './lib/supabase';
 import './Home.css';
 
 const WelcomeBriefing = ({ onAcknowledge }) => (
@@ -48,45 +49,79 @@ const WelcomeBriefing = ({ onAcknowledge }) => (
 );
 
 const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
-    // Check if briefing was already acknowledged for this user
     const briefingKey = `imrsv_briefing_acknowledged_${user?.id} `;
-    const [showBriefing, setShowBriefing] = useState(() => {
-        return !localStorage.getItem(briefingKey);
-    });
-
+    const [showBriefing, setShowBriefing] = useState(() => !localStorage.getItem(briefingKey));
     const [rsvpStatus, setRsvpStatus] = useState({});
     const [showSessionsModal, setShowSessionsModal] = useState(false);
     const [expandedSession, setExpandedSession] = useState(null);
     const [showTripsModal, setShowTripsModal] = useState(false);
     const [expandedTrip, setExpandedTrip] = useState(null);
 
-    const toggleSession = (index) => {
-        setExpandedSession(expandedSession === index ? null : index);
+    // Profile panel
+    const [showProfilePanel, setShowProfilePanel] = useState(false);
+    const [profileSaving, setProfileSaving] = useState(false);
+    const [profileSaved, setProfileSaved] = useState(false);
+    const [profileData, setProfileData] = useState({
+        full_name: '', profession: '', bio: '',
+        photos: ['', '', '']
+    });
+
+    // Credit / contribution
+    const [creditData, setCreditData] = useState(null);
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (!user?.email) return;
+            const { data } = await supabase
+                .from('applications')
+                .select('id, full_name, profession, bio, photos, contribution_amount, credit_balance, renewal_date')
+                .ilike('email', user.email.trim())
+                .single();
+            if (data) {
+                setProfileData({
+                    full_name: data.full_name || '',
+                    profession: data.profession || '',
+                    bio: data.bio || '',
+                    photos: data.photos?.length ? [...data.photos, ...['', '', '']].slice(0, 3) : ['', '', '']
+                });
+                setCreditData(data);
+                if (data.id) {
+                    const { data: txns } = await supabase
+                        .from('transactions')
+                        .select('*')
+                        .eq('member_id', data.id)
+                        .order('created_at', { ascending: false })
+                        .limit(5);
+                    setTransactions(txns || []);
+                }
+            }
+        };
+        fetchProfile();
+    }, [user]);
+
+    const saveProfile = async () => {
+        if (!user?.email) return;
+        setProfileSaving(true);
+        const photos = profileData.photos.filter(p => p.trim() !== '');
+        await supabase.from('applications')
+            .update({ full_name: profileData.full_name, profession: profileData.profession, bio: profileData.bio, photos })
+            .ilike('email', user.email.trim());
+        setProfileSaving(false);
+        setProfileSaved(true);
+        setTimeout(() => { setProfileSaved(false); setShowProfilePanel(false); }, 1500);
     };
 
-    const toggleTrip = (index) => {
-        setExpandedTrip(expandedTrip === index ? null : index);
-    };
+    const bioWordCount = profileData.bio.trim() === '' ? 0 : profileData.bio.trim().split(/\s+/).length;
+    const bioOverLimit = bioWordCount > 120;
 
+    const toggleSession = (index) => setExpandedSession(expandedSession === index ? null : index);
+    const toggleTrip = (index) => setExpandedTrip(expandedTrip === index ? null : index);
     const { scrollY } = useScroll();
-    // Start fading after 200px (past the header) and fully gone by 350px
     const brandingOpacity = useTransform(scrollY, [200, 350], [1, 0]);
-
-    const handleRSVP = (eventId) => {
-        setRsvpStatus(prev => ({ ...prev, [eventId]: 'SECURED' }));
-    };
-
-    const handleAcknowledge = () => {
-        localStorage.setItem(briefingKey, 'true');
-        setShowBriefing(false);
-    };
-
-    const scrollToMembers = () => {
-        const el = document.getElementById('members-section');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-    };
-
-    // Filter for members with active logins (or fallback to approved members if none marked yet)
+    const handleRSVP = (eventId) => setRsvpStatus(prev => ({ ...prev, [eventId]: 'SECURED' }));
+    const handleAcknowledge = () => { localStorage.setItem(briefingKey, 'true'); setShowBriefing(false); };
+    const scrollToMembers = () => { const el = document.getElementById('members-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); };
     const activeMembers = members.filter(m => m.status === 'approved');
 
     return (
@@ -151,34 +186,43 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     <div style={{ display: 'flex', gap: '60px', marginBottom: '80px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                         <div>
                             <p style={{ fontSize: '1.2rem', color: '#1A1A1A', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '4px' }}>
-                                {userName || 'Accessing Portal...'}
+                                {profileData.full_name || userName || 'Accessing Portal...'}
                             </p>
+                            {profileData.profession && (
+                                <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.6)', letterSpacing: '0.05em', marginBottom: '4px' }}>{profileData.profession}</p>
+                            )}
                             <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700 }}>
                                 MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
                             </p>
-                            <button
-                                onClick={scrollToMembers}
-                                style={{
-                                    background: '#F7D031',
-                                    border: 'none',
-                                    padding: '12px 24px',
-                                    fontSize: '0.7rem',
-                                    fontWeight: 800,
-                                    color: '#000',
-                                    marginTop: '25px',
-                                    cursor: 'pointer',
-                                    borderRadius: '4px',
-                                    letterSpacing: '0.1em',
-                                    display: 'block'
-                                }}
-                            >
-                                [ VIEW MEMBERS ]
-                            </button>
+                            <div style={{ display: 'flex', gap: '10px', marginTop: '25px', flexWrap: 'wrap' }}>
+                                <button onClick={scrollToMembers} style={{ background: '#F7D031', border: 'none', padding: '12px 24px', fontSize: '0.7rem', fontWeight: 800, color: '#000', cursor: 'pointer', borderRadius: '4px', letterSpacing: '0.1em' }}>[ VIEW MEMBERS ]</button>
+                                <button onClick={() => setShowProfilePanel(true)} style={{ background: 'transparent', border: '1px solid rgba(26,26,26,0.2)', padding: '12px 24px', fontSize: '0.7rem', fontWeight: 800, color: '#1A1A1A', cursor: 'pointer', borderRadius: '4px', letterSpacing: '0.1em' }}>[ EDIT PROFILE ]</button>
+                            </div>
                         </div>
                         <div>
                             <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Tier</p>
                             <p style={{ fontSize: '1.1rem', color: '#1A1A1A', fontWeight: 600 }}>FOUNDATION MEMBER</p>
                         </div>
+                        {creditData && (
+                            <div style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 30px', borderRadius: '4px', minWidth: '220px' }}>
+                                <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '8px' }}>CREDIT BALANCE</p>
+                                <p style={{ fontSize: '2rem', fontWeight: 800, color: '#1A1A1A', margin: '0 0 4px' }}>${(creditData.credit_balance ?? 0).toFixed(2)}</p>
+                                <p style={{ fontSize: '0.65rem', opacity: 0.4, marginBottom: '16px' }}>of ${(creditData.contribution_amount ?? 0).toFixed(2)} contribution</p>
+                                {creditData.renewal_date && (
+                                    <p style={{ fontSize: '0.65rem', opacity: 0.5 }}>Renews: {new Date(creditData.renewal_date).toLocaleDateString()}</p>
+                                )}
+                                {transactions.length > 0 && (
+                                    <div style={{ marginTop: '16px', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                        {transactions.map(t => (
+                                            <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <span style={{ fontSize: '0.65rem', opacity: 0.6 }}>{t.description || 'Transaction'}</span>
+                                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#FF453A' }}>-${t.amount.toFixed(2)}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     <div className="bucket-grid" style={{ marginBottom: '120px' }}>
@@ -252,6 +296,64 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 <div style={{ opacity: 0.4, fontSize: '0.7rem', color: '#1A1A1A' }}>the imrsv project / secure session access</div>
                 <div style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '0.7rem' }}>PROTOCOL: VERSION 2.0.4</div>
             </footer>
+
+            {/* PROFILE EDIT PANEL */}
+            <AnimatePresence>
+                {showProfilePanel && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(247,245,234,0.98)', zIndex: 5000, overflowY: 'auto', padding: '40px 20px' }}
+                    >
+                        <div style={{ maxWidth: '560px', margin: '0 auto', paddingTop: '60px', paddingBottom: '100px' }}>
+                            <button onClick={() => setShowProfilePanel(false)} style={{ background: 'none', border: 'none', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', color: '#1A1A1A', cursor: 'pointer', opacity: 0.5, marginBottom: '40px', padding: 0 }}>[ CLOSE ]</button>
+                            <span style={{ fontSize: '0.65rem', color: 'rgba(26,26,26,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>MEMBER PROFILE</span>
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '10px 0 40px', color: '#1A1A1A' }}>EDIT PROFILE.</h2>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '35px' }}>
+                                {/* Full Name */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
+                                    <input value={profileData.full_name} onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))} placeholder="Your full name" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
+                                </div>
+                                {/* Profession */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Profession *</label>
+                                    <input value={profileData.profession} onChange={e => setProfileData(p => ({ ...p, profession: e.target.value }))} placeholder="e.g. Photographer, Architect" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
+                                </div>
+                                {/* Bio */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Bio</label>
+                                        <span style={{ fontSize: '0.65rem', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.4)' }}>{bioWordCount} / 120 words</span>
+                                    </div>
+                                    <textarea value={profileData.bio} onChange={e => setProfileData(p => ({ ...p, bio: e.target.value }))} placeholder="Tell the collective who you are..." rows={5} style={{ background: 'transparent', border: 'none', borderBottom: `1px solid ${bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.2)'}`, padding: '10px 0', fontSize: '1rem', outline: 'none', resize: 'none', lineHeight: 1.7 }} />
+                                    {bioOverLimit && <p style={{ fontSize: '0.65rem', color: '#FF453A', margin: 0 }}>Bio must be under 120 words.</p>}
+                                </div>
+                                {/* Photos */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Photos (3 image URLs)</label>
+                                    {[0, 1, 2].map(i => (
+                                        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                            <span style={{ fontSize: '0.6rem', opacity: 0.4, letterSpacing: '0.05em' }}>PHOTO {i + 1}</span>
+                                            <input value={profileData.photos[i]} onChange={e => { const p = [...profileData.photos]; p[i] = e.target.value; setProfileData(prev => ({ ...prev, photos: p })); }} placeholder={`https://...`} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.15)', padding: '8px 0', fontSize: '0.9rem', outline: 'none', color: '#1A1A1A' }} />
+                                            {profileData.photos[i] && <img src={profileData.photos[i]} alt={`Preview ${i + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginTop: '4px' }} onError={e => e.target.style.display = 'none'} />}
+                                        </div>
+                                    ))}
+                                </div>
+                                <button
+                                    onClick={saveProfile}
+                                    disabled={profileSaving || bioOverLimit || !profileData.profession.trim()}
+                                    style={{ background: profileSaved ? '#2ECC71' : '#1A1A1A', color: '#FFF', border: 'none', padding: '18px', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', cursor: 'pointer', borderRadius: '4px', opacity: (profileSaving || bioOverLimit || !profileData.profession.trim()) ? 0.4 : 1, transition: 'background 0.3s' }}
+                                >
+                                    {profileSaved ? '[ SAVED ✓ ]' : profileSaving ? '[ SAVING... ]' : '[ SAVE PROFILE ]'}
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* SESSIONS MODAL */}
             <AnimatePresence>

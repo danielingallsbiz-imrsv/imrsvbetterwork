@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { supabase } from './lib/supabase';
 
 const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatus }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [editAmounts, setEditAmounts] = useState({}); // { [appId]: string }
+
+    const handleSetContribution = async (app) => {
+        const amount = parseFloat(editAmounts[app.id]);
+        if (isNaN(amount) || amount < 0) return;
+        await supabase.from('applications')
+            .update({ contribution_amount: amount, credit_balance: amount })
+            .eq('id', app.id);
+        setEditAmounts(prev => ({ ...prev, [app.id]: '' }));
+        alert(`Contribution set to $${amount.toFixed(2)} for ${app.name}`);
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -197,7 +209,15 @@ const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatu
                                             <span style={{ fontSize: '0.7rem', color: '#F7D031', textTransform: 'uppercase', letterSpacing: '0.2em', display: 'block', marginBottom: '10px' }}>Primary Hub: {app.hub}</span>
                                             <h4 style={{ fontSize: '2rem', color: '#F7F5EA', margin: 0, fontFamily: '"Outfit", sans-serif' }}>{app.name}</h4>
                                             <span style={{ fontSize: '0.9rem', opacity: 0.5, marginTop: '5px', display: 'block' }}>{app.social}</span>
-                                            <span style={{ fontSize: '0.8rem', color: '#F7D031', marginTop: '5px', display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{app.occupation}</span>
+                                            <span style={{ fontSize: '0.8rem', color: '#F7D031', marginTop: '5px', display: 'block', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{app.occupation}{app.profession ? ` · ${app.profession}` : ''}</span>
+                                            {app.bio && <p style={{ fontSize: '0.85rem', opacity: 0.6, marginTop: '10px', lineHeight: 1.6, maxWidth: '400px', fontStyle: 'italic' }}>"{app.bio}"</p>}
+                                            {app.photos?.filter(p => p).length > 0 && (
+                                                <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                                                    {app.photos.filter(p => p).map((url, i) => (
+                                                        <img key={i} src={url} alt={`Photo ${i + 1}`} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }} onError={e => e.target.style.display = 'none'} />
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                         <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '15px' }}>
                                             <span style={{ fontSize: '0.8rem', color: 'rgba(247, 245, 234, 0.4)' }}>
@@ -207,7 +227,10 @@ const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatu
                                                 {(!app.status || app.status === 'pending') && (
                                                     <>
                                                         <button
-                                                            onClick={() => onApprove(app.id)}
+                                                            onClick={async () => {
+                                                                await supabase.from('applications').update({ joined_date: new Date().toISOString().split('T')[0] }).eq('id', app.id);
+                                                                onApprove(app.id);
+                                                            }}
                                                             style={{
                                                                 background: 'rgba(0, 255, 0, 0.1)',
                                                                 border: '1px solid rgba(0, 255, 0, 0.4)',
@@ -286,6 +309,12 @@ const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatu
                                             <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Birthday</span>
                                             <p style={{ fontSize: '1rem', margin: '5px 0' }}>{app.birthday}</p>
                                         </div>
+                                        {app.joined_date && (
+                                            <div>
+                                                <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Joined Date</span>
+                                                <p style={{ fontSize: '1rem', margin: '5px 0', color: '#2ECC71' }}>{new Date(app.joined_date).toLocaleDateString()}</p>
+                                            </div>
+                                        )}
                                         <div style={{ gridColumn: '1 / -1' }}>
                                             <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Mailing Address</span>
                                             <p style={{ fontSize: '1rem', margin: '5px 0' }}>{app.address}</p>
@@ -297,6 +326,20 @@ const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatu
                                             "{app.contribution}"
                                         </p>
                                     </div>
+                                    {app.status === 'approved' && (
+                                        <div style={{ borderTop: '1px solid rgba(247,245,234,0.05)', paddingTop: '20px', marginTop: '20px', display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                                            <span style={{ fontSize: '0.7rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>Set Contribution ($)</span>
+                                            <input
+                                                type="number" min="0" step="0.01"
+                                                value={editAmounts[app.id] ?? ''}
+                                                onChange={e => setEditAmounts(prev => ({ ...prev, [app.id]: e.target.value }))}
+                                                placeholder="e.g. 130"
+                                                style={{ background: 'transparent', border: '1px solid rgba(247,245,234,0.2)', padding: '6px 12px', color: '#F7F5EA', fontSize: '0.9rem', borderRadius: '4px', outline: 'none', width: '120px' }}
+                                            />
+                                            <button onClick={() => handleSetContribution(app)} style={{ background: '#F7D031', border: 'none', padding: '6px 16px', fontSize: '0.7rem', fontWeight: 800, cursor: 'pointer', borderRadius: '4px', color: '#111', letterSpacing: '0.05em' }}>SET</button>
+                                            <span style={{ fontSize: '0.7rem', color: '#F7D031' }}>Balance: ${(app.credit_balance ?? 0).toFixed(2)} / ${(app.contribution_amount ?? 0).toFixed(2)}</span>
+                                        </div>
+                                    )}
                                 </motion.div>
                             ))}
                         </div>

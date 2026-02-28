@@ -48,26 +48,47 @@ const DirectoryLayer = ({ members = [], onBack, onLogout }) => {
 
                     <div className="bucket-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
                         {members.length > 0 ? (
-                            members.map((member, i) => (
-                                <motion.div
-                                    key={member.id}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.05 }}
-                                    className="bucket-card"
-                                    style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', padding: '30px' }}
-                                >
-                                    <span className="bucket-num" style={{ color: '#F7D031' }}>{(i + 1).toString().padStart(2, '0')}.</span>
-                                    <h3 className="bucket-title" style={{ color: '#1A1A1A', fontSize: '1.2rem', marginBottom: '5px' }}>{member.name}</h3>
-                                    <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '15px' }}>
-                                        ID: {member.id.toUpperCase()}
-                                    </p>
-                                    <div style={{ height: '1px', background: 'rgba(0,0,0,0.05)', margin: '15px 0' }} />
-                                    <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.05em' }}>
-                                        Joined {new Date(member.joined_at).toLocaleDateString()}
-                                    </p>
-                                </motion.div>
-                            ))
+                            members.map((member, i) => {
+                                const bioExcerpt = member.bio
+                                    ? member.bio.trim().split(/\s+/).slice(0, 20).join(' ') + (member.bio.trim().split(/\s+/).length > 20 ? '…' : '')
+                                    : null;
+                                const avatarUrl = member.photos?.find(p => p);
+                                const joinedDate = member.joined_date || member.created_at;
+                                return (
+                                    <motion.div
+                                        key={member.id}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                        className="bucket-card"
+                                        style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', padding: '30px' }}
+                                    >
+                                        <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', marginBottom: '16px' }}>
+                                            {avatarUrl ? (
+                                                <img src={avatarUrl} alt={member.name} style={{ width: '52px', height: '52px', objectFit: 'cover', borderRadius: '50%', flexShrink: 0, border: '2px solid rgba(0,0,0,0.06)' }} onError={e => e.target.style.display = 'none'} />
+                                            ) : (
+                                                <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: '#F7D031', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 800, color: '#111', flexShrink: 0 }}>
+                                                    {(member.full_name || member.name || '?')[0].toUpperCase()}
+                                                </div>
+                                            )}
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                <span className="bucket-num" style={{ color: '#F7D031', fontSize: '0.65rem' }}>{(i + 1).toString().padStart(2, '0')}.</span>
+                                                <h3 style={{ color: '#1A1A1A', fontSize: '1.1rem', fontWeight: 700, margin: '2px 0 4px', lineHeight: 1.2 }}>{member.full_name || member.name}</h3>
+                                                {member.profession && (
+                                                    <span style={{ fontSize: '0.65rem', color: '#F7D031', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{member.profession}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {bioExcerpt && (
+                                            <p style={{ fontSize: '0.8rem', opacity: 0.6, lineHeight: 1.6, margin: '0 0 14px', fontStyle: 'italic' }}>"{bioExcerpt}"</p>
+                                        )}
+                                        <div style={{ height: '1px', background: 'rgba(0,0,0,0.05)', margin: '12px 0' }} />
+                                        <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.35, letterSpacing: '0.05em' }}>
+                                            {joinedDate ? `Joined ${new Date(joinedDate).toLocaleDateString()}` : 'Active Member'}
+                                        </p>
+                                    </motion.div>
+                                );
+                            })
                         ) : (
                             <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '100px 0', opacity: 0.3 }}>
                                 <p>No members found in orbit.</p>

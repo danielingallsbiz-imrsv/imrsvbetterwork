@@ -12,6 +12,8 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         hub: '',
         social: '',
         occupation: '',
+        profession: '',
+        bio: '',
         gender: '',
         birthday: '',
         address: '',
@@ -19,12 +21,13 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
     });
 
     const steps = [
-        { label: '01 / 06', title: 'WHO ARE YOU?' },
-        { label: '02 / 06', title: 'WHERE ARE YOU?' },
-        { label: '03 / 06', title: 'WHAT DO YOU DO?' },
-        { label: '04 / 06', title: 'THE DETAILS.' },
-        { label: '05 / 06', title: 'MAILING.' },
-        { label: '06 / 06', title: 'THE CONTRIBUTION.' }
+        { label: '01 / 07', title: 'WHO ARE YOU?' },
+        { label: '02 / 07', title: 'WHERE ARE YOU?' },
+        { label: '03 / 07', title: 'WHAT DO YOU DO?' },
+        { label: '04 / 07', title: 'YOUR STORY.' },
+        { label: '05 / 07', title: 'THE DETAILS.' },
+        { label: '06 / 07', title: 'MAILING.' },
+        { label: '07 / 07', title: 'THE CONTRIBUTION.' }
     ];
 
     const handleInputChange = (e) => {
@@ -94,12 +97,44 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                 );
             case 2:
                 return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Occupation</label>
-                        <input required name="occupation" type="text" value={formData.occupation} onChange={handleInputChange} placeholder="Architect, Builder, Creator, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Occupation</label>
+                            <input required name="occupation" type="text" value={formData.occupation} onChange={handleInputChange} placeholder="Architect, Builder, Creator, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Profession / Title</label>
+                            <input required name="profession" type="text" value={formData.profession} onChange={handleInputChange} placeholder="e.g. Photographer, Designer, Chef" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                        </div>
                     </div>
                 );
-            case 3:
+            case 3: {
+                const wordCount = formData.bio.trim() === '' ? 0 : formData.bio.trim().split(/\s+/).length;
+                const overLimit = wordCount > 120;
+                return (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Bio</label>
+                            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: overLimit ? '#FF453A' : 'rgba(26,26,26,0.4)' }}>
+                                {wordCount} / 120 words
+                            </span>
+                        </div>
+                        <textarea
+                            required
+                            name="bio"
+                            value={formData.bio}
+                            onChange={handleInputChange}
+                            placeholder="Tell the collective who you are in under 120 words..."
+                            rows="6"
+                            style={{ background: 'transparent', border: 'none', borderBottom: `1px solid ${overLimit ? '#FF453A' : 'rgba(26, 26, 26, 0.2)'}`, padding: '10px 0', fontSize: '1.1rem', outline: 'none', resize: 'none', lineHeight: 1.6 }}
+                        />
+                        {overLimit && (
+                            <p style={{ fontSize: '0.7rem', color: '#FF453A', margin: 0 }}>Bio must be under 120 words.</p>
+                        )}
+                    </div>
+                );
+            }
+            case 4:
                 return (
                     <div style={{ display: 'flex', gap: '30px' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
@@ -117,14 +152,14 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         </div>
                     </div>
                 );
-            case 4:
+            case 5:
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Mailing Address</label>
                         <input required name="address" type="text" value={formData.address} onChange={handleInputChange} placeholder="Street, City, State, ZIP, Country" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                     </div>
                 );
-            case 5:
+            case 6:
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Contribution to Sunday Collection</label>
@@ -137,13 +172,15 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
     };
 
     const isCurrentStepValid = () => {
+        const bioWordCount = formData.bio.trim() === '' ? 0 : formData.bio.trim().split(/\s+/).length;
         switch (currentStep) {
             case 0: return formData.name && formData.email;
             case 1: return formData.hub && formData.social;
-            case 2: return formData.occupation;
-            case 3: return formData.gender && formData.birthday;
-            case 4: return formData.address;
-            case 5: return formData.contribution;
+            case 2: return formData.occupation && formData.profession;
+            case 3: return formData.bio && bioWordCount <= 120;
+            case 4: return formData.gender && formData.birthday;
+            case 5: return formData.address;
+            case 6: return formData.contribution;
             default: return false;
         }
     };
