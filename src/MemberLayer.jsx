@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'; // eslint-disable-line no-unused-vars
+import { AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import './Home.css';
@@ -55,49 +55,12 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     });
 
     const [rsvpStatus, setRsvpStatus] = useState({});
-    const [selectedSession, setSelectedSession] = useState(null);
+    const [showSessionsModal, setShowSessionsModal] = useState(false);
+    const [expandedSession, setExpandedSession] = useState(null);
 
-    const SESSIONS = [
-        {
-            id: 'project-culture',
-            num: '01.',
-            title: 'PROJECT CULTURE',
-            location: 'Medellín',
-            date: 'March 29 — April 19',
-            shortDesc: 'Medellín Hub Opening. Full 4-week drop sequence unlocked.',
-            details: {
-                where: 'IMRSV Medellín Hub & Secret Urban Locations',
-                what: 'A 4-week immersion into the intersection of technology, street art, and urban restoration.',
-                how: 'Access granted via Foundation Pass. Weekly drops include private gallery openings, mural restorations, and hardware laboratory sessions.'
-            }
-        },
-        {
-            id: 'hardware-lab',
-            num: '03.',
-            title: 'HARDWARE LAB',
-            location: 'Medellín',
-            date: 'April 19',
-            shortDesc: 'Final week activation. Urban tech prototype showcase.',
-            details: {
-                where: 'IMRSV Hardware Laboratory, Comuna 13',
-                what: 'Demonstration of the new restoration node hardware and community distribution protocol.',
-                how: 'Invitation only for Active Nodes. Live demo and technical briefing.'
-            }
-        },
-        {
-            id: 'medellin-hub',
-            num: '02.',
-            title: 'HUB OPENING',
-            location: 'Medellín',
-            date: 'March 29',
-            shortDesc: 'Official ribbon cutting and inaugural node synchronization.',
-            details: {
-                where: 'IMRSV Main Hub, El Poblado',
-                what: 'Foundation gathering to celebrate the activation of our permanent Medellín presence.',
-                how: 'One-night-only activation. RSVP required for entry.'
-            }
-        }
-    ];
+    const toggleSession = (index) => {
+        setExpandedSession(expandedSession === index ? null : index);
+    };
 
     const { scrollY } = useScroll();
     // Start fading after 200px (past the header) and fully gone by 350px
@@ -213,78 +176,23 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     </div>
 
                     <div className="bucket-grid" style={{ marginBottom: '120px' }}>
-                        {SESSIONS.map((session) => (
-                            <div
-                                key={session.id}
-                                className="bucket-card"
-                                style={{
-                                    background: '#FFF',
-                                    border: '1px solid rgba(0, 0, 0, 0.08)',
-                                    boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.2s ease',
-                                    position: 'relative'
-                                }}
-                                onClick={() => setSelectedSession(selectedSession === session.id ? null : session.id)}
-                            >
-                                <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>{session.num}</span>
-                                <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>{session.title}</h3>
-                                <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                    {session.location} — {session.date}
-                                    <br />{session.shortDesc}
-                                </p>
-
-                                <AnimatePresence>
-                                    {selectedSession === session.id && (
-                                        <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: 'auto', opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            style={{ overflow: 'hidden' }}
-                                        >
-                                            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-                                                <div style={{ marginBottom: '15px' }}>
-                                                    <p style={{ fontSize: '0.6rem', fontWeight: 800, color: '#F7D031', marginBottom: '4px', letterSpacing: '0.1em' }}>WHERE</p>
-                                                    <p style={{ fontSize: '0.8rem', color: '#1A1A1A', opacity: 0.8 }}>{session.details.where}</p>
-                                                </div>
-                                                <div style={{ marginBottom: '15px' }}>
-                                                    <p style={{ fontSize: '0.6rem', fontWeight: 800, color: '#F7D031', marginBottom: '4px', letterSpacing: '0.1em' }}>WHAT</p>
-                                                    <p style={{ fontSize: '0.8rem', color: '#1A1A1A', opacity: 0.8 }}>{session.details.what}</p>
-                                                </div>
-                                                <div style={{ marginBottom: '15px' }}>
-                                                    <p style={{ fontSize: '0.6rem', fontWeight: 800, color: '#F7D031', marginBottom: '4px', letterSpacing: '0.1em' }}>HOW</p>
-                                                    <p style={{ fontSize: '0.8rem', color: '#1A1A1A', opacity: 0.8 }}>{session.details.how}</p>
-                                                </div>
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleRSVP(session.id);
-                                    }}
-                                    className="gauntlet-btn"
-                                    style={{
-                                        fontSize: '0.7rem',
-                                        padding: '12px 20px',
-                                        marginTop: '20px',
-                                        backgroundColor: rsvpStatus[session.id] ? '#2ECC71' : '#F7D031',
-                                        color: '#000',
-                                        width: '100%'
-                                    }}
-                                >
-                                    {rsvpStatus[session.id] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $TBD ]'}
-                                </button>
-                                <p style={{ fontSize: '0.5rem', marginTop: '10px', opacity: 0.3, textAlign: 'center', fontWeight: 700 }}>
-                                    {selectedSession === session.id ? 'CLICK TO COLLAPSE' : 'CLICK FOR DETAILS'}
-                                </p>
-                            </div>
-                        ))}
-
                         <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>03.</span>
+                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>01.</span>
+                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING SESSIONS</h3>
+                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
+                                Medellín Hub Opening — March 29.
+                                <br />Full 4-week drop sequence unlocked.
+                            </p>
+                            <button
+                                onClick={() => setShowSessionsModal(true)}
+                                className="gauntlet-btn"
+                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: '#F7D031', color: '#000' }}
+                            >
+                                [ VIEW LOCATIONS & DETAILS ]
+                            </button>
+                        </div>
+                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
                             <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>TICKET SHOP</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
                                 Limited Edition 'Restoration' physical collection. Only available to verified nodes.
@@ -332,6 +240,109 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 <div style={{ opacity: 0.4, fontSize: '0.7rem', color: '#1A1A1A' }}>the imrsv project / secure session access</div>
                 <div style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '0.7rem' }}>PROTOCOL: VERSION 2.0.4</div>
             </footer>
+
+            {/* SESSIONS MODAL */}
+            <AnimatePresence>
+                {showSessionsModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(247, 245, 234, 0.98)',
+                            zIndex: 4000,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '40px',
+                            overflowY: 'auto'
+                        }}
+                    >
+                        <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%', position: 'relative', paddingTop: '40px', paddingBottom: '100px' }}>
+                            <button
+                                onClick={() => setShowSessionsModal(false)}
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    background: 'none',
+                                    border: 'none',
+                                    fontSize: '0.8rem',
+                                    fontWeight: 800,
+                                    letterSpacing: '0.1em',
+                                    color: '#1A1A1A',
+                                    cursor: 'pointer',
+                                    opacity: 0.5,
+                                    padding: '10px'
+                                }}
+                            >
+                                [ CLOSE ]
+                            </button>
+
+                            <ClippingText text="LOCATIONS." scale={0.6} style={{ color: '#1A1A1A', margin: 0, marginBottom: '10px' }} />
+                            <p style={{ opacity: 0.5, fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '60px', fontWeight: 600 }}>SELECT A SESSION FOR DETAILS</p>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                {/* SESSION 1: PROJECT CULTURE */}
+                                <div style={{ border: '1px solid rgba(0,0,0,0.1)', background: '#FFF', padding: '30px' }}>
+                                    <div
+                                        onClick={() => toggleSession(1)}
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                    >
+                                        <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600, color: '#1A1A1A' }}>01. PROJECT CULTURE</h3>
+                                        <span style={{ fontSize: '1.2rem', color: '#F7D031', fontWeight: 300 }}>
+                                            {expandedSession === 1 ? '—' : '+'}
+                                        </span>
+                                    </div>
+
+                                    <AnimatePresence>
+                                        {expandedSession === 1 && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                animate={{ height: 'auto', opacity: 1, marginTop: '30px' }}
+                                                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                style={{ overflow: 'hidden' }}
+                                            >
+                                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '30px' }}>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHERE</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            Medellín, Colombia. Exact coordinates provided upon RSVP.
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHAT</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            A deep dive into local impact projects. Connect with community builders and restore target areas.
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>HOW</h4>
+                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            Secure your spot via the portal. Travel and accommodations are self-managed.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleRSVP('project-culture'); }}
+                                                    className="gauntlet-btn"
+                                                    style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '30px', width: '100%', backgroundColor: rsvpStatus['project-culture'] ? '#2ECC71' : '#F7D031', color: '#000' }}
+                                                >
+                                                    {rsvpStatus['project-culture'] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $TBD ]'}
+                                                </button>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };
