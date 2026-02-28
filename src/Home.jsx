@@ -125,7 +125,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="The Network" />
                         </h3>
                         <p className="bucket-desc">
-                            This isn't just a guest list; it's a closed collective. Verified nodes get first access to global drops, high-ticket itineraries, and physical collections before they ever hit the public.
+                            This isn't just a guest list; it's a closed collective. We are the underground in select cities all around the world, getting first access to global drops, high-ticket itineraries, and physical collections.
                         </p>
                     </div>
                 </div>

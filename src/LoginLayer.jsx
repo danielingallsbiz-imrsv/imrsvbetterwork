@@ -1,4 +1,4 @@
-import InteractiveText from "./components/InteractiveText";import React, { useState } from 'react';
+import InteractiveText from "./components/InteractiveText"; import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import './Home.css';
@@ -30,7 +30,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
             if (mode === 'login') {
                 const result = await onLogin(email, password);
                 if (result?.status === 'CONFIRMATION_REQUIRED') {
-                    setError("EMAIL NOT CONFIRMED. PLEASE INITIALIZE YOUR NODE.");
+                    setError("EMAIL NOT CONFIRMED. PLEASE INITIALIZE YOUR ACCOUNT.");
                     setSuccess("WE'VE SENT A LINK TO YOUR INBOX. IF YOU CAN'T FIND IT, USE THE BUTTON BELOW TO RESEND.");
                 }
             } else {
@@ -39,7 +39,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
                 }
                 const result = await onSignup(email, password);
                 if (result?.status === 'CONFIRMATION_SENT') {
-                    setSuccess("CHECK YOUR EMAIL. WE'VE SENT A CONFIRMATION LINK TO INITIALIZE YOUR NODE.");
+                    setSuccess("CHECK YOUR EMAIL. WE'VE SENT A CONFIRMATION LINK TO INITIALIZE YOUR ACCOUNT.");
                 }
             }
         } catch (err) {
@@ -107,7 +107,7 @@ const LoginLayer = ({ onBack, onNavigateToApply, onLogin, onSignup, onResendConf
 
                     {mode === 'signup' && (
                         <p style={{ fontSize: '0.9rem', opacity: 0.5, marginBottom: '30px' }}>
-                            Initialize your node by setting a secure password.
+                            Initialize your account by setting a secure password.
                         </p>
                     )}
 

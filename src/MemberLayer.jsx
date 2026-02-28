@@ -201,7 +201,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
                             <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING TRIPS</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                This is our high-ticket offer. Access exclusive global trips and itineraries reserved for verified nodes.
+                                This is our high-ticket offer. Access exclusive global trips and itineraries reserved for the collective.
                             </p>
                             <button
                                 onClick={() => setShowTripsModal(true)}
@@ -217,7 +217,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     <div id="members-section" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '100px' }}>
                         <div style={{ marginBottom: '60px' }}>
                             <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
-                            <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>NODES CURRENTLY IN ORBIT</p>
+                            <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>MEMBERS CURRENTLY IN ORBIT</p>
                         </div>
                         <div className="bucket-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
                             {activeMembers.length > 0 ? (
@@ -228,7 +228,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                         style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.06)', padding: '25px', boxShadow: 'none' }}
                                     >
                                         <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '8px' }}>
-                                            NODE {member.id?.slice(0, 8).toUpperCase()}
+                                            USER {member.id?.slice(0, 8).toUpperCase()}
                                         </p>
                                         <h3 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 600, color: '#1A1A1A' }}>{member.name}</h3>
                                         <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
