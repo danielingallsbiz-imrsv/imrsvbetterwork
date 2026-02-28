@@ -158,7 +158,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 05</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (PRESENCE)</h3>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>UP DOG $H*T</h3>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
@@ -169,7 +169,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 12</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (DROP)</h3>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>THE CRASH OUT</h3>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
@@ -180,7 +180,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 19</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (CLOSING)</h3>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>LAST CALL</h3>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
