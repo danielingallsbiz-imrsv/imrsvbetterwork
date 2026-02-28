@@ -203,7 +203,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             The central digital nervous system for the IMRSV network.
                         </p>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            A private portal to secure your spot at upcoming drops, connect directly with the collective in your city, and get first-access to high-ticket global trips.
+                            A portal to secure your spot at upcoming drops, connect directly with the collective in your city, and get first-access to global trips.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
