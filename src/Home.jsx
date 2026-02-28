@@ -137,7 +137,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <InteractiveText text="02 / UPCOMING DROPS." />
                 </span>
                 <h2 className="concept-title" style={{ maxWidth: '900px' }}>
-                    <InteractiveText text="Medellín Drop Sequence." /> <br />
+                    <InteractiveText text="Colombia Drop Sequence." /> <br />
                     <InteractiveText text="Medellín, Colombia." />
                 </h2>
 
