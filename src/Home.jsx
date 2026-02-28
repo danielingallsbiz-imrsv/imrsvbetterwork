@@ -104,19 +104,19 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="bucket-card">
                         <span className="bucket-num">01.</span>
                         <h3 className="bucket-title">
-                            <InteractiveText text="How it works" />
+                            <InteractiveText text="IRL Events (Sunday Collection)" />
                         </h3>
                         <p className="bucket-desc">
-                            We take a slice of every ticket and global trip and put it right into what we call The IMRSV Project. That capital stays in the city and goes directly back to the local community—simple as that.
+                            We run events twice a month across three different countries, and host exclusive global trips once a month.
                         </p>
                     </div>
                     <div className="bucket-card">
                         <span className="bucket-num">02.</span>
                         <h3 className="bucket-title">
-                            <InteractiveText text="IRL Events" />
+                            <InteractiveText text="How it works" />
                         </h3>
                         <p className="bucket-desc">
-                            We run events twice a month across three different countries, and host exclusive global trips once a month.
+                            We take a slice of every ticket and global trip and put it right into what we call The IMRSV Project. That capital stays in the city and goes directly back to the local community—simple as that.
                         </p>
                     </div>
                     <div className="bucket-card">
