@@ -340,11 +340,15 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                     </div>
                                                 </div>
                                                 <button
-                                                    onClick={(e) => { e.stopPropagation(); handleRSVP('project-culture'); }}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        window.open('https://buy.stripe.com/test_cNieVdgy716kdRfct8abK00', '_blank');
+                                                        handleRSVP('project-culture');
+                                                    }}
                                                     className="gauntlet-btn"
                                                     style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '30px', width: '100%', backgroundColor: rsvpStatus['project-culture'] ? '#2ECC71' : '#F7D031', color: '#000' }}
                                                 >
-                                                    {rsvpStatus['project-culture'] ? '[ RSVP SECURED ]' : '[ SECURE SPOT — $TBD ]'}
+                                                    {rsvpStatus['project-culture'] ? '[ REDIRECTING... ]' : '[ SECURE SPOT ]'}
                                                 </button>
                                             </motion.div>
                                         )}
