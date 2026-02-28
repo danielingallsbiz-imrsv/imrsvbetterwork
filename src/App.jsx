@@ -222,8 +222,10 @@ function AppContent() {
       const { error } = await supabase.from('applications').delete().eq('id', id);
       if (error) throw error;
       setApplications(prev => prev.filter(app => app.id !== id));
+      setMembers(prev => prev.filter(app => app.id !== id));
     } catch {
       setApplications(prev => prev.filter(app => app.id !== id));
+      setMembers(prev => prev.filter(app => app.id !== id));
     }
   };
 

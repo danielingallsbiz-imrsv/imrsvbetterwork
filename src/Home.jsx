@@ -107,7 +107,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="How it works" />
                         </h3>
                         <p className="bucket-desc">
-                            We take a slice of every membership and put it into what we call a "Restoration Fund." That money stays in the city and goes right to the locals—simple as that.
+                            We take a slice of every ticket and global trip and put it right into what we call The IMRSV Project. That capital stays in the city and goes directly to the local builders—simple as that.
                         </p>
                     </div>
                     <div className="bucket-card">
@@ -116,16 +116,16 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="IRL Events" />
                         </h3>
                         <p className="bucket-desc">
-                            We do about 1 or 2 events a month. Sometimes it's a chill dinner with builders, other times it’s a bigger night showing off real local talent.
+                            We run events twice a month across three different countries. Sometimes it's an intimate dinner connecting with local visionaries, other times it’s a massive underground drop showcasing real local talent.
                         </p>
                     </div>
                     <div className="bucket-card">
                         <span className="bucket-num">03.</span>
                         <h3 className="bucket-title">
-                            <InteractiveText text="Staying connected" />
+                            <InteractiveText text="The Network" />
                         </h3>
                         <p className="bucket-desc">
-                            We’re all about bridging the gap. When we’re in town, we make sure our people are actually hanging with locals and spending money at the spots that define the culture.
+                            This isn't just a guest list; it's a closed collective. Verified nodes get first access to global drops, high-ticket itineraries, and physical collections before they ever hit the public.
                         </p>
                     </div>
                 </div>
@@ -200,22 +200,22 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 </div>
             </section>
 
-            {/* THE GAME LAYER */}
+            {/* THE APP LAYER */}
             <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
                 <PacmanGame />
                 <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
-                    <InteractiveText text="03 / THE GAME LAYER." />
+                    <InteractiveText text="03 / THE IMRSV APP." />
                 </span>
                 <div className="concept-grid" style={{ alignItems: 'center' }}>
                     <div className="concept-text">
                         <h3 style={{ fontSize: '3.5rem', marginBottom: '30px', color: '#F7F5EA' }}>
-                            <InteractiveText text="COLLECT THE WORLD." />
+                            <InteractiveText text="IN DEVELOPMENT." />
                         </h3>
                         <p style={{ marginBottom: '20px', fontSize: '1.2rem', opacity: 0.9 }}>
-                            IMRSV adds a real-world collection system centered around verified “Hubs.”
+                            The central digital nervous system for the IMRSV network.
                         </p>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            Physically hitting and claiming spots like restaurants, viewpoints, and hidden cultural hubs earns you points—participation currency that unlocks perks and missions.
+                            Track drops, network with local hubs, unlock private locations, and manage off-grid itineraries.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
