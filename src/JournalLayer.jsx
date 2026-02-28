@@ -1,4 +1,4 @@
-import React from 'react';
+import InteractiveText from "./components/InteractiveText";import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import './Home.css';

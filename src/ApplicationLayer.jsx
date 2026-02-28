@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import InteractiveText from './components/InteractiveText';
 import './Home.css';
 
 const ApplicationLayer = ({ navigateToHome, onSubmit }) => {

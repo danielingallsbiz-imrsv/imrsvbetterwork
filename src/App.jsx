@@ -10,6 +10,7 @@ import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
 import MemberLayer from './MemberLayer';
 import DirectoryLayer from './DirectoryLayer';
+import SundayCollectionFunnel from './SundayCollectionFunnel';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -222,7 +223,7 @@ function AppContent() {
       const { error } = await supabase.from('applications').delete().eq('id', id);
       if (error) throw error;
       setApplications(prev => prev.filter(app => app.id !== id));
-    } catch  {
+    } catch {
       setApplications(prev => prev.filter(app => app.id !== id));
     }
   };
@@ -343,6 +344,9 @@ function AppContent() {
           } />
           <Route path="/journal" element={
             <JournalLayer onBack={() => navigate('/')} />
+          } />
+          <Route path="/sundaycollection" element={
+            <SundayCollectionFunnel />
           } />
         </Routes>
       </AnimatePresence>
