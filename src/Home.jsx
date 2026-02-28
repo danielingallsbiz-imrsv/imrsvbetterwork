@@ -89,14 +89,14 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.4rem' }}>
                             Sunday Collection is our way of making sure we’re actually helping out the places we visit.
                         </p>
-                        <div style={{ marginBottom: '30px', marginTop: '10px' }}>
+                        <p style={{ fontSize: '1.2rem', lineHeight: 1.6 }}>
+                            We don’t just show up, throw a party, and dip. We make sure a real chunk of everything we do goes right back to the local artists and projects that make these cities what they are. It's about being a good guest.
+                        </p>
+                        <div style={{ marginBottom: '10px', marginTop: '30px' }}>
                             <button className="gauntlet-btn" onClick={handleApplyClick} style={{ padding: '12px 30px', fontSize: '0.8rem' }}>
                                 [ JOIN THE COLLECTIVE ]
                             </button>
                         </div>
-                        <p style={{ fontSize: '1.2rem', lineHeight: 1.6 }}>
-                            We don’t just show up, throw a party, and dip. We make sure a real chunk of everything we do goes right back to the local artists and projects that make these cities what they are. It's about being a good guest.
-                        </p>
                     </div>
                 </div>
 
