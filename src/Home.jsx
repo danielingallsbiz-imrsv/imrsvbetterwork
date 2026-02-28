@@ -81,26 +81,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 <span className="section-label">
                     <InteractiveText text="01 / THE MISSION." />
                 </span>
-                <div className="concept-grid" style={{ marginTop: '60px' }}>
-                    <div className="concept-text">
-                        <h3 style={{ marginBottom: '40px', lineHeight: 1 }}>
-                            <InteractiveText text="WHAT’S THE IDEA HERE?" />
-                        </h3>
-                        <p style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '20px', fontSize: '1.4rem' }}>
-                            Sunday Collection is our way of making sure we’re actually helping out the places we visit.
-                        </p>
-                        <p style={{ fontSize: '1.2rem', lineHeight: 1.6 }}>
-                            We don’t just show up, throw a party, and dip. We make sure a real chunk of everything we do goes right back to the local artists and projects that make these cities what they are. It's about being a good guest.
-                        </p>
-                        <div style={{ marginBottom: '10px', marginTop: '30px' }}>
-                            <button className="gauntlet-btn" onClick={handleApplyClick} style={{ padding: '12px 30px', fontSize: '0.8rem' }}>
-                                [ JOIN THE COLLECTIVE ]
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bucket-grid" style={{ marginTop: '80px' }}>
+                <div className="bucket-grid" style={{ marginTop: '60px' }}>
                     <div className="bucket-card">
                         <span className="bucket-num">01.</span>
                         <h3 className="bucket-title">
@@ -128,6 +109,12 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             This isn't just a guest list; it's a curated community. We connect like-minded people in select cities all around the world, sharing first access to global drops, exclusive itineraries, and physical collections.
                         </p>
                     </div>
+                </div>
+
+                <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'flex-start' }}>
+                    <button className="gauntlet-btn" onClick={handleApplyClick} style={{ padding: '16px 40px', fontSize: '0.8rem', marginTop: 0 }}>
+                        [ APPLY FOR SUNDAY COLLECTION ]
+                    </button>
                 </div>
             </section>
 
@@ -287,7 +274,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
                     <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', marginTop: '1px' }} />
                     <span style={{ marginLeft: '4px' }} className="mobile-hide">
-                        <InteractiveText text="imrsv project" />
+                        <InteractiveText text="IMRSV PROJECT" />
                     </span>
                 </div>
                 <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
