@@ -353,12 +353,98 @@
     transform: scale(1.05);
 }
 
-/* FOOTER */
-.footer {
-    padding: 100px 80px;
+/* FOOTER EXTENDED - SOHO STYLE */
+.footer-extended {
+    padding: 80px 80px 40px 80px;
     border-top: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.footer-top {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    width: 100%;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-col span,
+.footer-col a {
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: opacity 0.2s;
+}
+
+.footer-col span:hover,
+.footer-col a:hover {
+    opacity: 0.6;
+}
+
+.footer-bottom-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-subscribe {
+    max-width: 500px;
+}
+
+.footer-subscribe h4 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.footer-subscribe p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.subscribe-btn-pill {
+    background-color: var(--text-primary);
+    color: var(--bg-color);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.subscribe-btn-pill:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.footer-locale-selector {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 /* RAW EVENT GRID */

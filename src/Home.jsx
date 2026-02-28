@@ -270,20 +270,33 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 </motion.div>
             </section>
 
-            <footer className="footer">
-                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.6 }}>
-                    <img src="/logo.svg" alt="" style={{ height: '12px', width: 'auto', marginTop: '1px' }} />
-                    <span style={{ marginLeft: '4px' }} className="mobile-hide">
-                        <InteractiveText text="IMRSV PROJECT" />
-                    </span>
+            <footer className="footer-extended">
+                <div className="footer-top">
+                    <div className="footer-links-grid">
+                        <div className="footer-col">
+                            <span onClick={() => alert('We are always looking for operations and curatorial talent.')}>Careers</span>
+                            <span onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>About</span>
+                            <a href="mailto:hello@imrsv.com" style={{ textDecoration: 'none' }}>Contact</a>
+                        </div>
+                        <div className="footer-col">
+                            <span onClick={() => alert('The IMRSV Native App is currently in closed development.')}>Download app</span>
+                            <a href="https://instagram.com/theimrsvproject" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>@theimrsvproject</a>
+                        </div>
+                    </div>
                 </div>
-                <div className="nav-links" style={{ color: 'var(--text-secondary)' }}>
-                    <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>
-                        <InteractiveText text="Journal" />
-                    </span>
-                    <span onClick={navigateToAdmin} style={{ cursor: 'pointer' }}>
-                        <InteractiveText text="©2026" />
-                    </span>
+
+                <div className="footer-bottom-grid">
+                    <div className="footer-subscribe">
+                        <h4>Subscribe</h4>
+                        <p>Sign up to hear about events, news and updates from our <span onClick={navigateToJournal} style={{ cursor: 'pointer', textDecoration: 'underline' }}>journal</span> and Sunday Collection.</p>
+                        <button className="subscribe-btn-pill" onClick={handleApplyClick}>Subscribe</button>
+                    </div>
+                    <div className="footer-locale-selector">
+                        <span onClick={() => alert('Additional language and regional support coming soon.')}>English (US) ⏷</span>
+                    </div>
+                </div>
+                <div style={{ padding: '0px 0', fontSize: '0.8rem', opacity: 0.5, borderTop: 'none', display: 'flex', justifyContent: 'flex-start' }}>
+                    <span onClick={navigateToAdmin} style={{ cursor: 'pointer' }}>© 2026 The IMRSV Project</span>
                 </div>
             </footer>
         </div>
