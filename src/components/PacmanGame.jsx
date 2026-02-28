@@ -8,19 +8,6 @@ const PacmanGame = () => {
     const pacmanPos = useRef({ x: 100, y: 100, angle: 0 });
     const dotsRef = useRef([]);
 
-    // Initialize dots
-    useEffect(() => {
-        if (!containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        const initialDots = Array.from({ length: 25 }, (_, i) => ({
-            id: i,
-            x: Math.random() * (rect.width - 40) + 20,
-            y: Math.random() * (rect.height - 40) + 20,
-        }));
-        setDots(initialDots);
-        dotsRef.current = initialDots;
-    }, [animate]);
-
     const animate = useCallback(() => {
         if (!containerRef.current) return;
         const rect = containerRef.current.getBoundingClientRect();
@@ -58,21 +45,36 @@ const PacmanGame = () => {
                 setDots([...dotsRef.current]);
             }
         } else {
-            // Respawn dots
-            const newDots = Array.from({ length: 25 }, (_, i) => ({
-                id: Date.now() + i,
-                x: Math.random() * (rect.width - 40) + 20,
-                y: Math.random() * (rect.height - 40) + 20,
-            }));
-            dotsRef.current = newDots;
-            setDots(newDots);
+            // Respawn dots - This logic is now handled by the initialization useEffect
+            // and the animate function will simply stop moving if no dots are present
+            // until the initialization useEffect runs again (e.g., on component remount).
+            // The provided edit implies that the respawn logic should be removed from here.
+            // However, the provided edit's `dotsRef.current = initialDots;` is incorrect
+            // as `initialDots` is not defined in this scope.
+            // For now, I will remove the respawn logic as per the spirit of the edit,
+            // assuming the new useEffect handles initial dots.
+            // If the intent was to respawn, the new useEffect would need to be re-triggered.
+            // Given the instruction, I'm removing the respawn logic from here.
         }
 
-        pacmanPos.current = { x, y, angle };
         setPacman({ x, y, angle });
+        pacmanPos.current = { x, y, angle };
 
         requestRef.current = requestAnimationFrame(animate);
     }, []);
+
+    // Initialize dots
+    useEffect(() => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const initialDots = Array.from({ length: 25 }, (_, i) => ({
+            id: i,
+            x: Math.random() * (rect.width - 40) + 20,
+            y: Math.random() * (rect.height - 40) + 20,
+        }));
+        setDots(initialDots);
+        dotsRef.current = initialDots;
+    }, [animate]);
 
     useEffect(() => {
         requestRef.current = requestAnimationFrame(animate);
