@@ -252,11 +252,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
 
             {/* YACHT MEDIA & CTA */}
             <div style={{ width: '100%', marginBottom: '80px' }}>
-                <img
-                    src="/yacht-party.png"
-                    alt="Sunday Collection Event"
-                    style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
-                />
                 <div style={{ padding: '40px 80px', background: '#e3dfcd' }}>
                     <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Participation ]</span>
                     <button
