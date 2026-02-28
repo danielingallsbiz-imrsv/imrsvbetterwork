@@ -1,8 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const AdminLayer = ({ onBack, applications, onDelete, onApprove, onDeny, dbStatus }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        if (password === 'imrsv2026') {
+            setIsAuthenticated(true);
+            setError('');
+        } else {
+            setError('ACCESS DENIED');
+            setPassword('');
+        }
+    };
+
+    if (!isAuthenticated) {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="home-container"
+                style={{ backgroundColor: '#111', color: '#F7D031', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
+            >
+                <div style={{ position: 'absolute', top: 40, left: 40, cursor: 'pointer', fontFamily: 'monospace', opacity: 0.5, letterSpacing: '0.1em' }} onClick={onBack}>
+                    [ ABORT TERMINAL ]
+                </div>
+
+                <div style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <h2 style={{ fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0, fontSize: '1rem', opacity: 0.8 }}>Admin Gateway</h2>
+
+                    <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoFocus
+                            placeholder="Enter Passkey_"
+                            style={{
+                                background: 'transparent',
+                                border: '1px solid rgba(247, 208, 49, 0.3)',
+                                padding: '15px 20px',
+                                color: '#F7D031',
+                                fontFamily: 'monospace',
+                                fontSize: '1.2rem',
+                                outline: 'none'
+                            }}
+                        />
+                        <button type="submit" style={{
+                            background: '#F7D031',
+                            color: '#111',
+                            border: 'none',
+                            padding: '15px',
+                            fontFamily: 'monospace',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.1em'
+                        }}>
+                            Authenticate
+                        </button>
+                        {error && (
+                            <div style={{ color: '#FF453A', fontFamily: 'monospace', marginTop: '10px' }}>
+                                ERR: {error}
+                            </div>
+                        )}
+                    </form>
+                </div>
+            </motion.div>
+        );
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
