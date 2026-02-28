@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, useScroll, useTransform, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import './Home.css';

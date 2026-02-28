@@ -10,7 +10,6 @@ import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
 import MemberLayer from './MemberLayer';
 import DirectoryLayer from './DirectoryLayer';
-import SundayCollectionFunnel from './SundayCollectionFunnel';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -344,9 +343,6 @@ function AppContent() {
           } />
           <Route path="/journal" element={
             <JournalLayer onBack={() => navigate('/')} />
-          } />
-          <Route path="/sundaycollection" element={
-            <SundayCollectionFunnel />
           } />
         </Routes>
       </AnimatePresence>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import './SundayCollectionFunnel.css';
