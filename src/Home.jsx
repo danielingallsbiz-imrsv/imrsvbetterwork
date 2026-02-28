@@ -215,7 +215,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             The central digital nervous system for the IMRSV network.
                         </p>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            A seamless portal to book drops, connect with the collective, and secure your place on global trips.
+                            A seamless portal to book exclusive events, unlock authentic experiences with locals, and secure your place on global trips.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
