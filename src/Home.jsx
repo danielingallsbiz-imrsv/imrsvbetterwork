@@ -173,7 +173,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 12</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Guatapé, CO</p>
+                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>El Rio Buriticá, CO</p>
                             <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>THE CRASH OUT</h3>
                         </div>
                         <button
@@ -187,7 +187,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 26</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>El Rio Buriticá, CO</p>
+                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Guatapé, CO</p>
                             <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>LAST CALL</h3>
                         </div>
                         <button
