@@ -107,7 +107,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="How it works" />
                         </h3>
                         <p className="bucket-desc">
-                            We take a slice of every ticket and global trip and put it right into what we call The IMRSV Project. That capital stays in the city and goes directly to the local builders—simple as that.
+                            We take a slice of every ticket and global trip and put it right into what we call The IMRSV Project. That capital stays in the city and goes directly back to the local community—simple as that.
                         </p>
                     </div>
                     <div className="bucket-card">
@@ -116,7 +116,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="IRL Events" />
                         </h3>
                         <p className="bucket-desc">
-                            We run events twice a month across three different countries. Sometimes it's an intimate dinner connecting with local visionaries, other times it’s a massive underground drop showcasing real local talent.
+                            We run events twice a month across three different countries.
                         </p>
                     </div>
                     <div className="bucket-card">
