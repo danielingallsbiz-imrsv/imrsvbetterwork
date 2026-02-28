@@ -328,9 +328,12 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                     </div>
                                                     <div>
                                                         <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHAT</h4>
-                                                        <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
-                                                            A deep dive into local impact projects. Connect with community builders and restore target areas.
-                                                        </p>
+                                                        <div style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
+                                                            <strong>Itinerary:</strong><br />
+                                                            10am: Run Club<br />
+                                                            12pm - 5pm: Community Day<br />
+                                                            6pm - 11pm: After Hours Network (Ice baths, DJ, Open Bar, Tattoos)
+                                                        </div>
                                                     </div>
                                                     <div>
                                                         <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>HOW</h4>
