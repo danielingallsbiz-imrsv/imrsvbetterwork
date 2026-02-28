@@ -144,10 +144,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 <div className="bucket-grid" style={{ marginBottom: '80px' }}>
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAR. 29</span>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (OPENING)</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: TBD (Full Fund Reinvestment)
-                        </p>
+                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>PROJECT CULTURE</h3>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
@@ -159,9 +156,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 05</span>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (PRESENCE)</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: TBD (Full Fund Reinvestment)
-                        </p>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
@@ -173,9 +167,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 12</span>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (DROP)</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: TBD (Full Fund Reinvestment)
-                        </p>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
@@ -187,9 +178,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 19</span>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>MEDELLÍN HUB (CLOSING)</h3>
-                        <p className="bucket-desc" style={{ color: 'rgba(247, 245, 234, 0.7)' }}>
-                            Ticket: TBD (Full Fund Reinvestment)
-                        </p>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
