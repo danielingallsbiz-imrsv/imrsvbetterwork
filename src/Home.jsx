@@ -144,8 +144,10 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 <div className="bucket-grid" style={{ marginBottom: '80px' }}>
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAR. 29</span>
-                        <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px' }}>Medellín, CO</p>
-                        <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>PROJECT CULTURE</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>PROJECT CULTURE</h3>
+                        </div>
                         <button
                             onClick={handleApplyClick}
                             className="apply-link-btn"
@@ -204,7 +206,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             The central digital nervous system for the IMRSV network.
                         </p>
                         <p style={{ marginBottom: '20px', opacity: 0.8 }}>
-                            A portal to secure your spot at upcoming drops, connect directly with the collective in your city, and get first-access to global trips.
+                            A seamless portal to book drops, connect with the collective, and secure your place on global trips.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '40px' }}>
                             <div>
