@@ -79,7 +79,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
             {/* THE MISSION */}
             <section className="section" >
                 <span className="section-label">
-                    <InteractiveText text="01 / THE MISSION." />
+                    <InteractiveText text="What's the idea here?" />
                 </span>
                 <div className="bucket-grid" style={{ marginTop: '60px' }}>
                     <div className="bucket-card">
