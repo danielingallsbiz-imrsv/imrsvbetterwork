@@ -231,9 +231,9 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 <div className="concept-grid">
 
                     <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-                        <h2 className="concept-title" style={{ fontSize: '3.5rem', lineHeight: 1, marginBottom: 0 }}>
-                            <InteractiveText text="Most travel stuff is just transactional." /> <br />
-                            <InteractiveText text="IMRSV is about building actual participation." />
+                        <h2 className="concept-title" style={{ fontSize: '2.5rem', lineHeight: 1.1, marginBottom: 0, textTransform: 'uppercase' }}>
+                            <InteractiveText text="MOST TRAVEL STUFF IS JUST TRANSACTIONAL." /> <br />
+                            <InteractiveText text="IMRSV IS ABOUT BUILDING ACTUAL PARTICIPATION." />
                         </h2>
                         <p>
                             We’re moving from just being spectators to being active contributors. By connecting creators, builders, and travelers, we make sure that exploring a city actually does something for the people living there.
