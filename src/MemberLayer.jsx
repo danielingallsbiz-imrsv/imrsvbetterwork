@@ -201,7 +201,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
                             <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING TRIPS</h3>
                             <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                This is our high-ticket offer. Access exclusive global trips and itineraries reserved for the collective.
+                                Access exclusive global trips and itineraries reserved for the collective.
                             </p>
                             <button
                                 onClick={() => setShowTripsModal(true)}
@@ -439,7 +439,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                     <div>
                                                         <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHAT</h4>
                                                         <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
-                                                            A 7-day high-ticket intensive. Restoring centuries-old artisan crafts and connecting directly with local masters.
+                                                            A 7-day intensive. Restoring centuries-old artisan crafts and connecting directly with local masters.
                                                         </p>
                                                     </div>
                                                     <div>
@@ -490,7 +490,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                     <div>
                                                         <h4 style={{ fontSize: '0.7rem', color: '#F7D031', letterSpacing: '0.1em', marginBottom: '10px' }}>WHAT</h4>
                                                         <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
-                                                            A 10-day high-ticket journey. Direct reforestation efforts with local conservationists alongside mountain excursions.
+                                                            A 10-day journey. Direct reforestation efforts with local conservationists alongside mountain excursions.
                                                         </p>
                                                     </div>
                                                     <div>

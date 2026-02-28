@@ -125,7 +125,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <InteractiveText text="The Network" />
                         </h3>
                         <p className="bucket-desc">
-                            This isn't just a guest list; it's a closed collective. We are the underground in select cities all around the world, getting first access to global drops, high-ticket itineraries, and physical collections.
+                            This isn't just a guest list; it's a closed collective. We are the underground in select cities all around the world, getting first access to global drops, exclusive itineraries, and physical collections.
                         </p>
                     </div>
                 </div>
@@ -144,6 +144,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 <div className="bucket-grid" style={{ marginBottom: '80px' }}>
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAR. 29</span>
+                        <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '5px' }}>Medellín, CO</p>
                         <h3 className="bucket-title" style={{ color: '#F7F5EA' }}>PROJECT CULTURE</h3>
                         <button
                             onClick={handleApplyClick}
