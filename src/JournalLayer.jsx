@@ -165,7 +165,7 @@ const JournalLayer = ({ onBack }) => {
                                 opacity: 0.6,
                                 marginBottom: '20px'
                             }}>
-                                Here is the breakdown: We host open pre-events on Friday where everyone is welcome. Sunday begins with member-only wellness from 10:00 AM to 1:00 PM featuring run clubs, ice baths, and saunas. Following a community lunch at 1:00 PM, the rooftop Sunday party kicks off from 2:00 PM to 6:00 PM with DJs and hot tub games. The official "afters" then begin at 6:00 PM.
+                                Here is the breakdown: We host open pre-events on Friday where everyone is welcome. Sunday begins with member-only wellness from 10:00 AM to 1:00 PM featuring run clubs, ice baths, and saunas. Following a community lunch at 1:00 PM, the rooftop Sunday party kicks off from 2:00 PM to 6:00 PM with DJs. The official "afters" then begin at 6:00 PM.
                             </p>
                             <p style={{
                                 fontSize: '0.95rem',
