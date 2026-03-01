@@ -182,7 +182,23 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </p>
 
                         <div style={{ marginTop: '20px' }}>
-                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Intentional ]</span>
+                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Participation ]</span>
+                            <button
+                                onClick={handleApplyClick}
+                                style={{
+                                    background: '#F7D031',
+                                    color: '#111',
+                                    border: 'none',
+                                    padding: '16px 32px',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 'bold',
+                                    letterSpacing: '0.05em',
+                                    cursor: 'pointer',
+                                    display: 'inline-block'
+                                }}
+                            >
+                                [ JOIN SUNDAY COLLECTION ]
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -223,29 +239,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
 
                 </div>
             </section>
-
-            {/* YACHT MEDIA & CTA */}
-            <div style={{ width: '100%', marginBottom: '80px' }}>
-                <div style={{ padding: '40px 80px', background: '#e3dfcd' }}>
-                    <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Participation ]</span>
-                    <button
-                        onClick={handleApplyClick}
-                        style={{
-                            background: '#F7D031',
-                            color: '#111',
-                            border: 'none',
-                            padding: '16px 32px',
-                            fontSize: '0.9rem',
-                            fontWeight: 'bold',
-                            letterSpacing: '0.05em',
-                            cursor: 'pointer',
-                            display: 'inline-block'
-                        }}
-                    >
-                        [ JOIN SUNDAY COLLECTION ]
-                    </button>
-                </div>
-            </div>
 
             {/* THE GAUNTLET / JOIN */}
             <section className="gauntlet-section" id="apply" >
