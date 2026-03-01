@@ -17,17 +17,19 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         gender: '',
         birthday: '',
         address: '',
-        contribution: ''
+        contribution: '',
+        picture: ''
     });
 
     const steps = [
-        { label: '01 / 07', title: 'WHO ARE YOU?' },
-        { label: '02 / 07', title: 'WHERE ARE YOU?' },
-        { label: '03 / 07', title: 'WHAT DO YOU DO?' },
-        { label: '04 / 07', title: 'YOUR STORY.' },
-        { label: '05 / 07', title: 'THE DETAILS.' },
-        { label: '06 / 07', title: 'MAILING.' },
-        { label: '07 / 07', title: 'THE CONTRIBUTION.' }
+        { label: '01 / 08', title: 'WHO ARE YOU?' },
+        { label: '02 / 08', title: 'WHERE ARE YOU?' },
+        { label: '03 / 08', title: 'WHAT DO YOU DO?' },
+        { label: '04 / 08', title: 'YOUR STORY.' },
+        { label: '05 / 08', title: 'THE DETAILS.' },
+        { label: '06 / 08', title: 'MAILING.' },
+        { label: '07 / 08', title: 'THE CONTRIBUTION.' },
+        { label: '08 / 08', title: 'THE VISUAL.' }
     ];
 
     const handleInputChange = (e) => {
@@ -166,6 +168,16 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         <textarea required name="contribution" value={formData.contribution} onChange={handleInputChange} placeholder="How do you intend to participate?" rows="4" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', resize: 'none' }} />
                     </div>
                 );
+            case 7:
+                return (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Cultural Archive: Submit a Picture</label>
+                        <p style={{ fontSize: '0.9rem', opacity: 0.6, margin: '0 0 10px 0', lineHeight: 1.5 }}>
+                            Provide a link to the coolest picture you have been a part of or taken. This is for cultural purposes and will be added to our journal. (Google Drive, Instagram, etc.)
+                        </p>
+                        <input required name="picture" type="text" value={formData.picture} onChange={handleInputChange} placeholder="Paste link here..." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                    </div>
+                );
             default:
                 return null;
         }
@@ -181,6 +193,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
             case 4: return formData.gender && formData.birthday;
             case 5: return formData.address;
             case 6: return formData.contribution;
+            case 7: return formData.picture;
             default: return false;
         }
     };
