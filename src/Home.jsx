@@ -149,12 +149,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
                             <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>THE ART</h3>
                         </div>
-                        <button
-                            onClick={handleApplyClick}
-                            className="apply-link-btn"
-                        >
-                            apply →
-                        </button>
                     </div>
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
@@ -163,12 +157,33 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Buriticá, CO</p>
                             <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>MAYDAY</h3>
                         </div>
-                        <button
-                            onClick={handleApplyClick}
-                            className="apply-link-btn"
-                        >
-                            apply →
-                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* THE CORE IDEA */}
+            <section className="section" >
+                <span className="section-label">
+                    <InteractiveText text="03 / THE CORE IDEA." />
+                </span>
+                <div className="concept-grid">
+
+                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <h2 className="concept-title" style={{ fontSize: '2.5rem', lineHeight: 1.1, marginBottom: 0, textTransform: 'uppercase' }}>
+                            <InteractiveText text="MOST TRAVEL STUFF IS JUST TRANSACTIONAL." /> <br />
+                            <InteractiveText text="IMRSV IS ABOUT BUILDING ACTUAL PARTICIPATION." />
+                        </h2>
+                        <p>
+                            We’re moving from just being spectators to being active contributors. By connecting creators, builders, and travelers, we make sure that exploring a city actually does something for the people living there.
+                        </p>
+                        <p style={{ fontStyle: 'italic', borderLeft: '2px solid var(--border-color)', paddingLeft: '20px' }}>
+                            We don’t just visit cities — <br />
+                            we collaborate with them, host stuff within them, and reinvest into them.
+                        </p>
+
+                        <div style={{ marginTop: '20px' }}>
+                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Intentional ]</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -177,7 +192,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
             <section className="section" style={{ backgroundColor: '#111', color: '#F7F5EA', position: 'relative', overflow: 'hidden' }}>
                 <PacmanGame />
                 <span className="section-label" style={{ color: 'rgba(247, 245, 234, 0.4)' }}>
-                    <InteractiveText text="03 / THE IMRSV APP." />
+                    <InteractiveText text="04 / THE IMRSV APP." />
                 </span>
                 <div className="concept-grid" style={{ alignItems: 'center' }}>
                     <div className="concept-text">
@@ -206,33 +221,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </div>
                     </div>
 
-                </div>
-            </section>
-
-            {/* THE CORE IDEA */}
-            <section className="section" >
-                <span className="section-label">
-                    <InteractiveText text="04 / THE CORE IDEA." />
-                </span>
-                <div className="concept-grid">
-
-                    <div className="concept-text" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-                        <h2 className="concept-title" style={{ fontSize: '2.5rem', lineHeight: 1.1, marginBottom: 0, textTransform: 'uppercase' }}>
-                            <InteractiveText text="MOST TRAVEL STUFF IS JUST TRANSACTIONAL." /> <br />
-                            <InteractiveText text="IMRSV IS ABOUT BUILDING ACTUAL PARTICIPATION." />
-                        </h2>
-                        <p>
-                            We’re moving from just being spectators to being active contributors. By connecting creators, builders, and travelers, we make sure that exploring a city actually does something for the people living there.
-                        </p>
-                        <p style={{ fontStyle: 'italic', borderLeft: '2px solid var(--border-color)', paddingLeft: '20px' }}>
-                            We don’t just visit cities — <br />
-                            we collaborate with them, host stuff within them, and reinvest into them.
-                        </p>
-
-                        <div style={{ marginTop: '20px' }}>
-                            <span style={{ fontSize: '0.8rem', letterSpacing: '0.1em', opacity: 0.5, display: 'block', marginBottom: '15px' }}>[ Intentional ]</span>
-                        </div>
-                    </div>
                 </div>
             </section>
 
