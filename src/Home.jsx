@@ -2,11 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { useScroll, AnimatePresence, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
 import PacmanGame from './components/PacmanGame';
+import { supabase } from './lib/supabase';
 import './Home.css';
 
 const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
+
+    const [subscribeEmail, setSubscribeEmail] = useState('');
+    const [subscribeStatus, setSubscribeStatus] = useState('');
+    const [appEmail, setAppEmail] = useState('');
+    const [appStatus, setAppStatus] = useState('');
+
+    const handleEmailSubmit = async (e, source, email, setStatus, setEmailInput) => {
+        e.preventDefault();
+        if (!email) return;
+        setStatus('submitting');
+        try {
+            const { error } = await supabase
+                .from('subscribers')
+                .insert([{ email, source, created_at: new Date().toISOString() }]);
+
+            if (error) throw error;
+
+            setStatus('success');
+            setEmailInput('');
+            setTimeout(() => setStatus(''), 3000);
+        } catch (err) {
+            console.error("Subscription failed:", err);
+            setStatus('error');
+            setTimeout(() => setStatus(''), 3000);
+        }
+    };
 
     const handleApplyClick = () => {
         navigateToApply();
@@ -235,6 +262,28 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                                 <p style={{ fontSize: '0.85rem', opacity: 0.6 }}>The more you participate, the more access you unlock in the network.</p>
                             </div>
                         </div>
+
+                        <form onSubmit={(e) => handleEmailSubmit(e, 'app', appEmail, setAppStatus, setAppEmail)} style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '40px', maxWidth: '400px', backgroundColor: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '8px', border: '1px solid rgba(247,245,234,0.1)' }}>
+                            <h4 style={{ fontSize: '0.9rem', marginBottom: '5px', color: '#F7D031', letterSpacing: '0.1em' }}>JOIN THE WAITLIST</h4>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <input
+                                    type="email"
+                                    placeholder="Enter email to pre-download..."
+                                    value={appEmail}
+                                    onChange={(e) => setAppEmail(e.target.value)}
+                                    required
+                                    style={{ flex: 1, padding: '12px 16px', borderRadius: '4px', border: '1px solid rgba(247,245,234,0.3)', background: 'transparent', color: '#F7F5EA', outline: 'none' }}
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={appStatus === 'submitting'}
+                                    style={{ backgroundColor: '#F7D031', color: '#111', border: 'none', padding: '12px 24px', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', whiteSpace: 'nowrap', opacity: appStatus === 'submitting' ? 0.7 : 1 }}
+                                >
+                                    {appStatus === 'submitting' ? '...' : (appStatus === 'success' ? 'JOINED!' : 'PRE-DOWNLOAD')}
+                                </button>
+                            </div>
+                            {appStatus === 'error' && <span style={{ color: '#FF453A', fontSize: '0.8rem' }}>Failed to submit. Check connection.</span>}
+                        </form>
                     </div>
 
                 </div>
@@ -275,7 +324,27 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <div className="footer-subscribe">
                         <h4>Subscribe</h4>
                         <p>Sign up to hear about events, news and updates from our <span onClick={navigateToJournal} style={{ cursor: 'pointer', textDecoration: 'underline' }}>journal</span> and Sunday Collection.</p>
-                        <button className="subscribe-btn-pill" onClick={handleApplyClick}>Subscribe</button>
+                        <form onSubmit={(e) => handleEmailSubmit(e, 'journal', subscribeEmail, setSubscribeStatus, setSubscribeEmail)} style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '15px' }}>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <input
+                                    type="email"
+                                    placeholder="Email address"
+                                    value={subscribeEmail}
+                                    onChange={(e) => setSubscribeEmail(e.target.value)}
+                                    required
+                                    style={{ flex: 1, padding: '10px 0', border: 'none', borderBottom: '1px solid #1A1A1A', background: 'transparent', outline: 'none', color: '#1A1A1A' }}
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={subscribeStatus === 'submitting'}
+                                    className="subscribe-btn-pill"
+                                    style={{ margin: 0, opacity: subscribeStatus === 'submitting' ? 0.5 : 1 }}
+                                >
+                                    {subscribeStatus === 'submitting' ? '...' : (subscribeStatus === 'success' ? 'Subscribed!' : 'Subscribe')}
+                                </button>
+                            </div>
+                            {subscribeStatus === 'error' && <span style={{ color: '#FF453A', fontSize: '0.8rem' }}>Subscription failed. Please try again.</span>}
+                        </form>
                     </div>
                     <div className="footer-locale-selector">
                         <span onClick={() => alert('Additional language and regional support coming soon.')}>English (US) ⏷</span>
