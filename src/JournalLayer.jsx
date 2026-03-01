@@ -157,14 +157,22 @@ const JournalLayer = ({ onBack }) => {
                                 opacity: 0.6,
                                 marginBottom: '20px'
                             }}>
-                                The first official drop from Sunday Collection lands in Medellín, Colombia. Project Culture is the opening statement — a curated night where sound, people, and place collide in a way that doesn't exist anywhere else.
+                                The first official drop from Sunday Collection lands in Medellín, Colombia. Project Culture is the opening statement — a curated weekend where sound, people, and place collide.
+                            </p>
+                            <p style={{
+                                fontSize: '0.95rem',
+                                lineHeight: 1.7,
+                                opacity: 0.6,
+                                marginBottom: '20px'
+                            }}>
+                                Here is the breakdown: We host open pre-events on Friday where everyone is welcome. Sunday morning shifts to invite-only member meetings featuring run clubs, ice baths, and DJ cold plunges. Then, the official after-hours Sunday party begins at 3:00 PM.
                             </p>
                             <p style={{
                                 fontSize: '0.95rem',
                                 lineHeight: 1.7,
                                 opacity: 0.6
                             }}>
-                                This isn't a party. It's a blueprint. Every ticket sold feeds directly back into the local community through The IMRSV Project. You show up, you participate, the city benefits. Simple.
+                                This isn't just a party, it's a blueprint. Every ticket feeds directly back into the local community through The IMRSV Project. You show up, you participate, the city benefits. Simple.
                             </p>
                         </div>
                         <div>
