@@ -63,8 +63,11 @@ const JournalLayer = ({ onBack }) => {
                         margin: 0,
                         fontFamily: '"Outfit", sans-serif'
                     }}>
-                        <InteractiveText text="PROJECT" /><br />
-                        <InteractiveText text="CULTURE." />
+                        <InteractiveText text="SUNDAY" /><br />
+                        <InteractiveText text="COLLECTION 01." /><br />
+                        <span style={{ textDecoration: 'line-through', opacity: 0.4, display: 'inline-block', marginTop: '10px' }}>
+                            <InteractiveText text="PROJECT CULTURE" />
+                        </span>
                     </h1>
                     <p style={{
                         marginTop: '20px',
@@ -83,16 +86,28 @@ const JournalLayer = ({ onBack }) => {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, delay: 0.3 }}
-                style={{ width: '100%', padding: '0 80px', maxWidth: '1400px', margin: '0 auto' }}
+                style={{ width: '100%', padding: '0 80px', maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '20px' }}
             >
                 <img
-                    src="/journal-flyer-01.png"
-                    alt="Sunday Collection 01 — Project Culture"
+                    src="/project-culture-poster.jpg"
+                    alt="Sunday Collection 01 — Project Culture Editorial"
                     style={{
-                        width: '100%',
+                        width: '50%',
                         height: 'auto',
                         display: 'block',
-                        borderRadius: '2px'
+                        borderRadius: '2px',
+                        objectFit: 'contain'
+                    }}
+                />
+                <img
+                    src="/journal-flyer-01.png"
+                    alt="Sunday Collection 01 — Project Culture Flyer"
+                    style={{
+                        width: '50%',
+                        height: 'auto',
+                        display: 'block',
+                        borderRadius: '2px',
+                        objectFit: 'contain'
                     }}
                 />
             </motion.div>
@@ -259,28 +274,28 @@ const JournalLayer = ({ onBack }) => {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
                         {/* FRIDAY */}
                         <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
-                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Friday</span>
-                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>Pre-Events <span style={{ opacity: 0.4, fontSize: '0.85rem' }}>(Open)</span></h3>
+                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
+                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>10:00 AM <span style={{ opacity: 0.4, fontSize: '0.85rem' }}></span></h3>
                             <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                Everyone is welcome. We take over local spaces to set the tone for the weekend. No guestlist required.
+                                Run Club
                             </p>
                         </div>
 
                         {/* SUNDAY AM */}
                         <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
-                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Sunday Morning</span>
-                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>Member Meetings <span style={{ opacity: 0.4, fontSize: '0.85rem' }}>(Invite Only)</span></h3>
+                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
+                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>12:00 PM - 5:00 PM <span style={{ opacity: 0.4, fontSize: '0.85rem' }}></span></h3>
                             <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                Run clubs in the morning followed by DJ sets, cold plunges, and ice baths. Exclusive to Sunday Collection members.
+                                Community Day
                             </p>
                         </div>
 
                         {/* SUNDAY PM */}
                         <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
-                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Sunday Afternoon</span>
-                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>The Sunday Party</h3>
+                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
+                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>6:00 PM - 11:00 PM</h3>
                             <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                The main event drops. The official after-hours begins at 3:00 PM. High energy, heavy curation, zero compromises.
+                                After Hours Network (Ice baths, DJ, Open Bar, Tattoos)
                             </p>
                         </div>
                     </div>
