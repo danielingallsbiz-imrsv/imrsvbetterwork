@@ -243,7 +243,49 @@ const JournalLayer = ({ onBack }) => {
                 </motion.div>
             </section>
 
-            {/* FOOTER */}
+            {/* WEEKEND BREAKDOWN */}
+            <section style={{ padding: '0px 80px 80px 80px', maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
+                <div style={{ borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '60px' }}>
+                    <h2 style={{
+                        fontSize: '1.8rem',
+                        fontWeight: 400,
+                        lineHeight: 1.1,
+                        marginBottom: '40px',
+                        fontFamily: '"Outfit", sans-serif'
+                    }}>
+                        <InteractiveText text="The Breakdown." />
+                    </h2>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+                        {/* FRIDAY */}
+                        <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
+                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Friday</span>
+                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>Pre-Events <span style={{ opacity: 0.4, fontSize: '0.85rem' }}>(Open)</span></h3>
+                            <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
+                                Everyone is welcome. We take over local spaces to set the tone for the weekend. No guestlist required.
+                            </p>
+                        </div>
+
+                        {/* SUNDAY AM */}
+                        <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
+                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Sunday Morning</span>
+                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>Member Meetings <span style={{ opacity: 0.4, fontSize: '0.85rem' }}>(Invite Only)</span></h3>
+                            <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
+                                Run clubs in the morning followed by DJ sets, cold plunges, and ice baths. Exclusive to Sunday Collection members.
+                            </p>
+                        </div>
+
+                        {/* SUNDAY PM */}
+                        <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
+                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Sunday Afternoon</span>
+                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>The Sunday Party</h3>
+                            <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
+                                The main event drops. The official after-hours begins at 3:00 PM. High energy, heavy curation, zero compromises.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <footer style={{
                 padding: '40px 80px',
                 borderTop: '1px solid rgba(247, 245, 234, 0.08)',
