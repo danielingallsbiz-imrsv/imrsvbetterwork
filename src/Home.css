@@ -615,7 +615,7 @@
         grid-template-columns: 1fr !important;
         gap: 20px !important;
     }
-    
+
     .tertiary-action-grid {
         grid-template-columns: 1fr !important;
     }
@@ -636,7 +636,7 @@
 
 .member-id-card {
     background: #FFF;
-    border: 1px solid rgba(0,0,0,0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     padding: 40px;
     display: flex;
@@ -644,13 +644,13 @@
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
 }
 
 .credit-widget-card {
     background: #1A1A1A;
     color: #FFF;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 40px 30px;
     display: flex;
@@ -669,7 +669,7 @@
 
 .action-card-btn {
     background: #FFF;
-    border: 1px solid rgba(0,0,0,0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     padding: 25px 20px;
     border-radius: 8px;
     cursor: pointer;
@@ -682,7 +682,64 @@
 
 .action-card-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.horizontal-scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.perk-card {
+    min-width: 320px;
+    height: 180px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.active-perk-card {
+    background: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.active-perk-card:hover {
+    transform: translateY(-2px);
+}
+
+.placeholder-perk-card {
+    background: linear-gradient(135deg, #F5F5F3, #EAEAE8);
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+    .horizontal-scroll-container {
+        /* Add negative margin to bleed to the edge of the mobile screen */
+        margin: 0 -30px;
+        padding: 0 30px 20px 30px;
+    }
+
+    .perk-card {
+        min-width: 80vw;
+    }
 }
 
 @media (max-width: 600px) {

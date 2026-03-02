@@ -233,6 +233,26 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 )}
                             </div>
 
+                            {/* INLINE ACTION BUTTONS */}
+                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '40px' }}>
+                                <button onClick={() => setShowProfilePanel(true)} style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px', borderRadius: '40px', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#1A1A1A', transition: 'all 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                                    EDIT IDENTITY
+                                </button>
+                                <button onClick={scrollToMembers} style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px', borderRadius: '40px', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#1A1A1A', transition: 'all 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                                    DIRECTORY
+                                </button>
+                                <button onClick={() => {
+                                    const refCode = user?.id?.slice(0, 8).toUpperCase() || 'INVITE';
+                                    const bodyText = `Use my private referral code to skip the application queue for The Sunday Collection: ${refCode}%0D%0A%0D%0AApply here: https://theimrsvproject.org/apply`;
+                                    window.open(`mailto:?subject=Private Invite to Sunday Collection&body=${bodyText}`);
+                                }} style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px', borderRadius: '40px', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#1A1A1A', transition: 'all 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
+                                    REFER A FRIEND
+                                </button>
+                            </div>
+
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                                 <div>
                                     <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', margin: '0 0 5px 0' }}>MEMBERSHIP ID</p>
@@ -282,31 +302,6 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         )}
                     </div>
 
-                    {/* TERTIARY ACTION NAV */}
-                    <div className="tertiary-action-grid">
-                        <button onClick={() => setShowProfilePanel(true)} className="action-card-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-                            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>EDIT IDENTITY</span>
-                            <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>Manage your public persona.</span>
-                        </button>
-
-                        <button onClick={scrollToMembers} className="action-card-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-                            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>MEMBER DIRECTORY</span>
-                            <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>View who is currently in orbit.</span>
-                        </button>
-
-                        <button onClick={() => {
-                            const refCode = user?.id?.slice(0, 8).toUpperCase() || 'INVITE';
-                            const bodyText = `Use my private referral code to skip the application queue for The Sunday Collection: ${refCode}%0D%0A%0D%0AApply here: https://theimrsvproject.org/apply`;
-                            window.open(`mailto:?subject=Private Invite to Sunday Collection&body=${bodyText}`);
-                        }} className="action-card-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
-                            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>SEND REFERRAL</span>
-                            <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>Invite your network to apply.</span>
-                        </button>
-                    </div>
-
                     {/* CONSOLIDATED HOUSE PERKS & EVENTS */}
                     <div style={{ marginBottom: '120px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px', borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: '15px' }}>
@@ -314,14 +309,12 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>UNLOCKING SOON</span>
                         </div>
 
-                        <div style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+                        <div className="horizontal-scroll-container">
 
                             {/* ACTIVE INTERACTIVE PERKS */}
                             <div
                                 onClick={() => setShowSessionsModal(true)}
-                                style={{ minWidth: '320px', height: '180px', background: '#FFF', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)', padding: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
-                                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                                className="perk-card active-perk-card"
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                     <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>01.</span>
@@ -335,9 +328,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                             <div
                                 onClick={() => setShowTripsModal(true)}
-                                style={{ minWidth: '320px', height: '180px', background: '#FFF', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)', padding: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
-                                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                                className="perk-card active-perk-card"
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                     <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>02.</span>
@@ -350,13 +341,13 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
 
                             {/* FUTURE PLACEHOLDERS */}
-                            <div style={{ minWidth: '280px', height: '180px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                            <div className="perk-card placeholder-perk-card">
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>GLOBAL WORKSPACES</span>
                             </div>
-                            <div style={{ minWidth: '280px', height: '180px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                            <div className="perk-card placeholder-perk-card">
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>PARTNER DISCOUNTS</span>
                             </div>
-                            <div style={{ minWidth: '280px', height: '180px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                            <div className="perk-card placeholder-perk-card">
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>SECRET MENUS</span>
                             </div>
                         </div>
