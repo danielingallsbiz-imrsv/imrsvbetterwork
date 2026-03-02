@@ -26,14 +26,7 @@ const LocationCard = ({ location }) => {
         window.open(url, '_blank');
     };
 
-    const handleInstagram = (e) => {
-        e.stopPropagation();
-        if (!location.instagram) return;
-        const url = location.instagram.startsWith('http')
-            ? location.instagram
-            : `https://instagram.com/${location.instagram.replace('@', '')}`;
-        window.open(url, '_blank');
-    };
+
 
     return (
         <div
@@ -104,7 +97,7 @@ const LocationCard = ({ location }) => {
                                 <button
                                     onClick={handleDirections}
                                     style={{
-                                        flex: 2,
+                                        flex: 1,
                                         background: '#1A1A1A',
                                         color: '#F7D031',
                                         border: 'none',
@@ -117,24 +110,6 @@ const LocationCard = ({ location }) => {
                                 >
                                     [ GET DIRECTIONS ]
                                 </button>
-                                {location.instagram && (
-                                    <button
-                                        onClick={handleInstagram}
-                                        style={{
-                                            flex: 1,
-                                            background: 'transparent',
-                                            color: '#1A1A1A',
-                                            border: '1px solid rgba(0,0,0,0.2)',
-                                            padding: '12px',
-                                            fontSize: '0.7rem',
-                                            fontWeight: 800,
-                                            letterSpacing: '0.05em',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
-                                        INSTAGRAM
-                                    </button>
-                                )}
                             </div>
                         </div>
                     </motion.div>
