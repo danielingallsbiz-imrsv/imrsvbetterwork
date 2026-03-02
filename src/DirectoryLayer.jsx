@@ -68,8 +68,11 @@ const DirectoryLayer = ({ members = [], onBack, onLogout }) => {
                     transition={{ duration: 0.8 }}
                 >
                     <div style={{ marginBottom: '60px' }}>
-                        <h1 className="concept-title" style={{ fontSize: '3rem', color: '#1A1A1A', margin: 0 }}>MEMBERS.</h1>
-                        <p style={{ opacity: 0.4, fontSize: '0.8rem', letterSpacing: '0.1em', marginTop: '10px' }}>THE ACTIVE COLLECTIVE</p>
+                        <div className="sectionHeader" style={{ padding: 0, marginTop: 0 }}>
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: '#1A1A1A', lineHeight: 1 }}>MEMBERS.</h2>
+                            <span className="sectionMetaCount">({members.filter(m => m.status === 'approved').length})</span>
+                        </div>
+                        <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>THE ACTIVE COLLECTIVE</p>
 
                         <div style={{ marginTop: '40px', position: 'relative', maxWidth: '400px' }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'absolute', top: '50%', left: '16px', transform: 'translateY(-50%)', opacity: 0.3 }}>

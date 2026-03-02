@@ -258,7 +258,6 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
                                 <div>
-                                    <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.15em', fontWeight: 700, margin: '0 0 10px 0' }}>The Sunday Collection</p>
                                     <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', color: '#1A1A1A', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                                         {profileData.full_name || userName || 'Accessing Portal...'}
                                     </h1>
@@ -401,7 +400,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     <div id="members-section" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '100px' }}>
                         <div style={{ marginBottom: '60px' }}>
                             <div className="sectionHeader" style={{ padding: 0, marginTop: 0 }}>
-                                <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
+                                <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: '#1A1A1A', lineHeight: 1 }}>MEMBERS.</h2>
                                 <span className="sectionMetaCount">({activeMembers.length})</span>
                             </div>
                             <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>MEMBERS ONLINE</p>
