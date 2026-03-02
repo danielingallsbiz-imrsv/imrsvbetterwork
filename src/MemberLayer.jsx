@@ -75,6 +75,13 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     // Welcome Intro State
     const [showWelcomeIntro, setShowWelcomeIntro] = useState(true);
 
+    useEffect(() => {
+        if (showWelcomeIntro) {
+            const timer = setTimeout(() => setShowWelcomeIntro(false), 900);
+            return () => clearTimeout(timer);
+        }
+    }, [showWelcomeIntro]);
+
     // Credit / contribution
     const [creditData, setCreditData] = useState(null);
     const [transactions, setTransactions] = useState([]);
