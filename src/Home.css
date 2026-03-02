@@ -1493,9 +1493,10 @@ svg {
         grid-template-columns: unset !important;
         grid-template-rows: unset !important;
         place-items: unset !important;
-        align-items: stretch !important;
+        align-items: start !important;
+        align-content: start !important;
         height: auto !important;
-        min-height: unset !important;
+        min-height: 0 !important;
     }
 
     .hScroll>* {
@@ -1510,10 +1511,20 @@ svg {
     }
 
     .perkCard {
-        min-height: 160px !important;
-        aspect-ratio: 1.1 / 1 !important;
+        height: auto !important;
+        min-height: 170px !important;
+        max-height: none !important;
+        aspect-ratio: auto !important;
         padding: 16px !important;
         border-radius: 18px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+    }
+
+    .perkCard * {
+        height: auto !important;
+        min-height: 0 !important;
     }
 
     .perkTitle {
