@@ -307,54 +307,58 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </button>
                     </div>
 
-                    {/* EMPTY STATE PLACEHOLDER: HOUSE PERKS */}
-                    <div style={{ marginBottom: '80px' }}>
+                    {/* CONSOLIDATED HOUSE PERKS & EVENTS */}
+                    <div style={{ marginBottom: '120px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px', borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: '15px' }}>
-                            <h2 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 800, letterSpacing: '-0.02em', color: '#1A1A1A' }}>HOUSE PERKS</h2>
+                            <h2 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 800, letterSpacing: '-0.02em', color: '#1A1A1A' }}>HOUSE PERKS & SESSIONS</h2>
                             <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>UNLOCKING SOON</span>
                         </div>
-                        <div style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', scrollbarWidth: 'none' }}>
-                            <div style={{ minWidth: '280px', height: '160px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
-                                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.4 }}>GLOBAL WORKSPACES</span>
-                            </div>
-                            <div style={{ minWidth: '280px', height: '160px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
-                                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.4 }}>PARTNER DISCOUNTS</span>
-                            </div>
-                            <div style={{ minWidth: '280px', height: '160px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
-                                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.4 }}>SECRET MENUS</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div className="bucket-grid" style={{ marginBottom: '120px' }}>
-                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>01.</span>
-                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING SESSIONS</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                Medellín Hub Opening — March 29.
-                                <br />Full 4-week drop sequence unlocked.
-                            </p>
-                            <button
+                        <div style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+
+                            {/* ACTIVE INTERACTIVE PERKS */}
+                            <div
                                 onClick={() => setShowSessionsModal(true)}
-                                className="gauntlet-btn"
-                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: '#F7D031', color: '#000' }}
+                                style={{ minWidth: '320px', height: '180px', background: '#FFF', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)', padding: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                             >
-                                [ VIEW LOCATIONS & DETAILS ]
-                            </button>
-                        </div>
-                        <div className="bucket-card" style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                            <span className="bucket-num" style={{ color: '#F7D031', opacity: 0.8 }}>02.</span>
-                            <h3 className="bucket-title" style={{ color: '#1A1A1A' }}>UPCOMING TRIPS</h3>
-                            <p className="bucket-desc" style={{ color: 'rgba(26, 26, 26, 0.6)' }}>
-                                Access exclusive global trips and itineraries reserved for the collective.
-                            </p>
-                            <button
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                    <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>01.</span>
+                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F7D031' }} />
+                                </div>
+                                <div>
+                                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1A1A1A', margin: '0 0 5px 0' }}>UPCOMING SESSIONS</h3>
+                                    <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.5)', margin: 0, lineHeight: 1.5 }}>Medellín Hub Opening — March 29.<br />Full 4-week drop sequence.</p>
+                                </div>
+                            </div>
+
+                            <div
                                 onClick={() => setShowTripsModal(true)}
-                                className="gauntlet-btn"
-                                style={{ fontSize: '0.7rem', padding: '12px 20px', marginTop: '20px', backgroundColor: '#F7D031', color: '#000' }}
+                                style={{ minWidth: '320px', height: '180px', background: '#FFF', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)', padding: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                             >
-                                [ VIEW TRIPS & ITINERARIES ]
-                            </button>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                    <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>02.</span>
+                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F7D031' }} />
+                                </div>
+                                <div>
+                                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1A1A1A', margin: '0 0 5px 0' }}>UPCOMING TRIPS</h3>
+                                    <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.5)', margin: 0, lineHeight: 1.5 }}>Access exclusive global itineraries reserved for the collective.</p>
+                                </div>
+                            </div>
+
+                            {/* FUTURE PLACEHOLDERS */}
+                            <div style={{ minWidth: '280px', height: '180px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>GLOBAL WORKSPACES</span>
+                            </div>
+                            <div style={{ minWidth: '280px', height: '180px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>PARTNER DISCOUNTS</span>
+                            </div>
+                            <div style={{ minWidth: '280px', height: '180px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>SECRET MENUS</span>
+                            </div>
                         </div>
                     </div>
 
