@@ -1067,25 +1067,20 @@ svg {
     max-width: 100%;
 }
 
-.perksGrid,
-.membersGrid {
+.perksGrid {
     display: grid;
     gap: 18px;
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 @media (max-width:1023px) {
-
-    .perksGrid,
-    .membersGrid {
+    .perksGrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (max-width:640px) {
-
-    .perksGrid,
-    .membersGrid {
+    .perksGrid {
         grid-template-columns: 1fr;
     }
 }
@@ -1171,6 +1166,13 @@ svg {
     font-weight: 800;
 }
 
+.sectionMetaCount {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
 
 /* --- PERK CARDS --- */
 .perkCard {
@@ -1197,13 +1199,44 @@ svg {
 }
 
 
-/* --- MEMBER CARDS --- */
+/* --- MEMBER CARDS COMPACT & INTERACTIVE --- */
 .memberCard {
     padding: 18px;
-    min-height: auto;
+    min-height: 170px;
     background: #FFF;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    animation: float 6s ease-in-out infinite;
+}
+
+.memberCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.memberCard:active {
+    transform: scale(0.98);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .memberCardBody {
@@ -1215,6 +1248,14 @@ svg {
     display: flex;
     align-items: center;
     gap: 12px;
+}
+
+.memberMeta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0.75;
 }
 
 .memberBottom {
@@ -1302,5 +1343,46 @@ svg {
 
     .card+.card {
         margin-top: 14px !important;
+    }
+}
+
+/* --- MEMBERS RAIL (HORIZONTAL SCROLL) --- */
+.membersRail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+}
+
+.membersRail::-webkit-scrollbar {
+    display: none;
+}
+
+.membersRail {
+    scrollbar-width: none;
+}
+
+.membersRail>.memberCard {
+    scroll-snap-align: start;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .membersRail {
+        grid-auto-columns: 45%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .membersRail {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-auto-flow: unset;
+        overflow: visible;
     }
 }

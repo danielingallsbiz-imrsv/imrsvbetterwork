@@ -397,15 +397,19 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     {/* MEMBERS SECTION */}
                     <div id="members-section" style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '100px' }}>
                         <div style={{ marginBottom: '60px' }}>
-                            <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
-                            <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>MEMBERS CURRENTLY IN ORBIT</p>
+                            <div className="sectionHeader" style={{ padding: 0, marginTop: 0 }}>
+                                <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
+                                <span className="sectionMetaCount">({activeMembers.length})</span>
+                            </div>
+                            <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>MEMBERS ONLINE</p>
                         </div>
-                        <div className="membersGrid">
+                        <div className="membersRail">
                             {activeMembers.length > 0 ? (
                                 activeMembers.map((member) => (
                                     <div
                                         key={member.id}
                                         className="memberCard"
+                                        onClick={() => console.log('Navigate to', member.id)}
                                     >
                                         <div className="memberCardBody">
                                             <div className="memberTop">
@@ -417,7 +421,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                     <h3 style={{ fontSize: '1.1rem', margin: '0 0 2px 0', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em', fontFamily: 'serif' }}>
                                                         {member.name}
                                                     </h3>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <div className="memberMeta">
                                                         <span style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 800 }}>
                                                             ID {member.id?.slice(0, 8).toUpperCase()}
                                                         </span>
