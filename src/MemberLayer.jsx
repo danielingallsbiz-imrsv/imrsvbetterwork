@@ -567,7 +567,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 [ CLOSE ]
                             </button>
 
-                            <ClippingText text="LOCATIONS." scale={0.6} style={{ color: '#1A1A1A', margin: 0, marginBottom: '10px' }} />
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: '#1A1A1A', lineHeight: 1, marginBottom: '10px' }}>LOCATIONS.</h2>
                             <p style={{ opacity: 0.5, fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '60px', fontWeight: 600 }}>SELECT A SESSION FOR DETAILS</p>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -677,7 +677,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 [ CLOSE ]
                             </button>
 
-                            <ClippingText text="TRIPS." scale={0.6} style={{ color: '#1A1A1A', margin: 0, marginBottom: '10px' }} />
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: '#1A1A1A', lineHeight: 1, marginBottom: '10px' }}>TRIPS.</h2>
                             <p style={{ opacity: 0.5, fontSize: '0.8rem', letterSpacing: '0.1em', marginBottom: '60px', fontWeight: 600 }}>SELECT A TRIP FOR ITINERARY</p>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
