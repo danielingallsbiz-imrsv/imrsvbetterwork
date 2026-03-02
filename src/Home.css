@@ -1478,14 +1478,95 @@ svg {
 
     /* Soho Style: Perks Rail */
     .hScroll {
+        display: grid !important;
+        grid-auto-flow: column !important;
         grid-auto-columns: 86% !important;
         gap: 14px !important;
-        padding: 6px 2px 12px !important;
+        padding: 6px 2px 18px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory !important;
+        margin: 0 !important;
+
+        /* Strip desktop grid bleeding */
+        grid-template-columns: unset !important;
+        grid-template-rows: unset !important;
+        place-items: unset !important;
+        align-items: stretch !important;
+        height: auto !important;
+        min-height: unset !important;
+    }
+
+    .hScroll>* {
+        scroll-snap-align: start !important;
+    }
+
+    .section,
+    .pageWrap {
+        height: auto !important;
+        min-height: unset !important;
+        max-height: unset !important;
     }
 
     .perkCard {
-        min-height: auto !important;
+        min-height: 160px !important;
         aspect-ratio: 1.1 / 1 !important;
+        padding: 16px !important;
+        border-radius: 18px !important;
+    }
+
+    .perkTitle {
+        font-size: 16px !important;
+        line-height: 1.1 !important;
+        margin-top: 12px !important;
+    }
+
+    .perkCopy {
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+    }
+
+    .perkLocked {
+        position: relative !important;
+        height: auto !important;
+    }
+
+    .sectionHeader {
+        display: flex !important;
+        align-items: baseline !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .sectionMeta {
+        font-size: 10px !important;
+        letter-spacing: 0.22em !important;
+        white-space: nowrap !important;
+    }
+
+    .perksDots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 0 4px;
+    }
+
+    .perksDot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.18);
+        transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
+        opacity: 0.8;
+    }
+
+    .perksDot.isActive {
+        background: rgba(0, 0, 0, 0.55);
+        transform: scale(1.25);
+        opacity: 1;
     }
 }
 

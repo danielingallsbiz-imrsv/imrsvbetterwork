@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, useScroll, useTransform, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { useNavigate } from 'react-router-dom';
 import InteractiveText from './components/InteractiveText';
@@ -59,6 +59,10 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     const [showTripsModal, setShowTripsModal] = useState(false);
     const [expandedTrip, setExpandedTrip] = useState(null);
 
+    // Perks Pagination
+    const perksRailRef = useRef(null);
+    const [activePerkIndex, setActivePerkIndex] = useState(0);
+
     // Profile panel
     const [showProfilePanel, setShowProfilePanel] = useState(false);
     const [profileSaving, setProfileSaving] = useState(false);
@@ -74,6 +78,40 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     // Credit / contribution
     const [creditData, setCreditData] = useState(null);
     const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        const rail = perksRailRef.current;
+        if (!rail) return;
+
+        const handleScroll = () => {
+            const cards = Array.from(rail.children).filter(el => el.offsetParent !== null);
+            if (!cards.length) return;
+
+            const railLeft = rail.getBoundingClientRect().left;
+            let bestI = 0;
+            let bestDist = Infinity;
+
+            cards.forEach((card, i) => {
+                const left = card.getBoundingClientRect().left;
+                const dist = Math.abs(left - railLeft);
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    bestI = i;
+                }
+            });
+
+            if (bestI !== activePerkIndex) {
+                setActivePerkIndex(bestI);
+            }
+        };
+
+        const onScroll = () => {
+            requestAnimationFrame(handleScroll);
+        };
+
+        rail.addEventListener('scroll', onScroll, { passive: true });
+        return () => rail.removeEventListener('scroll', onScroll);
+    }, [activePerkIndex]);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -352,7 +390,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <span className="sectionMeta">UNLOCKING SOON</span>
                         </div>
 
-                        <div className="hScroll">
+                        <div className="hScroll" ref={perksRailRef}>
 
                             {/* ACTIVE INTERACTIVE PERKS */}
                             <div
@@ -403,6 +441,21 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     <div className="perkIndex">SECRET MENUS</div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="perksDots" aria-label="Perks pagination">
+                            {[0, 1, 2, 3, 4].map((index) => (
+                                <span
+                                    key={index}
+                                    className={`perksDot ${index === activePerkIndex ? 'isActive' : ''}`}
+                                    onClick={() => {
+                                        const rail = perksRailRef.current;
+                                        if (!rail) return;
+                                        const cards = Array.from(rail.children).filter(el => el.offsetParent !== null);
+                                        cards[index]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+                                    }}
+                                />
+                            ))}
                         </div>
                     </div>
 
