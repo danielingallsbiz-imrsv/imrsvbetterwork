@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from './lib/supabase';
-import InteractiveText from './components/InteractiveText';
-import './Home.css';
+import { supabase } from '../lib/supabase';
+import InteractiveText from '../components/InteractiveText';
+import '../Home.css';
 
 const CATEGORIES = [
     { id: 'speakeasy', label: 'Speakeasies' },
