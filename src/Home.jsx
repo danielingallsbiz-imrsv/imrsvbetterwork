@@ -162,12 +162,22 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
                             <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>PROJECT CULTURE</h3>
                         </div>
-                        <button
-                            onClick={handleApplyClick}
-                            className="apply-link-btn"
-                        >
-                            apply →
-                        </button>
+                        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '20px' }}>
+                            <button
+                                onClick={handleApplyClick}
+                                className="apply-link-btn"
+                                style={{ marginTop: 0 }}
+                            >
+                                apply →
+                            </button>
+                            <button
+                                onClick={navigateToJournal}
+                                className="apply-link-btn"
+                                style={{ marginTop: 0, opacity: 0.7 }}
+                            >
+                                learn more →
+                            </button>
+                        </div>
                     </div>
 
                     <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>

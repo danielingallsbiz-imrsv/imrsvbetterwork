@@ -103,10 +103,38 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
     const saveProfile = async () => {
         if (!user?.email) return;
         setProfileSaving(true);
-        const photos = profileData.photos.filter(p => p.trim() !== '');
+
+        const updatedPhotos = [...profileData.photos];
+
+        for (let i = 0; i < updatedPhotos.length; i++) {
+            const photo = updatedPhotos[i];
+            if (photo instanceof File) {
+                const fileExt = photo.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+                const { data, error } = await supabase.storage
+                    .from('applications')
+                    .upload(`visuals/${fileName}`, photo);
+
+                if (error) {
+                    console.error("Image upload failed:", error);
+                    updatedPhotos[i] = ''; // fallback
+                } else if (data) {
+                    const { data: publicUrlData } = supabase.storage
+                        .from('applications')
+                        .getPublicUrl(`visuals/${fileName}`);
+                    updatedPhotos[i] = publicUrlData.publicUrl;
+                }
+            }
+        }
+
+        const photosToSave = updatedPhotos.filter(p => typeof p === 'string' && p.trim() !== '');
+
         await supabase.from('applications')
-            .update({ full_name: profileData.full_name, profession: profileData.profession, bio: profileData.bio, photos })
+            .update({ full_name: profileData.full_name, profession: profileData.profession, bio: profileData.bio, photos: photosToSave })
             .ilike('email', user.email.trim());
+
+        setProfileData(prev => ({ ...prev, photos: updatedPhotos }));
         setProfileSaving(false);
         setProfileSaved(true);
         setTimeout(() => { setProfileSaved(false); setShowProfilePanel(false); }, 1500);
@@ -177,52 +205,125 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div style={{ marginBottom: '60px' }}>
-                        <h1 className="concept-title" style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', color: '#1A1A1A', lineHeight: 1, margin: 0 }}>
-                            WELCOME.
-                        </h1>
-                    </div>
+                    {/* PREMIUM SOHO HOUSE INSPIRED HERO SECTION */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: '40px', marginBottom: '80px', alignItems: 'stretch' }}>
 
-                    <div style={{ display: 'flex', gap: '60px', marginBottom: '80px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                        <div>
-                            <p style={{ fontSize: '1.2rem', color: '#1A1A1A', fontWeight: 600, letterSpacing: '0.02em', marginBottom: '4px' }}>
-                                {profileData.full_name || userName || 'Accessing Portal...'}
-                            </p>
-                            {profileData.profession && (
-                                <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.6)', letterSpacing: '0.05em', marginBottom: '4px' }}>{profileData.profession}</p>
-                            )}
-                            <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700 }}>
-                                MEMBERSHIP ID: {user?.id?.slice(0, 8).toUpperCase() || 'INITIALIZING...'}
-                            </p>
-                            <div style={{ display: 'flex', gap: '10px', marginTop: '25px', flexWrap: 'wrap' }}>
-                                <button onClick={scrollToMembers} style={{ background: '#F7D031', border: 'none', padding: '12px 24px', fontSize: '0.7rem', fontWeight: 800, color: '#000', cursor: 'pointer', borderRadius: '4px', letterSpacing: '0.1em' }}>[ VIEW MEMBERS ]</button>
-                                <button onClick={() => setShowProfilePanel(true)} style={{ background: 'transparent', border: '1px solid rgba(26,26,26,0.2)', padding: '12px 24px', fontSize: '0.7rem', fontWeight: 800, color: '#1A1A1A', cursor: 'pointer', borderRadius: '4px', letterSpacing: '0.1em' }}>[ EDIT PROFILE ]</button>
+                        {/* DIGITAL MEMBER ID CARD */}
+                        <div style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: '12px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.03)' }}>
+                            <div style={{ position: 'absolute', top: '-20px', right: '-20px', opacity: 0.05, pointerEvents: 'none' }}>
+                                <svg width="200" height="200" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#1A1A1A" strokeWidth="20" fill="none" /></svg>
                             </div>
-                        </div>
-                        <div>
-                            <p style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', marginBottom: '5px' }}>Tier</p>
-                            <p style={{ fontSize: '1.1rem', color: '#1A1A1A', fontWeight: 600 }}>FOUNDATION MEMBER</p>
-                        </div>
-                        {creditData && (
-                            <div style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 30px', borderRadius: '4px', minWidth: '220px' }}>
-                                <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 700, marginBottom: '8px' }}>CREDIT BALANCE</p>
-                                <p style={{ fontSize: '2rem', fontWeight: 800, color: '#1A1A1A', margin: '0 0 4px' }}>${(creditData.credit_balance ?? 0).toFixed(2)}</p>
-                                <p style={{ fontSize: '0.65rem', opacity: 0.4, marginBottom: '16px' }}>of ${(creditData.contribution_amount ?? 0).toFixed(2)} contribution</p>
-                                {creditData.renewal_date && (
-                                    <p style={{ fontSize: '0.65rem', opacity: 0.5 }}>Renews: {new Date(creditData.renewal_date).toLocaleDateString()}</p>
-                                )}
-                                {transactions.length > 0 && (
-                                    <div style={{ marginTop: '16px', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        {transactions.map(t => (
-                                            <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <span style={{ fontSize: '0.65rem', opacity: 0.6 }}>{t.description || 'Transaction'}</span>
-                                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#FF453A' }}>-${t.amount.toFixed(2)}</span>
-                                            </div>
-                                        ))}
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
+                                <div>
+                                    <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.15em', fontWeight: 700, margin: '0 0 10px 0' }}>The Sunday Collection</p>
+                                    <h1 style={{ fontSize: '2.5rem', color: '#1A1A1A', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                                        {profileData.full_name || userName || 'Accessing Portal...'}
+                                    </h1>
+                                    <p style={{ fontSize: '0.85rem', color: 'rgba(26,26,26,0.6)', letterSpacing: '0.05em', margin: '5px 0 0 0', textTransform: 'uppercase' }}>
+                                        {profileData.profession || 'GUEST'}
+                                    </p>
+                                </div>
+                                {profileData.photos && profileData.photos[0] ? (
+                                    <img src={profileData.photos[0]} alt="Member Avatar" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(0,0,0,0.1)' }} />
+                                ) : (
+                                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#F5F5F3', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <span style={{ fontSize: '1.5rem', opacity: 0.2 }}>?</span>
                                     </div>
                                 )}
                             </div>
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                                <div>
+                                    <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', margin: '0 0 5px 0' }}>MEMBERSHIP ID</p>
+                                    <p style={{ fontSize: '1rem', color: '#1A1A1A', fontWeight: 700, margin: 0, letterSpacing: '0.1em', fontFamily: 'monospace' }}>
+                                        {user?.id?.slice(0, 8).toUpperCase() || '-------------'}
+                                    </p>
+                                </div>
+                                <div style={{ textAlign: 'right' }}>
+                                    <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', margin: '0 0 5px 0' }}>STATUS</p>
+                                    <div style={{ display: 'inline-block', background: '#F7D031', color: '#000', fontSize: '0.6rem', fontWeight: 800, padding: '4px 8px', borderRadius: '4px', letterSpacing: '0.1em' }}>
+                                        ACTIVE FOUNDATION
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* DARK MODE CREDIT WIDGET */}
+                        {creditData && (
+                            <div style={{ background: '#1A1A1A', color: '#FFF', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '40px 30px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}>
+                                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: 'linear-gradient(90deg, #F7D031, #FFF)' }} />
+
+                                <div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                                        <p style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.15em', fontWeight: 700, margin: 0 }}>HOUSE CREDIT</p>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v12M6 12h12" /></svg>
+                                    </div>
+                                    <p style={{ fontSize: '2.5rem', fontWeight: 300, color: '#FFF', margin: '0 0 5px 0', letterSpacing: '-0.02em' }}>${(creditData.credit_balance ?? 0).toFixed(2)}</p>
+                                    <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', margin: 0, letterSpacing: '0.05em' }}>of ${(creditData.contribution_amount ?? 0).toFixed(2)} annual</p>
+                                </div>
+
+                                <div>
+                                    {creditData.renewal_date && (
+                                        <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', margin: '0 0 15px 0', letterSpacing: '0.05em' }}>RENEWS: {new Date(creditData.renewal_date).toLocaleDateString()}</p>
+                                    )}
+                                    {transactions.length > 0 && (
+                                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                            {transactions.map(t => (
+                                                <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.6)' }}>{t.description || 'Charge'}</span>
+                                                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#F7D031' }}>-${t.amount.toFixed(2)}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         )}
+                    </div>
+
+                    {/* TERTIARY ACTION NAV */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '80px' }}>
+                        <button onClick={() => setShowProfilePanel(true)} className="action-card" style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 20px', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>EDIT IDENTITY</span>
+                            <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>Manage your public persona.</span>
+                        </button>
+
+                        <button onClick={scrollToMembers} className="action-card" style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 20px', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>MEMBER DIRECTORY</span>
+                            <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>View who is currently in orbit.</span>
+                        </button>
+
+                        <button onClick={() => {
+                            const refCode = user?.id?.slice(0, 8).toUpperCase() || 'INVITE';
+                            const bodyText = `Use my private referral code to skip the application queue for The Sunday Collection: ${refCode}%0D%0A%0D%0AApply here: https://theimrsvproject.org/apply`;
+                            window.open(`mailto:?subject=Private Invite to Sunday Collection&body=${bodyText}`);
+                        }} className="action-card" style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 20px', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
+                            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>SEND REFERRAL</span>
+                            <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>Invite your network to apply.</span>
+                        </button>
+                    </div>
+
+                    {/* EMPTY STATE PLACEHOLDER: HOUSE PERKS */}
+                    <div style={{ marginBottom: '80px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px', borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: '15px' }}>
+                            <h2 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 800, letterSpacing: '-0.02em', color: '#1A1A1A' }}>HOUSE PERKS</h2>
+                            <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>UNLOCKING SOON</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', scrollbarWidth: 'none' }}>
+                            <div style={{ minWidth: '280px', height: '160px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.4 }}>GLOBAL WORKSPACES</span>
+                            </div>
+                            <div style={{ minWidth: '280px', height: '160px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.4 }}>PARTNER DISCOUNTS</span>
+                            </div>
+                            <div style={{ minWidth: '280px', height: '160px', background: 'linear-gradient(135deg, #F5F5F3, #EAEAE8)', borderRadius: '8px', border: '1px dashed rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.4 }}>SECRET MENUS</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="bucket-grid" style={{ marginBottom: '120px' }}>
@@ -333,12 +434,21 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 </div>
                                 {/* Photos */}
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Photos (3 image URLs)</label>
+                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Photos (3 Images)</label>
                                     {[0, 1, 2].map(i => (
                                         <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                             <span style={{ fontSize: '0.6rem', opacity: 0.4, letterSpacing: '0.05em' }}>PHOTO {i + 1}</span>
-                                            <input value={profileData.photos[i]} onChange={e => { const p = [...profileData.photos]; p[i] = e.target.value; setProfileData(prev => ({ ...prev, photos: p })); }} placeholder={`https://...`} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.15)', padding: '8px 0', fontSize: '0.9rem', outline: 'none', color: '#1A1A1A' }} />
-                                            {profileData.photos[i] && <img src={profileData.photos[i]} alt={`Preview ${i + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginTop: '4px' }} onError={e => e.target.style.display = 'none'} />}
+                                            <input type="file" accept="image/*" onChange={e => {
+                                                const file = e.target.files[0];
+                                                if (file) {
+                                                    const p = [...profileData.photos];
+                                                    p[i] = file;
+                                                    setProfileData(prev => ({ ...prev, photos: p }));
+                                                }
+                                            }} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.15)', padding: '8px 0', fontSize: '0.9rem', outline: 'none', color: '#1A1A1A', maxWidth: '300px' }} />
+                                            {profileData.photos[i] && (
+                                                <img src={typeof profileData.photos[i] === 'string' ? profileData.photos[i] : URL.createObjectURL(profileData.photos[i])} alt={`Preview ${i + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginTop: '4px' }} onError={e => e.target.style.display = 'none'} />
+                                            )}
                                         </div>
                                     ))}
                                 </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
+import { supabase } from './lib/supabase';
 import './Home.css';
 
 const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
@@ -58,8 +59,33 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
     const submitForm = async () => {
         setStatus('submitting');
         try {
+            let pictureUrl = formData.picture;
+
+            // Handle native file upload to Supabase Storage
+            if (formData.picture instanceof File) {
+                const fileExt = formData.picture.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+                const { data, error } = await supabase.storage
+                    .from('applications')
+                    .upload(`visuals/${fileName}`, formData.picture);
+
+                if (error) {
+                    console.error("Image upload failed:", error);
+                    alert("Image upload failed. It will be submitted without the picture. Ensure the 'applications' bucket exists.");
+                    pictureUrl = ''; // fallback
+                } else if (data) {
+                    const { data: publicUrlData } = supabase.storage
+                        .from('applications')
+                        .getPublicUrl(`visuals/${fileName}`);
+                    pictureUrl = publicUrlData.publicUrl;
+                }
+            }
+
+            const finalData = { ...formData, picture: pictureUrl };
+
             if (onSubmit) {
-                await onSubmit(formData);
+                await onSubmit(finalData);
             }
             navigateToHome(true);
         } catch (error) {
@@ -173,9 +199,12 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Cultural Archive: Submit a Picture</label>
                         <p style={{ fontSize: '0.9rem', opacity: 0.6, margin: '0 0 10px 0', lineHeight: 1.5 }}>
-                            Provide a link to the coolest picture you have been a part of or taken. This is for cultural purposes and will be added to our journal. (Google Drive, Instagram, etc.)
+                            Upload the coolest picture you have been a part of or taken. This is for cultural purposes and will be added to our journal.
                         </p>
-                        <input required name="picture" type="text" value={formData.picture} onChange={handleInputChange} placeholder="Paste link here..." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                        <input required name="picture" type="file" accept="image/*" onChange={(e) => setFormData(prev => ({ ...prev, picture: e.target.files[0] }))} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
+                        {formData.picture instanceof File && (
+                            <p style={{ fontSize: '0.8rem', color: '#1A1A1A', marginTop: '10px', fontWeight: 500 }}>Selected: {formData.picture.name}</p>
+                        )}
                     </div>
                 );
             default:
