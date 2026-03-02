@@ -394,7 +394,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                             {/* ACTIVE INTERACTIVE PERKS */}
                             <div
-                                onClick={() => setShowSessionsModal(true)}
+                                onClick={() => navigate('/directory/medellin')}
                                 className="perkCard"
                             >
                                 <div className="perkTop">
@@ -410,7 +410,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
 
                             <div
-                                onClick={() => setShowTripsModal(true)}
+                                onClick={() => navigate('/directory/medellin')}
                                 className="perkCard"
                             >
                                 <div className="perkTop">
@@ -426,17 +426,17 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
 
                             {/* FUTURE PLACEHOLDERS */}
-                            <div className="perkCard perkLocked">
+                            <div className="perkCard perkLocked" onClick={() => alert('Unlocking soon')}>
                                 <div className="perkTop">
                                     <div className="perkIndex">GLOBAL WORKSPACES</div>
                                 </div>
                             </div>
-                            <div className="perkCard perkLocked">
+                            <div className="perkCard perkLocked" onClick={() => alert('Unlocking soon')}>
                                 <div className="perkTop">
                                     <div className="perkIndex">PARTNER DISCOUNTS</div>
                                 </div>
                             </div>
-                            <div className="perkCard perkLocked">
+                            <div className="perkCard perkLocked" onClick={() => alert('Unlocking soon')}>
                                 <div className="perkTop">
                                     <div className="perkIndex">SECRET MENUS</div>
                                 </div>
