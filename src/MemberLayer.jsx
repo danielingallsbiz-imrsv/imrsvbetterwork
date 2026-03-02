@@ -318,7 +318,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                                     EDIT IDENTITY
                                 </button>
-                                <button onClick={() => navigate('/directory')} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                <button onClick={() => navigate('/directory/medellin')} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                                     DIRECTORY
                                 </button>
@@ -402,6 +402,22 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     <div className="perkDot" style={{ background: '#F7D031' }} />
                                 </div>
                                 <div className="perkBody">
+                                    <div className="perkTitle">MEDELLÍN HOUSE GUIDE</div>
+                                    <div className="perkCopy">
+                                        A curated directory of the best spots in the city.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                onClick={() => setShowSessionsModal(true)}
+                                className="perkCard"
+                            >
+                                <div className="perkTop">
+                                    <div className="perkIndex">02.</div>
+                                    <div className="perkDot" style={{ background: '#F7D031' }} />
+                                </div>
+                                <div className="perkBody">
                                     <div className="perkTitle">UPCOMING SESSIONS</div>
                                     <div className="perkCopy">
                                         Medellín Hub Opening — March 29.<br />Full 4-week drop sequence.
@@ -410,11 +426,11 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
 
                             <div
-                                onClick={() => navigate('/directory/medellin')}
+                                onClick={() => setShowTripsModal(true)}
                                 className="perkCard"
                             >
                                 <div className="perkTop">
-                                    <div className="perkIndex">02.</div>
+                                    <div className="perkIndex">03.</div>
                                     <div className="perkDot" style={{ background: '#F7D031' }} />
                                 </div>
                                 <div className="perkBody">
@@ -444,7 +460,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </div>
 
                         <div className="perksDots" aria-label="Perks pagination">
-                            {[0, 1, 2, 3, 4].map((index) => (
+                            {[0, 1, 2, 3, 4, 5].map((index) => (
                                 <span
                                     key={index}
                                     className={`perksDot ${index === activePerkIndex ? 'isActive' : ''}`}
