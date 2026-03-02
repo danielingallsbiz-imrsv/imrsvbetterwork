@@ -294,7 +294,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 </button>
                             </div>
 
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                            <div className="memberMetaRow" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                                 <div>
                                     <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', margin: '0 0 5px 0' }}>MEMBERSHIP ID</p>
                                     <p style={{ fontSize: '1rem', color: '#1A1A1A', fontWeight: 700, margin: 0, letterSpacing: '0.1em', fontFamily: 'monospace' }}>
@@ -303,7 +303,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 </div>
                                 <div style={{ textAlign: 'right' }}>
                                     <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.1em', margin: '0 0 5px 0' }}>STATUS</p>
-                                    <div style={{ display: 'inline-block', background: '#F7D031', color: '#000', fontSize: '0.6rem', fontWeight: 800, padding: '4px 8px', borderRadius: '4px', letterSpacing: '0.1em' }}>
+                                    <div className="statusPill" style={{ display: 'inline-block', background: '#F7D031', color: '#000', fontSize: '0.6rem', fontWeight: 800, padding: '4px 8px', borderRadius: '4px', letterSpacing: '0.1em' }}>
                                         ACTIVE FOUNDATION
                                     </div>
                                 </div>

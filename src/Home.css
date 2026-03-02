@@ -1229,5 +1229,78 @@ svg {
 @media (max-width: 640px) {
     .credit-widget-card {
         border-radius: 18px !important;
+        padding: 16px !important;
+        min-height: 150px !important;
+    }
+
+    .credit-widget-card p:first-of-type {
+        font-size: 46px !important;
+        line-height: 1.0 !important;
+        margin-top: 8px !important;
+    }
+
+    .credit-widget-card p:last-of-type {
+        margin-top: 6px !important;
+        font-size: 13px !important;
+        opacity: 0.75 !important;
+    }
+
+    .pageWrap {
+        padding: 10px 14px 100px 14px !important;
+    }
+
+    .heroGrid {
+        align-items: stretch;
+    }
+
+    .member-id-card {
+        padding: 18px !important;
+        border-radius: 18px !important;
+    }
+
+    .member-id-card h1 {
+        font-size: 34px !important;
+        line-height: 1.05 !important;
+        margin: 6px 0 4px !important;
+    }
+
+    .member-id-card p:first-of-type {
+        font-size: 14px !important;
+        letter-spacing: 0.12em !important;
+    }
+
+    .memberMetaRow {
+        display: grid !important;
+        grid-template-columns: 1fr auto !important;
+        gap: 10px !important;
+        align-items: end !important;
+        margin-top: 14px !important;
+    }
+
+    .statusPill {
+        font-size: 12px !important;
+        padding: 8px 12px !important;
+        border-radius: 999px !important;
+    }
+
+    .actionsRow {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-top: 14px !important;
+    }
+
+    .actionsRow button {
+        padding: 12px 12px !important;
+        border-radius: 14px !important;
+        font-size: 13px !important;
+    }
+
+    .actionsRow button:nth-child(3) {
+        grid-column: 1 / -1 !important;
+    }
+
+    .card+.card {
+        margin-top: 14px !important;
     }
 }
