@@ -259,6 +259,16 @@ function AppContent() {
     }
   };
 
+  if (loadingSession) {
+    return (
+      <div style={{ minHeight: '100vh', backgroundColor: '#F7F5EA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontSize: '0.8rem', letterSpacing: '0.2em', color: '#1A1A1A', opacity: 0.5, textTransform: 'uppercase' }}>
+          Restoring...
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <AnimatePresence mode="wait">
@@ -305,24 +315,28 @@ function AppContent() {
             />
           } />
           <Route path="/login" element={
-            <LoginLayer
-              onBack={() => navigate('/')}
-              onNavigateToApply={() => navigate('/apply')}
-              onLogin={handleLogin}
-              onSignup={handleSignup}
-              onResendConfirmation={handleResendConfirmation}
-              initialMode="login"
-            />
+            (user && isMember) ? <Navigate to="/member" replace /> : (
+              <LoginLayer
+                onBack={() => navigate('/')}
+                onNavigateToApply={() => navigate('/apply')}
+                onLogin={handleLogin}
+                onSignup={handleSignup}
+                onResendConfirmation={handleResendConfirmation}
+                initialMode="login"
+              />
+            )
           } />
           <Route path="/createaccount" element={
-            <LoginLayer
-              onBack={() => navigate('/')}
-              onNavigateToApply={() => navigate('/apply')}
-              onLogin={handleLogin}
-              onSignup={handleSignup}
-              onResendConfirmation={handleResendConfirmation}
-              initialMode="signup"
-            />
+            (user && isMember) ? <Navigate to="/member" replace /> : (
+              <LoginLayer
+                onBack={() => navigate('/')}
+                onNavigateToApply={() => navigate('/apply')}
+                onLogin={handleLogin}
+                onSignup={handleSignup}
+                onResendConfirmation={handleResendConfirmation}
+                initialMode="signup"
+              />
+            )
           } />
           <Route path="/signup" element={<Navigate to="/createaccount" replace />} />
           <Route path="/member" element={
