@@ -1,3 +1,19 @@
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
 .home-container {
     min-height: 100vh;
     padding-bottom: 200px;
@@ -626,6 +642,11 @@
 }
 
 /* PREMIUM MEMBER DASHBOARD STYLES */
+.member-portal-section {
+    padding-top: 160px;
+    padding-bottom: 100px;
+}
+
 .premium-hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 300px;
@@ -929,6 +950,13 @@
 }
 
 @media (max-width: 600px) {
+    .member-portal-section {
+        padding-top: 100px !important;
+        padding-bottom: 60px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
     .horizontal-scroll-container {
         margin: 0 -30px;
         padding: 0 30px 20px 30px;
@@ -949,8 +977,15 @@
     .action-pill-btn {
         width: 100% !important;
         justify-content: center !important;
-        padding: 12px 14px !important;
-        font-size: 0.7rem !important;
+        padding: 16px 20px !important;
+        font-size: 0.8rem !important;
+        background: #F4F4F4 !important;
+        border: none !important;
+        color: #1A1A1A !important;
+        border-radius: 12px !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        margin: 0 !important;
     }
 
     .member-directory-grid {
@@ -978,5 +1013,92 @@
 
     .member-id-card {
         padding: 24px !important;
+        border-radius: 12px !important;
+    }
+
+    .credit-widget-card {
+        padding: 24px !important;
+        border-radius: 12px !important;
+    }
+}
+
+/* --- RESPONSIVE FLUID GRIDS --- */
+.pageWrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+@media (max-width:640px) {
+    .pageWrap {
+        padding: 0 14px;
+    }
+}
+
+.heroGrid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    align-items: start;
+}
+
+.heroGrid>* {
+    min-width: 0;
+}
+
+/* CRITICAL: stops overflow */
+@media (max-width:1023px) {
+    .heroGrid {
+        grid-template-columns: 1fr 320px;
+    }
+}
+
+@media (max-width:640px) {
+    .heroGrid {
+        grid-template-columns: 1fr;
+    }
+
+    /* STACK */
+}
+
+.card {
+    width: 100%;
+    max-width: 100%;
+}
+
+.perksGrid,
+.membersGrid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width:1023px) {
+
+    .perksGrid,
+    .membersGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width:640px) {
+
+    .perksGrid,
+    .membersGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.actionsRow {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+@media (max-width:640px) {
+    .actionsRow {
+        flex-wrap: wrap;
+        gap: 8px;
     }
 }

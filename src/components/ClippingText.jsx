@@ -25,11 +25,11 @@ const ClippingText = ({ text, scale = 1 }) => {
         '"Inter", sans-serif'
     ];
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const baseFontSize = isMobile ? 1.75 : 3.5;
-    const basePadding = isMobile ? { y: 6, x: 10 } : { y: 12, x: 18 };
-    const baseGap = isMobile ? 15 : 40;
-    const baseCharGap = isMobile ? 3 : 8;
+    // Let the parent scale dictate the sizing. Hardcoded isMobile logic causes double-shrink.
+    const baseFontSize = 3.5;
+    const basePadding = { y: 12, x: 18 };
+    const baseGap = 40;
+    const baseCharGap = 8;
 
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: `${baseGap * scale}px`, alignItems: 'flex-start' }}>
@@ -61,7 +61,7 @@ const ClippingText = ({ text, scale = 1 }) => {
                                     userSelect: 'none',
                                     lineHeight: 1,
                                     transformOrigin: 'center',
-                                    marginBottom: scale > 0.2 ? (isMobile ? '10px' : '20px') : '0px'
+                                    marginBottom: scale > 0.2 ? '20px' : '0px'
                                 }}
                             >
                                 {char.toUpperCase()}

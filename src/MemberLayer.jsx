@@ -168,6 +168,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
                     <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
                     <motion.div
+                        className="mobile-hide"
                         style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -199,17 +200,17 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 </div>
             </nav>
 
-            <section className="section" style={{ paddingTop: '160px', paddingBottom: '100px', flex: 1 }}>
+            <section className="pageWrap" style={{ paddingTop: '160px', paddingBottom: '100px', flex: 1 }}>
                 <motion.div
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
                 >
                     {/* PREMIUM SOHO HOUSE INSPIRED HERO SECTION */}
-                    <div className="premium-hero-grid">
+                    <div className="heroGrid">
 
                         {/* DIGITAL MEMBER ID CARD */}
-                        <div className="member-id-card">
+                        <div className="member-id-card card">
                             <div style={{ position: 'absolute', top: '-20px', right: '-20px', opacity: 0.05, pointerEvents: 'none' }}>
                                 <svg width="200" height="200" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#1A1A1A" strokeWidth="20" fill="none" /></svg>
                             </div>
@@ -234,7 +235,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
 
                             {/* INLINE ACTION BUTTONS */}
-                            <div className="member-actions-row">
+                            <div className="actionsRow">
                                 <button onClick={() => setShowProfilePanel(true)} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                                     EDIT IDENTITY
@@ -271,7 +272,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                         {/* DARK MODE CREDIT WIDGET */}
                         {creditData && (
-                            <div className="credit-widget-card">
+                            <div className="credit-widget-card card">
                                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: 'linear-gradient(90deg, #F7D031, #FFF)' }} />
 
                                 <div>
@@ -309,7 +310,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>UNLOCKING SOON</span>
                         </div>
 
-                        <div className="horizontal-scroll-container">
+                        <div className="perksGrid">
 
                             {/* ACTIVE INTERACTIVE PERKS */}
                             <div
@@ -359,7 +360,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
                             <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>MEMBERS CURRENTLY IN ORBIT</p>
                         </div>
-                        <div className="bucket-grid member-directory-grid">
+                        <div className="membersGrid">
                             {activeMembers.length > 0 ? (
                                 activeMembers.map((member) => (
                                     <div
