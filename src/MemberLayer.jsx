@@ -66,6 +66,9 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         photos: ['', '', '']
     });
 
+    // Welcome Intro State
+    const [showWelcomeIntro, setShowWelcomeIntro] = useState(true);
+
     // Credit / contribution
     const [creditData, setCreditData] = useState(null);
     const [transactions, setTransactions] = useState([]);
@@ -140,6 +143,12 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         setTimeout(() => { setProfileSaved(false); setShowProfilePanel(false); }, 1500);
     };
 
+    useEffect(() => {
+        // Hide welcome intro after 2 seconds
+        const timer = setTimeout(() => setShowWelcomeIntro(false), 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
     const bioWordCount = profileData.bio.trim() === '' ? 0 : profileData.bio.trim().split(/\s+/).length;
     const bioOverLimit = bioWordCount > 120;
 
@@ -162,6 +171,37 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         >
             <AnimatePresence>
                 {showBriefing && <WelcomeBriefing onAcknowledge={handleAcknowledge} />}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {showWelcomeIntro && !showBriefing && (
+                    <motion.div
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.8 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#F7F5EA',
+                            zIndex: 2500,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <motion.h1
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                            style={{ fontFamily: 'serif', fontSize: '3rem', fontWeight: 800, letterSpacing: '0.1em' }}
+                        >
+                            WELCOME.
+                        </motion.h1>
+                    </motion.div>
+                )}
             </AnimatePresence>
 
             <nav className="nav-bar">
@@ -305,50 +345,50 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                     {/* CONSOLIDATED HOUSE PERKS & EVENTS */}
                     <div style={{ marginBottom: '120px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '20px', borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: '15px' }}>
-                            <h2 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 800, letterSpacing: '-0.02em', color: '#1A1A1A' }}>HOUSE PERKS & SESSIONS</h2>
-                            <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>UNLOCKING SOON</span>
+                        <div className="sectionHeader">
+                            <h2 className="sectionTitle">HOUSE PERKS & SESSIONS</h2>
+                            <span className="sectionMeta">UNLOCKING SOON</span>
                         </div>
 
-                        <div className="perksGrid">
+                        <div className="hScroll">
 
                             {/* ACTIVE INTERACTIVE PERKS */}
                             <div
                                 onClick={() => setShowSessionsModal(true)}
-                                className="perk-card active-perk-card"
+                                className="perkCard card active-perk-card"
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                     <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>01.</span>
                                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F7D031' }} />
                                 </div>
                                 <div>
-                                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1A1A1A', margin: '0 0 5px 0' }}>UPCOMING SESSIONS</h3>
-                                    <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.5)', margin: 0, lineHeight: 1.5 }}>Medellín Hub Opening — March 29.<br />Full 4-week drop sequence.</p>
+                                    <h3>UPCOMING SESSIONS</h3>
+                                    <p>Medellín Hub Opening — March 29.<br />Full 4-week drop sequence.</p>
                                 </div>
                             </div>
 
                             <div
                                 onClick={() => setShowTripsModal(true)}
-                                className="perk-card active-perk-card"
+                                className="perkCard card active-perk-card"
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                     <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>02.</span>
                                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F7D031' }} />
                                 </div>
                                 <div>
-                                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1A1A1A', margin: '0 0 5px 0' }}>UPCOMING TRIPS</h3>
-                                    <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.5)', margin: 0, lineHeight: 1.5 }}>Access exclusive global itineraries reserved for the collective.</p>
+                                    <h3>UPCOMING TRIPS</h3>
+                                    <p>Access exclusive global itineraries reserved for the collective.</p>
                                 </div>
                             </div>
 
                             {/* FUTURE PLACEHOLDERS */}
-                            <div className="perk-card placeholder-perk-card">
+                            <div className="perkCard card placeholder-perk-card">
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>GLOBAL WORKSPACES</span>
                             </div>
-                            <div className="perk-card placeholder-perk-card">
+                            <div className="perkCard card placeholder-perk-card">
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>PARTNER DISCOUNTS</span>
                             </div>
-                            <div className="perk-card placeholder-perk-card">
+                            <div className="perkCard card placeholder-perk-card">
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>SECRET MENUS</span>
                             </div>
                         </div>
@@ -365,36 +405,36 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 activeMembers.map((member) => (
                                     <div
                                         key={member.id}
-                                        className="member-card-premium"
+                                        className="memberCard"
                                     >
-                                        <div className="member-card-header">
-                                            <div className="member-identity-row">
+                                        <div className="memberCardBody">
+                                            <div className="memberTop">
                                                 {/* Avatar Placeholder */}
                                                 <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.2rem', fontWeight: 800, flexShrink: 0 }}>
                                                     {member.name ? member.name.charAt(0).toUpperCase() : '?'}
                                                 </div>
                                                 <div>
-                                                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 5px 0', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em', fontFamily: 'serif' }}>
+                                                    <h3 style={{ fontSize: '1.1rem', margin: '0 0 2px 0', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em', fontFamily: 'serif' }}>
                                                         {member.name}
                                                     </h3>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                         <span style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 800 }}>
                                                             ID {member.id?.slice(0, 8).toUpperCase()}
                                                         </span>
-                                                        <span className="mobile-hide" style={{ opacity: 0.2 }}>|</span>
+                                                        <span style={{ opacity: 0.2 }}>|</span>
                                                         <span style={{ fontSize: '0.6rem', opacity: 0.5, letterSpacing: '0.05em' }}>
                                                             TIER 01
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div className="member-footer-row">
-                                            <span style={{ fontSize: '0.6rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Joined {new Date(member.created_at || member.date).toLocaleDateString()}</span>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(46, 204, 113, 0.1)', padding: '4px 8px', borderRadius: '4px' }}>
-                                                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2ECC71', boxShadow: '0 0 8px rgba(46, 204, 113, 0.6)' }} />
-                                                <span style={{ fontSize: '0.55rem', fontWeight: 800, color: '#2ECC71', letterSpacing: '0.05em' }}>IN ORBIT</span>
+                                            <div className="memberBottom">
+                                                <span style={{ fontSize: '0.6rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Joined {new Date(member.created_at || member.date).toLocaleDateString()}</span>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(46, 204, 113, 0.1)', padding: '4px 8px', borderRadius: '4px' }}>
+                                                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2ECC71', boxShadow: '0 0 8px rgba(46, 204, 113, 0.6)' }} />
+                                                    <span style={{ fontSize: '0.55rem', fontWeight: 800, color: '#2ECC71', letterSpacing: '0.05em' }}>IN ORBIT</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

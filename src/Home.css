@@ -1102,3 +1102,132 @@ svg {
         gap: 8px;
     }
 }
+
+/* --- HORIZONTAL SCROLL CAROUSEL --- */
+.hScroll {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 6px 2px 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.hScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.hScroll>.card {
+    scroll-snap-align: start;
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 640px) {
+    .hScroll {
+        grid-auto-columns: 45%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hScroll {
+        display: grid;
+        grid-auto-flow: unset;
+        grid-auto-columns: unset;
+        overflow: visible;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+
+/* --- SECTION HEADER --- */
+.sectionHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 2px;
+    margin-top: 8px;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    margin: 0;
+    font-weight: 800;
+    color: #1A1A1A;
+}
+
+.sectionMeta {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    color: #F7D031;
+    font-weight: 800;
+}
+
+
+/* --- PERK CARDS --- */
+.perkCard {
+    padding: 18px;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.perkCard h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1A1A1A;
+}
+
+.perkCard p {
+    margin: 0;
+    line-height: 1.35;
+    opacity: 0.8;
+    font-size: 0.75rem;
+    color: rgba(26, 26, 26, 0.8);
+}
+
+
+/* --- MEMBER CARDS --- */
+.memberCard {
+    padding: 18px;
+    min-height: auto;
+    background: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+.memberCardBody {
+    display: grid;
+    gap: 10px;
+}
+
+.memberTop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.memberBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 10px;
+}
+
+@media (max-width: 640px) {
+    .credit-widget-card {
+        border-radius: 18px !important;
+    }
+}
