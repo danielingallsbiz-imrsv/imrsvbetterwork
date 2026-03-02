@@ -887,3 +887,96 @@
         left: 200%;
     }
 }
+
+.member-card-premium {
+    background: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.member-card-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.member-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.member-identity-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.member-footer-row {
+    margin-top: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .horizontal-scroll-container {
+        margin: 0 -30px;
+        padding: 0 30px 20px 30px;
+    }
+
+    .perk-card {
+        min-width: 240px !important;
+        width: 240px !important;
+        height: 240px !important;
+    }
+
+    .member-actions-row {
+        flex-direction: column !important;
+        gap: 12px !important;
+        margin-bottom: 30px !important;
+    }
+
+    .action-pill-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px 14px !important;
+        font-size: 0.7rem !important;
+    }
+
+    .member-directory-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    .member-card-premium {
+        padding: 20px !important;
+        gap: 15px !important;
+        aspect-ratio: 1 / 1;
+    }
+
+    .member-identity-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .member-footer-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .member-id-card {
+        padding: 24px !important;
+    }
+}

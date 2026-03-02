@@ -365,43 +365,22 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     <div
                                         key={member.id}
                                         className="member-card-premium"
-                                        style={{
-                                            background: '#FFF',
-                                            border: '1px solid rgba(0, 0, 0, 0.08)',
-                                            borderRadius: '8px',
-                                            padding: '30px',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            gap: '20px',
-                                            position: 'relative',
-                                            overflow: 'hidden',
-                                            transition: 'transform 0.2s, box-shadow 0.2s',
-                                            cursor: 'pointer'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.transform = 'translateY(-2px)';
-                                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.transform = 'translateY(0)';
-                                            e.currentTarget.style.boxShadow = 'none';
-                                        }}
                                     >
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                        <div className="member-card-header">
+                                            <div className="member-identity-row">
                                                 {/* Avatar Placeholder */}
-                                                <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.2rem', fontWeight: 800 }}>
+                                                <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.2rem', fontWeight: 800, flexShrink: 0 }}>
                                                     {member.name ? member.name.charAt(0).toUpperCase() : '?'}
                                                 </div>
                                                 <div>
                                                     <h3 style={{ fontSize: '1.1rem', margin: '0 0 5px 0', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em', fontFamily: 'serif' }}>
                                                         {member.name}
                                                     </h3>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                                                         <span style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 800 }}>
                                                             ID {member.id?.slice(0, 8).toUpperCase()}
                                                         </span>
-                                                        <span style={{ opacity: 0.2 }}>|</span>
+                                                        <span className="mobile-hide" style={{ opacity: 0.2 }}>|</span>
                                                         <span style={{ fontSize: '0.6rem', opacity: 0.5, letterSpacing: '0.05em' }}>
                                                             TIER 01
                                                         </span>
@@ -410,7 +389,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                             </div>
                                         </div>
 
-                                        <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div className="member-footer-row">
                                             <span style={{ fontSize: '0.6rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Joined {new Date(member.created_at || member.date).toLocaleDateString()}</span>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(46, 204, 113, 0.1)', padding: '4px 8px', borderRadius: '4px' }}>
                                                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2ECC71', boxShadow: '0 0 8px rgba(46, 204, 113, 0.6)' }} />
