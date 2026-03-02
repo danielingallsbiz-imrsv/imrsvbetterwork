@@ -1138,6 +1138,33 @@ svg {
     }
 }
 
+/* --- SOHO POLISH: TOP BAR --- */
+.topBar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    background: rgba(247, 245, 234, 0.75);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.topBarInner {
+    height: 54px;
+    display: grid;
+    grid-template-columns: 44px 1fr 72px;
+    align-items: center;
+    padding: 0 14px;
+}
+
+.brandMark {
+    justify-self: center;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    font-weight: 800;
+}
+
 
 /* --- SECTION HEADER --- */
 .sectionHeader {
@@ -1269,21 +1296,28 @@ svg {
 
 @media (max-width: 640px) {
     .credit-widget-card {
-        border-radius: 18px !important;
         padding: 16px !important;
-        min-height: 150px !important;
+        border-radius: 18px !important;
+        min-height: 140px !important;
     }
 
     .credit-widget-card p:first-of-type {
-        font-size: 46px !important;
-        line-height: 1.0 !important;
-        margin-top: 8px !important;
+        font-size: 12px !important;
+        letter-spacing: 0.22em !important;
+        opacity: 0.85 !important;
+        margin: 0 !important;
     }
 
-    .credit-widget-card p:last-of-type {
-        margin-top: 6px !important;
+    .credit-widget-card p:nth-of-type(2) {
+        font-size: 44px !important;
+        line-height: 1.0 !important;
+        margin-top: 10px !important;
+    }
+
+    .credit-widget-card p:nth-of-type(3) {
         font-size: 13px !important;
-        opacity: 0.75 !important;
+        opacity: 0.7 !important;
+        margin-top: 6px !important;
     }
 
     .pageWrap {
@@ -1306,16 +1340,36 @@ svg {
     }
 
     .member-id-card p:first-of-type {
-        font-size: 14px !important;
-        letter-spacing: 0.12em !important;
+        font-size: 12px !important;
+        letter-spacing: 0.22em !important;
+        opacity: 0.65 !important;
+        text-transform: uppercase !important;
+    }
+
+    .member-id-card h1 {
+        font-size: 34px !important;
+        line-height: 1.02 !important;
+        margin-top: 6px !important;
+    }
+
+    .member-id-card p:last-of-type {
+        margin-top: 6px !important;
+        font-size: 13px !important;
+        letter-spacing: 0.18em !important;
+        opacity: 0.7 !important;
     }
 
     .memberMetaRow {
-        display: grid !important;
-        grid-template-columns: 1fr auto !important;
-        gap: 10px !important;
-        align-items: end !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-end !important;
+        gap: 12px !important;
         margin-top: 14px !important;
+    }
+
+    .memberMetaRow p:last-child {
+        font-size: 18px !important;
+        letter-spacing: 0.08em !important;
     }
 
     .statusPill {
@@ -1332,9 +1386,12 @@ svg {
     }
 
     .actionsRow button {
-        padding: 12px 12px !important;
+        height: 44px !important;
+        padding: 0 !important;
         border-radius: 14px !important;
-        font-size: 13px !important;
+        font-size: 12px !important;
+        letter-spacing: 0.18em !important;
+        text-transform: uppercase !important;
     }
 
     .actionsRow button:nth-child(3) {
@@ -1343,6 +1400,44 @@ svg {
 
     .card+.card {
         margin-top: 14px !important;
+    }
+
+    /* Soho Style: General Spacing */
+    .pageWrap {
+        padding: 0 14px 100px 14px !important;
+    }
+
+    .stack {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+    }
+
+    .section {
+        margin-top: 20px !important;
+    }
+
+    .sectionHeader {
+        margin-bottom: 10px !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+        margin-block: 0 !important;
+    }
+
+    /* Soho Style: Perks Rail */
+    .hScroll {
+        grid-auto-columns: 86% !important;
+        gap: 14px !important;
+        padding: 6px 2px 12px !important;
+    }
+
+    .perkCard {
+        padding: 18px !important;
+        min-height: 190px !important;
     }
 }
 

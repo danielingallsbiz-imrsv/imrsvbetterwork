@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, useScroll, useTransform, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
+import { useNavigate } from 'react-router-dom';
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import { supabase } from './lib/supabase';
@@ -49,6 +50,7 @@ const WelcomeBriefing = ({ onAcknowledge }) => (
 );
 
 const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
+    const navigate = useNavigate();
     const briefingKey = `imrsv_briefing_acknowledged_${user?.id} `;
     const [showBriefing, setShowBriefing] = useState(() => !localStorage.getItem(briefingKey));
     const [rsvpStatus, setRsvpStatus] = useState({});
@@ -204,44 +206,43 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 )}
             </AnimatePresence>
 
-            <nav className="nav-bar">
-                <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', color: '#1A1A1A' }} onClick={onBack}>
-                    <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
-                    <motion.div
-                        className="mobile-hide"
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            opacity: brandingOpacity
-                        }}
-                    >
-                        <ClippingText text="SUNDAY COLLECTION" scale={0.22} />
-                    </motion.div>
-                </div>
-                <div className="nav-links">
-                    <motion.span
-                        onClick={onLogout}
-                        whileHover={{
-                            opacity: 1,
-                            textShadow: 'none'
-                        }}
-                        style={{
-                            cursor: 'pointer',
-                            color: '#1A1A1A',
-                            fontWeight: 800,
-                            fontSize: '0.6rem',
-                            letterSpacing: '0.1em',
-                            opacity: 0.7,
-                            textShadow: 'none'
-                        }}
-                    >
-                        LOG OUT
-                    </motion.span>
-                </div>
-            </nav>
+            {/* SOHO STYLE TOP BAR */}
+            <div className="topBar">
+                <div className="topBarInner">
+                    {/* Left: Logo/Back */}
+                    <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={onBack}>
+                        <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
+                    </div>
 
-            <section className="pageWrap" style={{ paddingTop: '160px', paddingBottom: '100px', flex: 1 }}>
+                    {/* Center: Brand Anchor */}
+                    <div className="brandMark">
+                        SUNDAY COLLECTION
+                    </div>
+
+                    {/* Right: Log Out */}
+                    <div style={{ justifySelf: 'end' }}>
+                        <motion.span
+                            onClick={onLogout}
+                            whileHover={{ opacity: 1 }}
+                            style={{
+                                cursor: 'pointer',
+                                color: '#1A1A1A',
+                                fontWeight: 800,
+                                fontSize: '10px',
+                                letterSpacing: '0.1em',
+                                opacity: 0.6,
+                                textTransform: 'uppercase'
+                            }}
+                        >
+                            LOG OUT
+                        </motion.span>
+                    </div>
+                </div>
+            </div>
+
+            <section className="pageWrap" style={{ paddingTop: '10px', paddingBottom: '100px', flex: 1 }}>
                 <motion.div
+                    className="stack"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
@@ -280,7 +281,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                                     EDIT IDENTITY
                                 </button>
-                                <button onClick={scrollToMembers} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                <button onClick={() => navigate('/directory')} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                                     DIRECTORY
                                 </button>
@@ -343,8 +344,10 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         )}
                     </div>
 
+                    <div className="divider" />
+
                     {/* CONSOLIDATED HOUSE PERKS & EVENTS */}
-                    <div style={{ marginBottom: '120px' }}>
+                    <div className="section" style={{ marginBottom: '40px' }}>
                         <div className="sectionHeader">
                             <h2 className="sectionTitle">HOUSE PERKS & SESSIONS</h2>
                             <span className="sectionMeta">UNLOCKING SOON</span>
