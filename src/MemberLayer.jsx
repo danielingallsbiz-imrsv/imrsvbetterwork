@@ -582,8 +582,8 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                         <div style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.6 }}>
                                                             <strong>Itinerary:</strong><br />
                                                             10am: Run Club<br />
-                                                            12pm - 5pm: Community Day<br />
-                                                            6pm - 11pm: After Hours Network (Ice baths, DJ, Open Bar, Tattoos)
+                                                            12pm - 5pm: Community Day (Ice baths, DJ, Open Bar, Tattoos, sauna)<br />
+                                                            6pm - 11pm: After Hours Network
                                                         </div>
                                                     </div>
                                                     <div>

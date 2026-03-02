@@ -294,7 +294,7 @@ const JournalLayer = ({ onBack }) => {
                             <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
                             <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>12:00 PM - 5:00 PM <span style={{ opacity: 0.4, fontSize: '0.85rem' }}></span></h3>
                             <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                Community Day
+                                Community Day (Ice baths, DJ, Open Bar, Tattoos, sauna)
                             </p>
                         </div>
 
@@ -303,7 +303,7 @@ const JournalLayer = ({ onBack }) => {
                             <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
                             <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>6:00 PM - 11:00 PM</h3>
                             <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                After Hours Network (Ice baths, DJ, Open Bar, Tattoos)
+                                After Hours Network
                             </p>
                         </div>
                     </div>
