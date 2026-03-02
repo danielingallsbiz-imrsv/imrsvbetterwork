@@ -338,7 +338,7 @@ function AppContent() {
               <Navigate to="/login" replace />
             )
           } />
-          <Route path="/directory" element={
+          <Route exact path="/directory" element={
             isMember ? (
               <DirectoryLayer
                 members={members}
