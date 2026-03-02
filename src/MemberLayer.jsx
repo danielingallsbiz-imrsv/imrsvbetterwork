@@ -206,10 +206,10 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     transition={{ duration: 0.8 }}
                 >
                     {/* PREMIUM SOHO HOUSE INSPIRED HERO SECTION */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: '40px', marginBottom: '80px', alignItems: 'stretch' }}>
+                    <div className="premium-hero-grid">
 
                         {/* DIGITAL MEMBER ID CARD */}
-                        <div style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: '12px', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.03)' }}>
+                        <div className="member-id-card">
                             <div style={{ position: 'absolute', top: '-20px', right: '-20px', opacity: 0.05, pointerEvents: 'none' }}>
                                 <svg width="200" height="200" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#1A1A1A" strokeWidth="20" fill="none" /></svg>
                             </div>
@@ -217,7 +217,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
                                 <div>
                                     <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.15em', fontWeight: 700, margin: '0 0 10px 0' }}>The Sunday Collection</p>
-                                    <h1 style={{ fontSize: '2.5rem', color: '#1A1A1A', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                                    <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', color: '#1A1A1A', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                                         {profileData.full_name || userName || 'Accessing Portal...'}
                                     </h1>
                                     <p style={{ fontSize: '0.85rem', color: 'rgba(26,26,26,0.6)', letterSpacing: '0.05em', margin: '5px 0 0 0', textTransform: 'uppercase' }}>
@@ -227,7 +227,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 {profileData.photos && profileData.photos[0] ? (
                                     <img src={profileData.photos[0]} alt="Member Avatar" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(0,0,0,0.1)' }} />
                                 ) : (
-                                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#F5F5F3', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#F5F5F3', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                                         <span style={{ fontSize: '1.5rem', opacity: 0.2 }}>?</span>
                                     </div>
                                 )}
@@ -251,7 +251,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                         {/* DARK MODE CREDIT WIDGET */}
                         {creditData && (
-                            <div style={{ background: '#1A1A1A', color: '#FFF', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '40px 30px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}>
+                            <div className="credit-widget-card">
                                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: 'linear-gradient(90deg, #F7D031, #FFF)' }} />
 
                                 <div>
@@ -283,14 +283,14 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                     </div>
 
                     {/* TERTIARY ACTION NAV */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '80px' }}>
-                        <button onClick={() => setShowProfilePanel(true)} className="action-card" style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 20px', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div className="tertiary-action-grid">
+                        <button onClick={() => setShowProfilePanel(true)} className="action-card-btn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                             <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>EDIT IDENTITY</span>
                             <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>Manage your public persona.</span>
                         </button>
 
-                        <button onClick={scrollToMembers} className="action-card" style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 20px', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <button onClick={scrollToMembers} className="action-card-btn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                             <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>MEMBER DIRECTORY</span>
                             <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>View who is currently in orbit.</span>
@@ -300,7 +300,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             const refCode = user?.id?.slice(0, 8).toUpperCase() || 'INVITE';
                             const bodyText = `Use my private referral code to skip the application queue for The Sunday Collection: ${refCode}%0D%0A%0D%0AApply here: https://theimrsvproject.org/apply`;
                             window.open(`mailto:?subject=Private Invite to Sunday Collection&body=${bodyText}`);
-                        }} className="action-card" style={{ background: '#FFF', border: '1px solid rgba(0,0,0,0.08)', padding: '25px 20px', borderRadius: '8px', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        }} className="action-card-btn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="1.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
                             <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em' }}>SEND REFERRAL</span>
                             <span style={{ fontSize: '0.65rem', opacity: 0.5 }}>Invite your network to apply.</span>

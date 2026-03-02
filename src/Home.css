@@ -610,6 +610,79 @@
     .nav-links {
         gap: 20px;
     }
+
+    .premium-hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    .tertiary-action-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .member-id-card {
+        padding: 30px !important;
+    }
+}
+
+/* PREMIUM MEMBER DASHBOARD STYLES */
+.premium-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 40px;
+    margin-bottom: 80px;
+    align-items: stretch;
+}
+
+.member-id-card {
+    background: #FFF;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+.credit-widget-card {
+    background: #1A1A1A;
+    color: #FFF;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.tertiary-action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 80px;
+}
+
+.action-card-btn {
+    background: #FFF;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 25px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 @media (max-width: 600px) {
