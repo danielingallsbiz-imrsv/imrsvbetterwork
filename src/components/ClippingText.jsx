@@ -55,6 +55,7 @@ const ClippingText = ({ text, scale = 1 }) => {
                                     fontSize: `${baseFontSize * scale}rem`,
                                     fontWeight: 900,
                                     display: 'inline-block',
+                                    flexShrink: 0,
                                     boxShadow: `${2 * scale}px ${4 * scale}px 0px rgba(0,0,0,0.15)`,
                                     border: '1px solid rgba(0,0,0,0.05)',
                                     userSelect: 'none',

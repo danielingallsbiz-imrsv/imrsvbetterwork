@@ -234,12 +234,12 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
 
                             {/* INLINE ACTION BUTTONS */}
-                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '40px' }}>
-                                <button onClick={() => setShowProfilePanel(true)} style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px', borderRadius: '40px', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#1A1A1A', transition: 'all 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                            <div className="member-actions-row">
+                                <button onClick={() => setShowProfilePanel(true)} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
                                     EDIT IDENTITY
                                 </button>
-                                <button onClick={scrollToMembers} style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px', borderRadius: '40px', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#1A1A1A', transition: 'all 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                <button onClick={scrollToMembers} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                                     DIRECTORY
                                 </button>
@@ -247,7 +247,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     const refCode = user?.id?.slice(0, 8).toUpperCase() || 'INVITE';
                                     const bodyText = `Use my private referral code to skip the application queue for The Sunday Collection: ${refCode}%0D%0A%0D%0AApply here: https://theimrsvproject.org/apply`;
                                     window.open(`mailto:?subject=Private Invite to Sunday Collection&body=${bodyText}`);
-                                }} style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px', borderRadius: '40px', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.05em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#1A1A1A', transition: 'all 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                                }} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
                                     REFER A FRIEND
                                 </button>
@@ -359,7 +359,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <ClippingText text="MEMBERS." scale={0.5} style={{ color: '#1A1A1A', margin: 0 }} />
                             <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>MEMBERS CURRENTLY IN ORBIT</p>
                         </div>
-                        <div className="bucket-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+                        <div className="bucket-grid member-directory-grid">
                             {activeMembers.length > 0 ? (
                                 activeMembers.map((member) => (
                                     <div
