@@ -24,12 +24,15 @@ function AppContent() {
   const [isMember, setIsMember] = useState(false);
   const [members, setMembers] = useState([]);
   const [dbStatus, setDbStatus] = useState('connecting');
+  const [loadingSession, setLoadingSession] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setUser(session.user);
-        checkMembership(session.user.email);
+        checkMembership(session.user.email).finally(() => setLoadingSession(false));
+      } else {
+        setLoadingSession(false);
       }
     });
 
@@ -48,6 +51,8 @@ function AppContent() {
 
   // Dedicated Redirection Logic - Prevents Stale Closures
   useEffect(() => {
+    if (loadingSession) return; // DO NOT redirect while checking auth state
+
     const authPaths = ['/login', '/createaccount', '/signup'];
 
     if (user && isMember) {
@@ -55,13 +60,13 @@ function AppContent() {
       if (authPaths.includes(location.pathname)) {
         navigate('/member');
       }
-    } else if (!user && !isMember) {
-      // Redirect unauthenticated users AWAY from the member portal
+    } else if (!user || !isMember) {
+      // Redirect unauthenticated/unapproved users AWAY from the member portal
       if (location.pathname === '/member') {
         navigate('/');
       }
     }
-  }, [user, isMember, location.pathname, navigate]);
+  }, [user, isMember, loadingSession, location.pathname, navigate]);
 
   const checkMembership = async (email) => {
     try {
