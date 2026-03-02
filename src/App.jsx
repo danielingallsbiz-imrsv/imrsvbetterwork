@@ -10,6 +10,7 @@ import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
 import MemberLayer from './MemberLayer';
 import DirectoryLayer from './DirectoryLayer';
+import Directory from './FullfillmentFunnel/Directory';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -337,9 +338,20 @@ function AppContent() {
               <Navigate to="/login" replace />
             )
           } />
-          <Route path="/directory/:citySlug" element={
+          <Route path="/directory" element={
             isMember ? (
               <DirectoryLayer
+                members={members}
+                onLogout={handleLogout}
+                onBack={() => navigate('/member')}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          } />
+          <Route path="/directory/:citySlug" element={
+            isMember ? (
+              <Directory
                 members={members}
                 onLogout={handleLogout}
                 onBack={() => navigate('/member')}
