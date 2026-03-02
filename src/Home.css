@@ -1477,17 +1477,24 @@ svg {
     }
 
     /* Soho Style: Perks Rail */
+    .section {
+        overflow-x: hidden !important;
+    }
+
     .hScroll {
         display: grid !important;
         grid-auto-flow: column !important;
-        grid-auto-columns: 86% !important;
-        gap: 14px !important;
-        padding: 6px 2px 18px !important;
+        grid-auto-columns: 88% !important;
+        gap: 12px !important;
+        padding: 10px 16px 12px !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
-        -webkit-overflow-scrolling: touch;
+        -webkit-overflow-scrolling: touch !important;
         scroll-snap-type: x mandatory !important;
         margin: 0 !important;
+
+        width: 100% !important;
+        max-width: 100vw !important;
 
         /* Strip desktop grid bleeding */
         grid-template-columns: unset !important;
@@ -1501,6 +1508,11 @@ svg {
 
     .hScroll>* {
         scroll-snap-align: start !important;
+    }
+
+    .hScroll::after {
+        content: "";
+        width: 10px;
     }
 
     .section,
