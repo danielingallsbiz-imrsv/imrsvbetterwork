@@ -719,36 +719,84 @@ svg {
     display: none;
 }
 
-.perk-card {
-    min-width: 320px;
-    height: 180px;
-    border-radius: 8px;
-    flex-shrink: 0;
-}
-
-.active-perk-card {
-    background: #FFF;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    padding: 25px;
+.perkCard {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    min-height: 190px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
     cursor: pointer;
-    transition: transform 0.2s;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
-.active-perk-card:hover {
-    transform: translateY(-2px);
+.perkCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
 }
 
-.placeholder-perk-card {
+.perkCard:active {
+    transform: scale(0.99);
+}
+
+.perkTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.perkIndex {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.perkDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    opacity: 0.85;
+}
+
+.perkBody {
+    margin-top: 18px;
+}
+
+.perkTitle {
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.perkCopy {
+    font-size: 14px;
+    line-height: 1.45;
+    opacity: 0.72;
+    max-width: 28ch;
+}
+
+.perkLocked {
+    opacity: 0.55;
+    position: relative;
     background: linear-gradient(135deg, #F5F5F3, #EAEAE8);
     border: 1px dashed rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
     justify-content: center;
-    opacity: 0.7;
+}
+
+.perkLocked::after {
+    content: "LOCKED";
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.6;
 }
 
 @media (max-width: 600px) {
@@ -1436,8 +1484,8 @@ svg {
     }
 
     .perkCard {
-        padding: 18px !important;
-        min-height: 190px !important;
+        min-height: auto !important;
+        aspect-ratio: 1.1 / 1 !important;
     }
 }
 

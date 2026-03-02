@@ -357,41 +357,51 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             {/* ACTIVE INTERACTIVE PERKS */}
                             <div
                                 onClick={() => setShowSessionsModal(true)}
-                                className="perkCard card active-perk-card"
+                                className="perkCard"
                             >
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                    <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>01.</span>
-                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F7D031' }} />
+                                <div className="perkTop">
+                                    <div className="perkIndex">01.</div>
+                                    <div className="perkDot" style={{ background: '#F7D031' }} />
                                 </div>
-                                <div>
-                                    <h3>UPCOMING SESSIONS</h3>
-                                    <p>Medellín Hub Opening — March 29.<br />Full 4-week drop sequence.</p>
+                                <div className="perkBody">
+                                    <div className="perkTitle">UPCOMING SESSIONS</div>
+                                    <div className="perkCopy">
+                                        Medellín Hub Opening — March 29.<br />Full 4-week drop sequence.
+                                    </div>
                                 </div>
                             </div>
 
                             <div
                                 onClick={() => setShowTripsModal(true)}
-                                className="perkCard card active-perk-card"
+                                className="perkCard"
                             >
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                    <span style={{ fontSize: '0.6rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.1em' }}>02.</span>
-                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F7D031' }} />
+                                <div className="perkTop">
+                                    <div className="perkIndex">02.</div>
+                                    <div className="perkDot" style={{ background: '#F7D031' }} />
                                 </div>
-                                <div>
-                                    <h3>UPCOMING TRIPS</h3>
-                                    <p>Access exclusive global itineraries reserved for the collective.</p>
+                                <div className="perkBody">
+                                    <div className="perkTitle">UPCOMING TRIPS</div>
+                                    <div className="perkCopy">
+                                        Access exclusive global itineraries reserved for the collective.
+                                    </div>
                                 </div>
                             </div>
 
                             {/* FUTURE PLACEHOLDERS */}
-                            <div className="perkCard card placeholder-perk-card">
-                                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>GLOBAL WORKSPACES</span>
+                            <div className="perkCard perkLocked">
+                                <div className="perkTop">
+                                    <div className="perkIndex">GLOBAL WORKSPACES</div>
+                                </div>
                             </div>
-                            <div className="perkCard card placeholder-perk-card">
-                                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>PARTNER DISCOUNTS</span>
+                            <div className="perkCard perkLocked">
+                                <div className="perkTop">
+                                    <div className="perkIndex">PARTNER DISCOUNTS</div>
+                                </div>
                             </div>
-                            <div className="perkCard card placeholder-perk-card">
-                                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', opacity: 0.3 }}>SECRET MENUS</span>
+                            <div className="perkCard perkLocked">
+                                <div className="perkTop">
+                                    <div className="perkIndex">SECRET MENUS</div>
+                                </div>
                             </div>
                         </div>
                     </div>
