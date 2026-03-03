@@ -126,95 +126,127 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '100%',
-                    maxWidth: '320px',
-                    padding: '0 24px',
+                    maxWidth: '300px',
+                    padding: '0 20px',
                     zIndex: 10,
                 }}>
                     <form
                         onSubmit={handleHeroLogin}
                         style={{
-                            background: 'rgba(10,10,10,0.52)',
-                            backdropFilter: 'blur(18px)',
-                            WebkitBackdropFilter: 'blur(18px)',
-                            border: '1px solid rgba(255,255,255,0.10)',
-                            borderRadius: '12px',
-                            padding: '28px 24px',
+                            background: 'rgba(8,8,8,0.38)',
+                            backdropFilter: 'blur(28px)',
+                            WebkitBackdropFilter: 'blur(28px)',
+                            borderTop: '1px solid rgba(255,255,255,0.12)',
+                            borderBottom: '1px solid rgba(255,255,255,0.06)',
+                            borderLeft: '1px solid rgba(255,255,255,0.08)',
+                            borderRight: '1px solid rgba(255,255,255,0.04)',
+                            borderRadius: '2px',
+                            padding: '32px 28px 24px',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '14px',
+                            gap: '0px',
                         }}
                     >
-                        <p style={{ margin: 0, fontSize: '0.6rem', letterSpacing: '0.18em', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', textAlign: 'center' }}>
-                            Member Portal
-                        </p>
-                        <input
-                            type="email"
-                            value={loginEmail}
-                            onChange={e => setLoginEmail(e.target.value)}
-                            placeholder="Email"
-                            style={{
-                                background: 'rgba(255,255,255,0.07)',
-                                border: '1px solid rgba(255,255,255,0.12)',
-                                borderRadius: '6px',
-                                padding: '12px 14px',
-                                color: '#FFF',
-                                fontSize: '0.9rem',
-                                outline: 'none',
-                                width: '100%',
-                                boxSizing: 'border-box',
-                            }}
-                        />
-                        <input
-                            type="password"
-                            value={loginPassword}
-                            onChange={e => setLoginPassword(e.target.value)}
-                            placeholder="Password"
-                            style={{
-                                background: 'rgba(255,255,255,0.07)',
-                                border: '1px solid rgba(255,255,255,0.12)',
-                                borderRadius: '6px',
-                                padding: '12px 14px',
-                                color: '#FFF',
-                                fontSize: '0.9rem',
-                                outline: 'none',
-                                width: '100%',
-                                boxSizing: 'border-box',
-                            }}
-                        />
+                        {/* Logo + label */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '28px' }}>
+                            <img src="/logo.svg" alt="" style={{ height: '16px', filter: 'invert(1)', opacity: 0.9 }} />
+                            <span style={{
+                                fontSize: '0.52rem',
+                                letterSpacing: '0.22em',
+                                color: 'rgba(255,255,255,0.3)',
+                                textTransform: 'uppercase',
+                            }}>
+                                Private Access
+                            </span>
+                        </div>
+
+                        {/* Email */}
+                        <div style={{ marginBottom: '22px' }}>
+                            <label style={{ fontSize: '0.52rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Email</label>
+                            <input
+                                type="email"
+                                value={loginEmail}
+                                onChange={e => setLoginEmail(e.target.value)}
+                                placeholder="your@email.com"
+                                style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    borderBottom: '1px solid rgba(255,255,255,0.18)',
+                                    padding: '8px 0',
+                                    color: '#FFF',
+                                    fontSize: '0.95rem',
+                                    fontWeight: 300,
+                                    letterSpacing: '0.02em',
+                                    outline: 'none',
+                                    width: '100%',
+                                    boxSizing: 'border-box',
+                                }}
+                            />
+                        </div>
+
+                        {/* Password */}
+                        <div style={{ marginBottom: '28px' }}>
+                            <label style={{ fontSize: '0.52rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Password</label>
+                            <input
+                                type="password"
+                                value={loginPassword}
+                                onChange={e => setLoginPassword(e.target.value)}
+                                placeholder="••••••••"
+                                style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    borderBottom: '1px solid rgba(255,255,255,0.18)',
+                                    padding: '8px 0',
+                                    color: '#FFF',
+                                    fontSize: '0.95rem',
+                                    fontWeight: 300,
+                                    letterSpacing: '0.12em',
+                                    outline: 'none',
+                                    width: '100%',
+                                    boxSizing: 'border-box',
+                                }}
+                            />
+                        </div>
+
                         {loginError && (
-                            <p style={{ margin: 0, fontSize: '0.7rem', color: '#FF6B6B', textAlign: 'center' }}>{loginError}</p>
+                            <p style={{ margin: '0 0 16px', fontSize: '0.65rem', color: 'rgba(255,100,100,0.8)', letterSpacing: '0.05em', textAlign: 'center' }}>{loginError}</p>
                         )}
+
+                        {/* CTA button */}
                         <button
                             type="submit"
                             disabled={loginLoading}
                             style={{
-                                background: '#F7D031',
+                                background: loginLoading ? 'rgba(247,208,49,0.5)' : '#F7D031',
                                 color: '#111',
                                 border: 'none',
-                                borderRadius: '6px',
-                                padding: '12px',
-                                fontSize: '0.72rem',
+                                borderRadius: '40px',
+                                padding: '13px 0',
+                                fontSize: '0.65rem',
                                 fontWeight: 800,
-                                letterSpacing: '0.1em',
+                                letterSpacing: '0.16em',
                                 textTransform: 'uppercase',
                                 cursor: loginLoading ? 'not-allowed' : 'pointer',
-                                opacity: loginLoading ? 0.6 : 1,
-                                transition: 'opacity 0.2s',
+                                transition: 'all 0.22s ease',
+                                width: '100%',
+                                marginBottom: '20px',
                             }}
                         >
-                            {loginLoading ? 'Signing in...' : 'Enter Portal →'}
+                            {loginLoading ? 'One moment...' : 'Enter →'}
                         </button>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '2px' }}>
+
+                        {/* Footer links */}
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
                             <span
                                 onClick={navigateToLogin}
-                                style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.35)', cursor: 'pointer', letterSpacing: '0.05em' }}
+                                style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.28)', cursor: 'pointer', letterSpacing: '0.06em' }}
                             >
-                                Forgot password?
+                                Forgot password
                             </span>
-                            <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.2)' }}>·</span>
+                            <span style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.15)' }}>|</span>
                             <span
                                 onClick={navigateToApply}
-                                style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.35)', cursor: 'pointer', letterSpacing: '0.05em' }}
+                                style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.28)', cursor: 'pointer', letterSpacing: '0.06em' }}
                             >
                                 Apply to join
                             </span>
@@ -222,6 +254,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     </form>
                 </div>
             </section>
+
 
             {/* THE MISSION */}
             <section className="section" >
