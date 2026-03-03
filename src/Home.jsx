@@ -126,114 +126,100 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
 
 
 
-            {/* SECTION 1 — DARK LUXURY EVENT GRID */}
-            <section className="dark-grid-section">
-                <div className="luxury-grid">
-                    {/* CARD 1: PROJECT CULTURE */}
-                    <div className="luxury-card">
-                        <div className="luxury-card-image-wrap">
-                            <img src="/project-culture-blueprint.png" alt="Project Culture" className="luxury-card-img" />
-                            <div className="luxury-card-overlay"></div>
-                            <div className="luxury-card-title-wrap">
-                                <span className="luxury-card-label">PARTICIPATION</span>
-                                <h3 className="luxury-card-title">PROJECT CULTURE <br />THE BLUEPRINT.</h3>
-                            </div>
-                        </div>
-                        <div className="luxury-card-meta">
-                            <p className="luxury-card-info">A living schema for community restoration. <br />Private session.</p>
-                            <button onClick={handleApplyClick} className="luxury-btn">GET ACCESS →</button>
-                        </div>
+            {/* THE MISSION */}
+            <section className="section" >
+                <span className="section-label">
+                    <InteractiveText text="01 / WHAT'S THE IDEA HERE?" />
+                </span>
+                <div className="bucket-grid" style={{ marginTop: '60px' }}>
+                    <div className="bucket-card">
+                        <span className="bucket-num">01.</span>
+                        <h3 className="bucket-title">
+                            <InteractiveText text="IRL Events (Sunday Collection)" />
+                        </h3>
+                        <p className="bucket-desc">
+                            We run events twice a month across three different countries, and host exclusive global trips once a month.
+                        </p>
                     </div>
+                    <div className="bucket-card">
+                        <span className="bucket-num">02.</span>
+                        <h3 className="bucket-title">
+                            <InteractiveText text="How it works" />
+                        </h3>
+                        <p className="bucket-desc">
+                            We take a slice of every ticket and global trip and put it right into what we call The IMRSV Project. That capital stays in the city and goes directly back to the local community—simple as that.
+                        </p>
+                    </div>
+                    <div className="bucket-card">
+                        <span className="bucket-num">03.</span>
+                        <h3 className="bucket-title">
+                            <InteractiveText text="The Network" />
+                        </h3>
+                        <p className="bucket-desc">
+                            This isn't just a guest list; it's a curated community. We connect like-minded people in select cities all around the world, sharing first access to global drops, exclusive itineraries, and physical collections.
+                        </p>
+                    </div>
+                </div>
 
-                    {/* CARD 2: COMMUNITY DINNER */}
-                    <div className="luxury-card">
-                        <div className="luxury-card-image-wrap">
-                            <img src="/annual-dinner.png" alt="Community Dinner" className="luxury-card-img" />
-                            <div className="luxury-card-overlay"></div>
-                            <div className="luxury-card-title-wrap">
-                                <span className="luxury-card-label">GATHERING</span>
-                                <h3 className="luxury-card-title">ANNUAL <br />COMMUNITY DINNER.</h3>
-                            </div>
-                        </div>
-                        <div className="luxury-card-meta">
-                            <p className="luxury-card-info">Intimate dialogue. Private courtyard. <br />Limited to 40 residents.</p>
-                            <button onClick={navigateToJournal} className="luxury-btn">LEARN MORE →</button>
-                        </div>
-                    </div>
-
-                    {/* CARD 3: VIDA ELEVADA */}
-                    <div className="luxury-card">
-                        <div className="luxury-card-image-wrap">
-                            <img src="/vida-elevada.png" alt="Vida Elevada" className="luxury-card-img" />
-                            <div className="luxury-card-overlay"></div>
-                            <div className="luxury-card-title-wrap">
-                                <span className="luxury-card-label">IMMERSION</span>
-                                <h3 className="luxury-card-title">VIDA ELEVADA <br />RETREAT 02.</h3>
-                            </div>
-                        </div>
-                        <div className="luxury-card-meta">
-                            <p className="luxury-card-info">High-altitude living. Deep immersion. <br />Buriticá mountainside.</p>
-                            <button onClick={handleApplyClick} className="luxury-btn">APPLY NOW →</button>
-                        </div>
-                    </div>
+                <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'flex-start' }}>
+                    <button className="gauntlet-btn" onClick={handleApplyClick} style={{ padding: '16px 40px', fontSize: '0.8rem', marginTop: 0 }}>
+                        [ APPLY FOR SUNDAY COLLECTION ]
+                    </button>
                 </div>
             </section>
 
-            {/* SECTION 2 — EDITORIAL DROP SEQUENCE */}
-            <section className="editorial-section">
-                <div className="editorial-header">
-                    <span className="section-label" style={{ color: 'rgba(17,17,17,0.4)', marginBottom: '32px' }}>02 / UPCOMING DROPS.</span>
-                    <h2 className="editorial-title">
-                        COLOMBIA DROP <br />
-                        SEQUENCE. <br />
-                        MEDELLÍN, COLOMBIA<span className="editorial-dot">.</span>
-                    </h2>
-                </div>
+            {/* WHERE WE OPERATE */}
+            <section className="section" >
+                <span className="section-label">
+                    <InteractiveText text="02 / UPCOMING DROPS." />
+                </span>
+                <h2 className="concept-title" style={{ maxWidth: '900px' }}>
+                    <InteractiveText text="Colombia Drop Sequence." /> <br />
+                    <InteractiveText text="Medellín, Colombia." />
+                </h2>
 
-                <div className="drop-grid">
-                    {/* DROP 1 */}
-                    <div className="drop-card">
-                        <div>
-                            <p className="drop-card-loc">MEDELLÍN, CO</p>
-                            <h3 className="drop-card-date">MAR. 29</h3>
+                <div
+                    className="no-scrollbar"
+                    style={{
+                        display: 'flex',
+                        gap: '16px',
+                        overflowX: 'auto',
+                        WebkitOverflowScrolling: 'touch',
+                        scrollSnapType: 'x mandatory',
+                        paddingBottom: '16px',
+                        marginBottom: '64px',
+                        paddingRight: '24px',
+                    }}
+                >
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none', minWidth: '280px', flexShrink: 0, scrollSnapAlign: 'start' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>MAR. 29</span>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>PROJECT CULTURE</h3>
                         </div>
-                        <div>
-                            <h4 className="drop-card-title">PROJECT CULTURE</h4>
-                            <div className="drop-card-links">
-                                <span onClick={handleApplyClick} className="drop-text-link">APPLY →</span>
-                                <span onClick={navigateToJournal} className="drop-text-link">LEARN MORE →</span>
-                            </div>
+                        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '20px' }}>
+                            <button onClick={handleApplyClick} className="apply-link-btn" style={{ marginTop: 0 }}>apply →</button>
+                            <button onClick={navigateToJournal} className="apply-link-btn" style={{ marginTop: 0, opacity: 0.7 }}>learn more →</button>
                         </div>
                     </div>
 
-                    {/* DROP 2 */}
-                    <div className="drop-card">
-                        <div>
-                            <p className="drop-card-loc">MEDELLÍN, CO</p>
-                            <h3 className="drop-card-date">APR. 05</h3>
-                        </div>
-                        <div>
-                            <h4 className="drop-card-title">THE ART</h4>
-                            <div className="drop-card-links">
-                                <span onClick={handleApplyClick} className="drop-text-link">APPLY →</span>
-                            </div>
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none', minWidth: '280px', flexShrink: 0, scrollSnapAlign: 'start' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 05</span>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>THE ART</h3>
                         </div>
                     </div>
 
-                    {/* DROP 3 */}
-                    <div className="drop-card">
-                        <div>
-                            <p className="drop-card-loc">BURITICÁ, CO</p>
-                            <h3 className="drop-card-date">APR. 19</h3>
-                        </div>
-                        <div>
-                            <h4 className="drop-card-title">MAYDAY</h4>
-                            <div className="drop-card-links">
-                                <span onClick={handleApplyClick} className="drop-text-link">APPLY →</span>
-                            </div>
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none', minWidth: '280px', flexShrink: 0, scrollSnapAlign: 'start' }}>
+                        <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 19</span>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Buriticá, CO</p>
+                            <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>MAYDAY</h3>
                         </div>
                     </div>
                 </div>
+
             </section>
 
             {/* THE CORE IDEA */}
