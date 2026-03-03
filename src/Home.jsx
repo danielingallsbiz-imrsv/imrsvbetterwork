@@ -147,18 +147,12 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             gap: '0px',
                         }}
                     >
-                        {/* Logo + label */}
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '28px' }}>
-                            <img src="/logo.svg" alt="" style={{ height: '16px', filter: 'invert(1)', opacity: 0.9 }} />
-                            <span style={{
-                                fontSize: '0.52rem',
-                                letterSpacing: '0.22em',
-                                color: 'rgba(255,255,255,0.3)',
-                                textTransform: 'uppercase',
-                            }}>
-                                Private Access
-                            </span>
+                        {/* Logo */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+                            <img src="/logo.svg" alt="" style={{ height: '18px', filter: 'invert(1)', opacity: 0.85 }} />
+                            <div style={{ width: '32px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(247,208,49,0.5), transparent)' }} />
                         </div>
+
 
                         {/* Email */}
                         <div style={{ marginBottom: '22px' }}>
