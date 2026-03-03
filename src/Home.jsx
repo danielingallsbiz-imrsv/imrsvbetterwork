@@ -250,32 +250,32 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <InteractiveText text="Medellín, Colombia." />
                 </h2>
 
-                <div className="bucket-grid" style={{ marginBottom: '80px' }}>
-                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                <div
+                    className="no-scrollbar"
+                    style={{
+                        display: 'flex',
+                        gap: '16px',
+                        overflowX: 'auto',
+                        WebkitOverflowScrolling: 'touch',
+                        scrollSnapType: 'x mandatory',
+                        paddingBottom: '16px',
+                        marginBottom: '64px',
+                        paddingRight: '24px',
+                    }}
+                >
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none', minWidth: '280px', flexShrink: 0, scrollSnapAlign: 'start' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>MAR. 29</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
                             <h3 className="bucket-title" style={{ color: '#F7F5EA', margin: 0 }}>PROJECT CULTURE</h3>
                         </div>
                         <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '20px' }}>
-                            <button
-                                onClick={handleApplyClick}
-                                className="apply-link-btn"
-                                style={{ marginTop: 0 }}
-                            >
-                                apply →
-                            </button>
-                            <button
-                                onClick={navigateToJournal}
-                                className="apply-link-btn"
-                                style={{ marginTop: 0, opacity: 0.7 }}
-                            >
-                                learn more →
-                            </button>
+                            <button onClick={handleApplyClick} className="apply-link-btn" style={{ marginTop: 0 }}>apply →</button>
+                            <button onClick={navigateToJournal} className="apply-link-btn" style={{ marginTop: 0, opacity: 0.7 }}>learn more →</button>
                         </div>
                     </div>
 
-                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none', minWidth: '280px', flexShrink: 0, scrollSnapAlign: 'start' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 05</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Medellín, CO</p>
@@ -283,7 +283,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </div>
                     </div>
 
-                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none' }}>
+                    <div className="bucket-card" style={{ background: '#1A1A1A', color: '#F7F5EA', border: 'none', minWidth: '280px', flexShrink: 0, scrollSnapAlign: 'start' }}>
                         <span className="bucket-num" style={{ color: '#F7D031' }}>APR. 19</span>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <p style={{ color: 'rgba(247, 245, 234, 0.4)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>Buriticá, CO</p>
@@ -291,6 +291,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         </div>
                     </div>
                 </div>
+
             </section>
 
             {/* THE CORE IDEA */}
