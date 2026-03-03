@@ -71,6 +71,8 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         full_name: '', profession: '', bio: '',
         photos: ['', '', '']
     });
+    const [selectedMember, setSelectedMember] = useState(null);
+    const [referCopied, setReferCopied] = useState(false);
 
     // Welcome Intro State
     const [showWelcomeIntro, setShowWelcomeIntro] = useState(true);
@@ -181,7 +183,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         const photosToSave = updatedPhotos.filter(p => typeof p === 'string' && p.trim() !== '');
 
         await supabase.from('applications')
-            .update({ full_name: profileData.full_name, profession: profileData.profession, bio: profileData.bio, photos: photosToSave })
+            .update({ name: profileData.full_name, full_name: profileData.full_name, profession: profileData.profession, bio: profileData.bio, photos: photosToSave })
             .ilike('email', user.email.trim());
 
         setProfileData(prev => ({ ...prev, photos: updatedPhotos }));
@@ -331,11 +333,14 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 </button>
                                 <button onClick={() => {
                                     const refCode = user?.id?.slice(0, 8).toUpperCase() || 'INVITE';
-                                    const bodyText = `Use my private referral code to skip the application queue for The Sunday Collection: ${refCode}%0D%0A%0D%0AApply here: https://theimrsvproject.org/apply`;
-                                    window.open(`mailto:?subject=Private Invite to Sunday Collection&body=${bodyText}`);
+                                    const referLink = `https://theimrsvproject.org/apply?ref=${refCode}`;
+                                    navigator.clipboard.writeText(referLink).then(() => {
+                                        setReferCopied(true);
+                                        setTimeout(() => setReferCopied(false), 2500);
+                                    });
                                 }} className="action-pill-btn" onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.03)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
-                                    REFER A FRIEND
+                                    {referCopied ? 'LINK COPIED!' : 'REFER A FRIEND'}
                                 </button>
                             </div>
 
@@ -366,7 +371,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v12M6 12h12" /></svg>
                                     </div>
                                     <p style={{ fontSize: '2.5rem', fontWeight: 300, color: '#FFF', margin: '0 0 5px 0', letterSpacing: '-0.02em' }}>${(creditData.credit_balance ?? 0).toFixed(2)}</p>
-                                    <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', margin: 0, letterSpacing: '0.05em' }}>of ${(creditData.contribution_amount ?? 0).toFixed(2)} annual</p>
+                                    <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.25)', margin: 0, letterSpacing: '0.05em' }}>of ${(creditData.contribution_amount ?? 0).toFixed(2)} annual</p>
                                 </div>
 
                                 <div>
@@ -497,31 +502,38 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     <div
                                         key={member.id}
                                         className="memberCard"
-                                        onClick={() => console.log('Navigate to', member.id)}
+                                        onClick={() => setSelectedMember(member)}
+                                        style={{ cursor: 'pointer' }}
                                     >
                                         <div className="memberCardBody">
                                             <div className="memberTop">
-                                                {/* Avatar Placeholder */}
-                                                <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.2rem', fontWeight: 800, flexShrink: 0 }}>
-                                                    {member.name ? member.name.charAt(0).toUpperCase() : '?'}
+                                                {/* Avatar */}
+                                                <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.2rem', fontWeight: 800, flexShrink: 0, overflow: 'hidden' }}>
+                                                    {member.photos?.[0] ? (
+                                                        <img src={member.photos[0]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    ) : (
+                                                        member.name ? member.name.charAt(0).toUpperCase() : '?'
+                                                    )}
                                                 </div>
                                                 <div>
                                                     <h3 style={{ fontSize: '1.1rem', margin: '0 0 2px 0', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em', fontFamily: 'serif' }}>
-                                                        {member.name}
+                                                        {member.name || member.full_name}
                                                     </h3>
                                                     <div className="memberMeta">
                                                         <span style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 800 }}>
-                                                            ID {member.id?.slice(0, 8).toUpperCase()}
-                                                        </span>
-                                                        <span style={{ opacity: 0.2 }}>|</span>
-                                                        <span style={{ fontSize: '0.6rem', opacity: 0.5, letterSpacing: '0.05em' }}>
-                                                            TIER 01
+                                                            {member.profession || 'MEMBER'}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="memberBottom">
+                                            {member.bio && (
+                                                <p style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.6)', margin: '10px 0 0 0', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                                    {member.bio}
+                                                </p>
+                                            )}
+
+                                            <div className="memberBottom" style={{ marginTop: '12px' }}>
                                                 <span style={{ fontSize: '0.6rem', opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Joined {new Date(member.created_at || member.date).toLocaleDateString()}</span>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(46, 204, 113, 0.1)', padding: '4px 8px', borderRadius: '4px' }}>
                                                     <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2ECC71', boxShadow: '0 0 8px rgba(46, 204, 113, 0.6)' }} />
@@ -871,6 +883,69 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 </div>
                             </div>
                         </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* MEMBER PROFILE MODAL */}
+            <AnimatePresence>
+                {selectedMember && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedMember(null)}
+                        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 9000, display: 'flex', alignItems: 'flex-end' }}
+                    >
+                        <motion.div
+                            initial={{ y: '100%' }}
+                            animate={{ y: 0 }}
+                            exit={{ y: '100%' }}
+                            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+                            onClick={e => e.stopPropagation()}
+                            style={{ width: '100%', maxHeight: '85vh', overflowY: 'auto', backgroundColor: '#F7F5EA', padding: '30px 24px 60px', borderRadius: '16px 16px 0 0' }}
+                        >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                                <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.4, textTransform: 'uppercase' }}>MEMBER PROFILE</span>
+                                <button onClick={() => setSelectedMember(null)} style={{ background: 'none', border: 'none', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', color: '#1A1A1A', cursor: 'pointer', opacity: 0.5, padding: 0 }}>[ CLOSE ]</button>
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', marginBottom: '30px' }}>
+                                <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.8rem', fontWeight: 800, flexShrink: 0, overflow: 'hidden' }}>
+                                    {selectedMember.photos?.[0] ? (
+                                        <img src={selectedMember.photos[0]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    ) : (
+                                        (selectedMember.name || selectedMember.full_name || '?').charAt(0).toUpperCase()
+                                    )}
+                                </div>
+                                <div>
+                                    <h2 style={{ margin: '0 0 4px 0', fontSize: '1.5rem', fontWeight: 800, color: '#1A1A1A', fontFamily: 'serif' }}>
+                                        {selectedMember.name || selectedMember.full_name || 'Member'}
+                                    </h2>
+                                    {selectedMember.profession && (
+                                        <span style={{ fontSize: '0.65rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{selectedMember.profession}</span>
+                                    )}
+                                </div>
+                            </div>
+
+                            {selectedMember.bio && (
+                                <div style={{ marginBottom: '30px' }}>
+                                    <h4 style={{ fontSize: '0.6rem', letterSpacing: '0.15em', opacity: 0.4, marginBottom: '8px', fontWeight: 700 }}>ABOUT</h4>
+                                    <p style={{ fontSize: '0.9rem', color: 'rgba(26,26,26,0.8)', lineHeight: 1.7, margin: 0 }}>{selectedMember.bio}</p>
+                                </div>
+                            )}
+
+                            {selectedMember.photos?.filter(p => p).length > 1 && (
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '30px' }}>
+                                    {selectedMember.photos.filter(p => p).map((photo, i) => (
+                                        <img key={i} src={photo} alt="" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: '4px' }} />
+                                    ))}
+                                </div>
+                            )}
+
+                            <div style={{ fontSize: '0.6rem', opacity: 0.3, letterSpacing: '0.1em' }}>
+                                MEMBER ID: {selectedMember.id?.slice(0, 8).toUpperCase()}
+                            </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
