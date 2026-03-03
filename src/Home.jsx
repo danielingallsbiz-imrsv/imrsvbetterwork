@@ -89,7 +89,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     </span>
                 </div>
                 <div className="nav-links">
-                    <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>
+                    <span onClick={navigateToJournal} style={{ cursor: 'pointer', opacity: 0.8, letterSpacing: '0.15em' }}>
                         <InteractiveText text="Journal." />
                     </span>
                 </div>
@@ -102,8 +102,9 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
                     className="hero-content"
+                    style={{ marginBottom: '120px' }}
                 >
-                    <h1 className="hero-title">
+                    <h1 className="hero-title" style={{ fontWeight: 700, lineHeight: 0.95, textShadow: '0 2px 24px rgba(0,0,0,0.18)' }}>
                         <InteractiveText text="Participation" /><br />
                         <InteractiveText text="that restores." />
                     </h1>
@@ -119,28 +120,35 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     style={{ pointerEvents: 'none', objectFit: 'cover' }}
                 />
 
+                {/* Soft overlay for text contrast */}
+                <div style={{
+                    position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.55))',
+                }} />
+
                 {/* LOGIN CARD */}
                 <div style={{
                     position: 'absolute',
-                    top: '50%', left: '50%',
+                    top: '44%', left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '100%', maxWidth: '280px',
+                    width: '100%', maxWidth: '420px',
                     padding: '0 24px',
                     zIndex: 10,
                 }}>
                     <form onSubmit={handleHeroLogin} style={{
-                        background: 'rgba(6,6,6,0.42)',
-                        backdropFilter: 'blur(24px)',
-                        WebkitBackdropFilter: 'blur(24px)',
+                        background: 'rgba(18,18,18,0.55)',
+                        backdropFilter: 'blur(30px)',
+                        WebkitBackdropFilter: 'blur(30px)',
                         border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '4px',
-                        padding: '28px 24px 22px',
+                        borderRadius: '20px',
+                        padding: '48px',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '18px',
+                        gap: '0',
+                        boxShadow: '0 40px 100px rgba(0,0,0,0.5)',
                     }}>
                         {/* Logo */}
-                        <img src="/logo.svg" alt="imrsv" style={{ height: '15px', filter: 'invert(1)', opacity: 0.25, alignSelf: 'center', marginBottom: '6px' }} />
+                        <img src="/logo.svg" alt="imrsv" style={{ height: '15px', filter: 'invert(1)', opacity: 0.25, alignSelf: 'center', marginBottom: '32px' }} />
 
                         {/* Email */}
                         <input
@@ -148,13 +156,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             value={loginEmail}
                             onChange={e => setLoginEmail(e.target.value)}
                             placeholder="Email"
-                            style={{
-                                background: 'transparent', border: 'none',
-                                borderBottom: '1px solid rgba(255,255,255,0.2)',
-                                padding: '8px 0', color: '#FFF',
-                                fontSize: '0.88rem', fontWeight: 300,
-                                outline: 'none', width: '100%', boxSizing: 'border-box',
-                            }}
+                            className="hero-login-input"
                         />
 
                         {/* Password */}
@@ -163,31 +165,18 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                             value={loginPassword}
                             onChange={e => setLoginPassword(e.target.value)}
                             placeholder="Password"
-                            style={{
-                                background: 'transparent', border: 'none',
-                                borderBottom: '1px solid rgba(255,255,255,0.2)',
-                                padding: '8px 0', color: '#FFF',
-                                fontSize: '0.88rem', fontWeight: 300,
-                                outline: 'none', width: '100%', boxSizing: 'border-box',
-                            }}
+                            className="hero-login-input"
                         />
 
-                        {loginError && <p style={{ margin: 0, fontSize: '0.65rem', color: 'rgba(255,90,90,0.8)', textAlign: 'center' }}>{loginError}</p>}
+                        {loginError && <p style={{ margin: '0 0 16px', fontSize: '0.65rem', color: 'rgba(255,90,90,0.8)', textAlign: 'center' }}>{loginError}</p>}
 
                         {/* Button */}
-                        <button type="submit" disabled={loginLoading} style={{
-                            background: '#F7D031', color: '#111', border: 'none',
-                            borderRadius: '30px', padding: '12px 0',
-                            fontSize: '0.63rem', fontWeight: 800, letterSpacing: '0.14em',
-                            textTransform: 'uppercase', cursor: 'pointer',
-                            transition: 'opacity 0.2s', opacity: loginLoading ? 0.5 : 1,
-                            marginTop: '4px',
-                        }}>
+                        <button type="submit" disabled={loginLoading} className="hero-login-btn">
                             {loginLoading ? '...' : 'Enter'}
                         </button>
 
                         {/* Links */}
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '14px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', marginTop: '20px' }}>
                             <span onClick={navigateToLogin} style={{ fontSize: '0.57rem', color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>Forgot password</span>
                             <span style={{ color: 'rgba(255,255,255,0.12)', fontSize: '0.57rem' }}>·</span>
                             <span onClick={navigateToApply} style={{ fontSize: '0.57rem', color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>Apply</span>

@@ -124,7 +124,7 @@ svg {
     width: 100%;
     height: 100%;
     background: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.12;
+    opacity: 0.07;
     z-index: 1;
     pointer-events: none;
     mix-blend-mode: overlay;
@@ -193,11 +193,61 @@ svg {
     font-size: 0.9rem;
     letter-spacing: 0.15em;
     color: rgba(247, 245, 234, 0.7);
-    /* Muted version of title color */
     font-weight: 500;
     text-transform: lowercase;
     margin-top: 15px;
     z-index: 10;
+}
+
+/* Hero Login Card — inputs */
+.hero-login-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 12px;
+    margin-bottom: 32px;
+    color: #FFF;
+    font-size: 0.92rem;
+    font-weight: 300;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.hero-login-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-login-input:focus {
+    border-color: #D4AF37;
+}
+
+/* Hero Login Card — button */
+.hero-login-btn {
+    background: linear-gradient(135deg, #C6A74B, #F2D272, #C6A74B);
+    color: #111;
+    border: none;
+    border-radius: 999px;
+    height: 56px;
+    width: 100%;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.35);
+}
+
+.hero-login-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* CONTENT SECTIONS */
