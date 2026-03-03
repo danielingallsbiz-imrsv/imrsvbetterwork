@@ -570,54 +570,99 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             <span style={{ fontSize: '0.65rem', color: 'rgba(26,26,26,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>MEMBER PROFILE</span>
                             <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '10px 0 40px', color: '#1A1A1A' }}>EDIT PROFILE.</h2>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '35px' }}>
-                                {/* Full Name */}
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
-                                    <input value={profileData.full_name} onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))} placeholder="Your full name" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
-                                </div>
-                                {/* Profession */}
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Profession *</label>
-                                    <input value={profileData.profession} onChange={e => setProfileData(p => ({ ...p, profession: e.target.value }))} placeholder="e.g. Photographer, Architect" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
-                                </div>
-                                {/* Bio */}
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Bio</label>
-                                        <span style={{ fontSize: '0.65rem', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.4)' }}>{bioWordCount} / 120 words</span>
+                            {/* PROFILE PICTURE — tap to upload */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                                <label style={{ cursor: 'pointer', position: 'relative' }}>
+                                    <div style={{
+                                        width: '100px', height: '100px', borderRadius: '50%',
+                                        background: '#1A1A1A',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        border: '3px solid rgba(247,208,49,0.4)',
+                                        transition: 'border-color 0.2s',
+                                    }}>
+                                        {profileData.photos[0] ? (
+                                            <img
+                                                src={typeof profileData.photos[0] === 'string' ? profileData.photos[0] : URL.createObjectURL(profileData.photos[0])}
+                                                alt="Profile"
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F7D031" strokeWidth="1.5">
+                                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                                <circle cx="12" cy="13" r="4" />
+                                            </svg>
+                                        )}
                                     </div>
-                                    <textarea value={profileData.bio} onChange={e => setProfileData(p => ({ ...p, bio: e.target.value }))} placeholder="Tell the collective who you are..." rows={5} style={{ background: 'transparent', border: 'none', borderBottom: `1px solid ${bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.2)'}`, padding: '10px 0', fontSize: '1rem', outline: 'none', resize: 'none', lineHeight: 1.7 }} />
-                                    {bioOverLimit && <p style={{ fontSize: '0.65rem', color: '#FF453A', margin: 0 }}>Bio must be under 120 words.</p>}
-                                </div>
-                                {/* Photos */}
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Photos (3 Images)</label>
-                                    {[0, 1, 2].map(i => (
-                                        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                            <span style={{ fontSize: '0.6rem', opacity: 0.4, letterSpacing: '0.05em' }}>PHOTO {i + 1}</span>
-                                            <input type="file" accept="image/*" onChange={e => {
-                                                const file = e.target.files[0];
-                                                if (file) {
-                                                    const p = [...profileData.photos];
-                                                    p[i] = file;
-                                                    setProfileData(prev => ({ ...prev, photos: p }));
-                                                }
-                                            }} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.15)', padding: '8px 0', fontSize: '0.9rem', outline: 'none', color: '#1A1A1A', maxWidth: '300px' }} />
-                                            {profileData.photos[i] && (
-                                                <img src={typeof profileData.photos[i] === 'string' ? profileData.photos[i] : URL.createObjectURL(profileData.photos[i])} alt={`Preview ${i + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginTop: '4px' }} onError={e => e.target.style.display = 'none'} />
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                                <button
-                                    onClick={saveProfile}
-                                    disabled={profileSaving || bioOverLimit || !profileData.profession.trim()}
-                                    style={{ background: profileSaved ? '#2ECC71' : '#1A1A1A', color: '#FFF', border: 'none', padding: '18px', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', cursor: 'pointer', borderRadius: '4px', opacity: (profileSaving || bioOverLimit || !profileData.profession.trim()) ? 0.4 : 1, transition: 'background 0.3s' }}
-                                >
-                                    {profileSaved ? '[ SAVED ✓ ]' : profileSaving ? '[ SAVING... ]' : '[ SAVE PROFILE ]'}
-                                </button>
+                                    <div style={{
+                                        position: 'absolute', bottom: 0, right: 0,
+                                        width: '28px', height: '28px', borderRadius: '50%',
+                                        background: '#F7D031', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    }}>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="2.5">
+                                            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                    </div>
+                                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={e => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const p = [...profileData.photos];
+                                            p[0] = file;
+                                            setProfileData(prev => ({ ...prev, photos: p }));
+                                        }
+                                    }} />
+                                </label>
+                                <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', opacity: 0.4, textTransform: 'uppercase' }}>
+                                    Tap to change photo
+                                </span>
                             </div>
+
+                            {/* Full Name */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
+                                <input value={profileData.full_name} onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))} placeholder="Your full name" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
+                            </div>
+                            {/* Profession */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Profession *</label>
+                                <input value={profileData.profession} onChange={e => setProfileData(p => ({ ...p, profession: e.target.value }))} placeholder="e.g. Photographer, Architect" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
+                            </div>
+                            {/* Bio */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Bio</label>
+                                    <span style={{ fontSize: '0.65rem', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.4)' }}>{bioWordCount} / 120 words</span>
+                                </div>
+                                <textarea value={profileData.bio} onChange={e => setProfileData(p => ({ ...p, bio: e.target.value }))} placeholder="Tell the collective who you are..." rows={5} style={{ background: 'transparent', border: 'none', borderBottom: `1px solid ${bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.2)'}`, padding: '10px 0', fontSize: '1rem', outline: 'none', resize: 'none', lineHeight: 1.7 }} />
+                                {bioOverLimit && <p style={{ fontSize: '0.65rem', color: '#FF453A', margin: 0 }}>Bio must be under 120 words.</p>}
+                            </div>
+                            {/* Additional Photos (2 + 3) */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Additional Photos</label>
+                                {[1, 2].map(i => (
+                                    <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                        <span style={{ fontSize: '0.6rem', opacity: 0.4, letterSpacing: '0.05em' }}>PHOTO {i + 1}</span>
+                                        <input type="file" accept="image/*" onChange={e => {
+                                            const file = e.target.files[0];
+                                            if (file) {
+                                                const p = [...profileData.photos];
+                                                p[i] = file;
+                                                setProfileData(prev => ({ ...prev, photos: p }));
+                                            }
+                                        }} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.15)', padding: '8px 0', fontSize: '0.9rem', outline: 'none', color: '#1A1A1A', maxWidth: '300px' }} />
+                                        {profileData.photos[i] && (
+                                            <img src={typeof profileData.photos[i] === 'string' ? profileData.photos[i] : URL.createObjectURL(profileData.photos[i])} alt={`Preview ${i + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginTop: '4px' }} onError={e => e.target.style.display = 'none'} />
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                            <button
+                                onClick={saveProfile}
+                                disabled={profileSaving || bioOverLimit || !profileData.profession.trim()}
+                                style={{ background: profileSaved ? '#2ECC71' : '#1A1A1A', color: '#FFF', border: 'none', padding: '18px', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', cursor: 'pointer', borderRadius: '4px', opacity: (profileSaving || bioOverLimit || !profileData.profession.trim()) ? 0.4 : 1, transition: 'background 0.3s' }}
+                            >
+                                {profileSaved ? '[ SAVED ✓ ]' : profileSaving ? '[ SAVING... ]' : '[ SAVE PROFILE ]'}
+                            </button>
                         </div>
                     </motion.div>
                 )}
@@ -635,6 +680,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             top: 0,
                             left: 0,
                             width: '100%',
+
                             height: '100%',
                             backgroundColor: 'rgba(247, 245, 234, 0.98)',
                             zIndex: 4000,
@@ -731,10 +777,10 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </div>
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence >
 
             {/* TRIPS MODAL */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {showTripsModal && (
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -885,9 +931,9 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </div>
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence >
             {/* MEMBER PROFILE MODAL */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {selectedMember && (
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -948,8 +994,8 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                         </motion.div>
                     </motion.div>
                 )}
-            </AnimatePresence>
-        </motion.div>
+            </AnimatePresence >
+        </motion.div >
     );
 };
 

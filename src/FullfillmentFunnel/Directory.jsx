@@ -16,10 +16,8 @@ const CATEGORIES = [
 
 const CITIES = [
     { slug: 'medellin', label: 'Medellín' },
-    // Future cities go here
 ];
 
-// Curated one-liner overrides — keep descriptions tight and premium
 const DESCRIPTION_OVERRIDES = {
     'La Cruda': 'Industrial exterior. Neon-forward cocktail lab inside.',
     'Mombasa': 'Password-entry cocktail room with afro-house energy.',
@@ -27,8 +25,20 @@ const DESCRIPTION_OVERRIDES = {
     'La Oculta': "Provenza's unmarked-door speakeasy for curated nights.",
 };
 
+// Fallback photos by category
+const CATEGORY_FALLBACKS = {
+    speakeasy: 'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80',
+    techno: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80',
+    music: 'https://images.unsplash.com/photo-1571266752414-d6e4a0f04839?w=800&q=80',
+    restaurants: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
+    workspaces: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80',
+    vintage: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80',
+    experiences: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
+};
+
 const LocationCard = ({ location }) => {
     const [expanded, setExpanded] = useState(false);
+    const [imgLoaded, setImgLoaded] = useState(false);
 
     const handleDirections = (e) => {
         e.stopPropagation();
@@ -44,109 +54,181 @@ const LocationCard = ({ location }) => {
 
     const description = DESCRIPTION_OVERRIDES[location.name] || location.what_it_is;
 
+    // Find the best photo URL
+    const photoUrl = location.photo_url
+        || CATEGORY_FALLBACKS[location.category?.toLowerCase()]
+        || CATEGORY_FALLBACKS.speakeasy;
+
     return (
-        <div
+        <motion.div
+            layout
             onClick={() => setExpanded(!expanded)}
             style={{
-                border: '1px solid rgba(0,0,0,0.08)',
                 background: '#FFF',
-                padding: '20px',
-                marginBottom: '12px',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                marginBottom: '16px',
                 cursor: 'pointer',
-                transition: 'box-shadow 0.22s ease-out',
                 boxShadow: expanded
-                    ? '0 8px 32px rgba(0,0,0,0.10)'
-                    : '0 1px 4px rgba(0,0,0,0.04)',
-                borderRadius: '4px',
+                    ? '0 12px 40px rgba(0,0,0,0.14)'
+                    : '0 2px 8px rgba(0,0,0,0.06)',
+                transition: 'box-shadow 0.25s ease',
+                border: '1px solid rgba(0,0,0,0.06)',
             }}
         >
-            {/* Card Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div style={{ flex: 1, paddingRight: '16px' }}>
-                    {/* NAME */}
-                    <h3 style={{ margin: '0 0 8px 0', fontSize: '1.15rem', fontWeight: 900, color: '#1A1A1A', lineHeight: 1.1 }}>
+            {/* PHOTO — Airbnb inspired with IMRSV dark editorial twist */}
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#1A1A1A', overflow: 'hidden' }}>
+                <img
+                    src={photoUrl}
+                    alt={location.name}
+                    onLoad={() => setImgLoaded(true)}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                        opacity: imgLoaded ? 1 : 0,
+                        transition: 'opacity 0.4s ease',
+                        filter: 'brightness(0.82) contrast(1.08)',
+                    }}
+                />
+                {/* Gold grain overlay for brand texture */}
+                <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.72) 100%)',
+                    pointerEvents: 'none',
+                }} />
+
+                {/* Name + neighborhood overlay — bottom left */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '16px', right: 0 }}>
+                    <h3 style={{
+                        margin: 0,
+                        fontSize: '1.15rem',
+                        fontWeight: 900,
+                        color: '#FFF',
+                        letterSpacing: '-0.01em',
+                        lineHeight: 1.1,
+                        textShadow: '0 1px 4px rgba(0,0,0,0.4)',
+                    }}>
                         {location.name}
                     </h3>
-                    {/* NEIGHBORHOOD — subtle metadata */}
                     {neighborhood && (
                         <span style={{
-                            display: 'block',
-                            fontSize: '12px',
+                            fontSize: '11px',
                             color: '#F7D031',
                             fontWeight: 700,
                             letterSpacing: '0.12em',
                             textTransform: 'uppercase',
-                            opacity: 0.7,
-                            marginBottom: '6px',
+                            opacity: 0.9,
+                            marginTop: '3px',
+                            display: 'block',
                         }}>
                             {neighborhood}
                         </span>
                     )}
-                    {/* ONE-LINE DESCRIPTION */}
-                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(26,26,26,0.65)', lineHeight: 1.5 }}>
-                        {description}
-                    </p>
                 </div>
-                {/* EXPAND TOGGLE */}
-                <motion.span
+
+                {/* Expand indicator — top right */}
+                <motion.div
                     animate={{ rotate: expanded ? 45 : 0 }}
-                    transition={{ duration: 0.22, ease: 'easeOut' }}
-                    style={{ fontSize: '1.3rem', color: '#F7D031', fontWeight: 300, lineHeight: 1, flexShrink: 0, marginTop: '2px' }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                    style={{
+                        position: 'absolute', top: '12px', right: '12px',
+                        width: '28px', height: '28px', borderRadius: '50%',
+                        background: 'rgba(0,0,0,0.45)',
+                        backdropFilter: 'blur(8px)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: '#F7D031',
+                        fontSize: '1.1rem',
+                        fontWeight: 300,
+                        lineHeight: 1,
+                    }}
                 >
                     +
-                </motion.span>
+                </motion.div>
+
+                {/* Price hint badge */}
+                {location.price_hint && (
+                    <div style={{
+                        position: 'absolute', top: '12px', left: '12px',
+                        background: 'rgba(0,0,0,0.45)',
+                        backdropFilter: 'blur(8px)',
+                        borderRadius: '20px',
+                        padding: '3px 10px',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        color: '#F7D031',
+                        letterSpacing: '0.05em',
+                    }}>
+                        {location.price_hint}
+                    </div>
+                )}
+            </div>
+
+            {/* DESCRIPTION BAR below photo */}
+            <div style={{ padding: '14px 16px 16px' }}>
+                <p style={{
+                    margin: 0,
+                    fontSize: '0.83rem',
+                    color: 'rgba(26,26,26,0.65)',
+                    lineHeight: 1.55,
+                }}>
+                    {description}
+                </p>
             </div>
 
             {/* EXPANDED DETAILS */}
             <AnimatePresence>
                 {expanded && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                        animate={{ height: 'auto', opacity: 1, marginTop: '20px' }}
-                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.22, ease: 'easeOut' }}
                         style={{ overflow: 'hidden' }}
                     >
-                        <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '18px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                        <div style={{
+                            borderTop: '1px solid rgba(0,0,0,0.06)',
+                            padding: '16px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '14px',
+                        }}>
+                            {/* Hours + Address */}
+                            {((location.hours_text && location.hours_text !== 'TBD') ||
+                                (location.address_text && location.address_text !== 'TBD')) && (
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                                        {location.hours_text && location.hours_text !== 'TBD' && (
+                                            <div>
+                                                <h4 style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.12em', margin: '0 0 4px 0', textTransform: 'uppercase', fontWeight: 700 }}>Hours</h4>
+                                                <p style={{ fontSize: '0.8rem', color: 'rgba(26,26,26,0.65)', margin: 0, lineHeight: 1.5 }}>{location.hours_text}</p>
+                                            </div>
+                                        )}
+                                        {location.address_text && location.address_text !== 'TBD' && (
+                                            <div>
+                                                <h4 style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.12em', margin: '0 0 4px 0', textTransform: 'uppercase', fontWeight: 700 }}>Address</h4>
+                                                <p style={{ fontSize: '0.8rem', color: 'rgba(26,26,26,0.65)', margin: 0, lineHeight: 1.5 }}>{location.address_text}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
 
-                            {(location.hours_text && location.hours_text !== 'TBD') || (location.address_text && location.address_text !== 'TBD') ? (
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                                    {location.hours_text && location.hours_text !== 'TBD' && (
-                                        <div>
-                                            <h4 style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.12em', margin: '0 0 5px 0', textTransform: 'uppercase', fontWeight: 700 }}>Hours</h4>
-                                            <p style={{ fontSize: '0.82rem', color: 'rgba(26,26,26,0.65)', margin: 0, lineHeight: 1.5 }}>{location.hours_text}</p>
-                                        </div>
-                                    )}
-                                    {location.address_text && location.address_text !== 'TBD' && (
-                                        <div>
-                                            <h4 style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.12em', margin: '0 0 5px 0', textTransform: 'uppercase', fontWeight: 700 }}>Address</h4>
-                                            <p style={{ fontSize: '0.82rem', color: 'rgba(26,26,26,0.65)', margin: 0, lineHeight: 1.5 }}>{location.address_text}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : null}
-
-                            {location.price_hint && (
-                                <div style={{ fontSize: '0.75rem', color: 'rgba(26,26,26,0.4)', letterSpacing: '0.05em' }}>
-                                    {location.price_hint}
-                                </div>
-                            )}
-
+                            {/* Directions button */}
                             <button
                                 onClick={handleDirections}
                                 style={{
-                                    display: 'inline-block',
                                     alignSelf: 'flex-start',
                                     background: '#1A1A1A',
                                     color: '#F7D031',
                                     border: 'none',
-                                    padding: '10px 18px',
+                                    padding: '10px 20px',
                                     fontSize: '0.65rem',
                                     fontWeight: 800,
-                                    letterSpacing: '0.08em',
+                                    letterSpacing: '0.1em',
                                     cursor: 'pointer',
                                     borderRadius: '24px',
                                     textTransform: 'uppercase',
+                                    transition: 'background 0.18s',
                                 }}
                             >
                                 Get Directions
@@ -155,7 +237,7 @@ const LocationCard = ({ location }) => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 };
 
@@ -195,11 +277,9 @@ export default function Directory({ members = [], onBack, onLogout }) {
                 setLoading(false);
             }
         };
-
         fetchLocations();
     }, [citySlug, activeCategory]);
 
-    // Close city dropdown on outside click
     useEffect(() => {
         const handler = (e) => {
             if (cityDropdownRef.current && !cityDropdownRef.current.contains(e.target)) {
@@ -241,24 +321,17 @@ export default function Directory({ members = [], onBack, onLogout }) {
                 <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
                     {/* HEADER */}
-                    <div style={{ marginBottom: '28px' }}>
+                    <div style={{ marginBottom: '24px' }}>
                         {/* City Switcher */}
-                        <div ref={cityDropdownRef} style={{ position: 'relative', display: 'inline-block', marginBottom: '16px' }}>
+                        <div ref={cityDropdownRef} style={{ position: 'relative', display: 'inline-block', marginBottom: '14px' }}>
                             <button
                                 onClick={() => setShowCitySwitcher(s => !s)}
                                 style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    padding: 0,
+                                    background: 'none', border: 'none', padding: 0,
                                     cursor: CITIES.length > 1 ? 'pointer' : 'default',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    fontSize: '0.6rem',
-                                    letterSpacing: '0.18em',
-                                    fontWeight: 700,
-                                    color: 'rgba(26,26,26,0.5)',
-                                    textTransform: 'uppercase',
+                                    display: 'flex', alignItems: 'center', gap: '5px',
+                                    fontSize: '0.6rem', letterSpacing: '0.18em', fontWeight: 700,
+                                    color: 'rgba(26,26,26,0.45)', textTransform: 'uppercase',
                                 }}
                             >
                                 {currentCity.label}
@@ -272,16 +345,10 @@ export default function Directory({ members = [], onBack, onLogout }) {
                                         exit={{ opacity: 0, y: -6 }}
                                         transition={{ duration: 0.15 }}
                                         style={{
-                                            position: 'absolute',
-                                            top: '100%',
-                                            left: 0,
-                                            background: '#FFF',
-                                            border: '1px solid rgba(0,0,0,0.1)',
-                                            borderRadius: '6px',
-                                            padding: '8px 0',
-                                            minWidth: '140px',
-                                            zIndex: 100,
-                                            boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
+                                            position: 'absolute', top: '100%', left: 0,
+                                            background: '#FFF', border: '1px solid rgba(0,0,0,0.1)',
+                                            borderRadius: '6px', padding: '8px 0', minWidth: '140px',
+                                            zIndex: 100, boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
                                         }}
                                     >
                                         {CITIES.map(city => (
@@ -289,11 +356,8 @@ export default function Directory({ members = [], onBack, onLogout }) {
                                                 key={city.slug}
                                                 onClick={() => { navigate(`/directory/${city.slug}`); setShowCitySwitcher(false); }}
                                                 style={{
-                                                    padding: '10px 16px',
-                                                    fontSize: '0.75rem',
-                                                    fontWeight: 700,
-                                                    cursor: 'pointer',
-                                                    color: city.slug === citySlug ? '#F7D031' : '#1A1A1A',
+                                                    padding: '10px 16px', fontSize: '0.75rem', fontWeight: 700,
+                                                    cursor: 'pointer', color: city.slug === citySlug ? '#F7D031' : '#1A1A1A',
                                                     letterSpacing: '0.05em',
                                                 }}
                                             >
@@ -308,7 +372,7 @@ export default function Directory({ members = [], onBack, onLogout }) {
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '0 0 8px 0', letterSpacing: '-0.02em', color: '#1A1A1A', lineHeight: 1, textTransform: 'capitalize' }}>
                             {currentCity.label} House Guide.
                         </h2>
-                        <p style={{ margin: 0, fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.35, textTransform: 'uppercase', fontVariant: 'small-caps' }}>
+                        <p style={{ margin: 0, fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.35, textTransform: 'uppercase' }}>
                             A curated, living directory for members only.
                         </p>
                     </div>
@@ -317,13 +381,9 @@ export default function Directory({ members = [], onBack, onLogout }) {
                     <div
                         className="no-scrollbar"
                         style={{
-                            display: 'flex',
-                            gap: '8px',
-                            overflowX: 'auto',
-                            paddingBottom: '18px',
-                            marginBottom: '12px',
-                            WebkitOverflowScrolling: 'touch',
-                            scrollSnapType: 'x mandatory',
+                            display: 'flex', gap: '8px', overflowX: 'auto',
+                            paddingBottom: '18px', marginBottom: '8px',
+                            WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory',
                         }}
                     >
                         {CATEGORIES.map(cat => {
@@ -338,16 +398,12 @@ export default function Directory({ members = [], onBack, onLogout }) {
                                         border: isActive ? '1px solid #1A1A1A' : '1px solid rgba(0,0,0,0.15)',
                                         borderRadius: '30px',
                                         padding: '6px 14px',
-                                        fontSize: '0.72rem',
-                                        fontWeight: 700,
-                                        letterSpacing: '0.05em',
-                                        whiteSpace: 'nowrap',
-                                        cursor: 'pointer',
+                                        fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.05em',
+                                        whiteSpace: 'nowrap', cursor: 'pointer',
                                         transition: 'all 0.18s ease',
                                         opacity: isActive ? 1 : 0.85,
                                         boxShadow: isActive ? 'inset 0 1px 3px rgba(0,0,0,0.3)' : 'none',
-                                        scrollSnapAlign: 'start',
-                                        flexShrink: 0,
+                                        scrollSnapAlign: 'start', flexShrink: 0,
                                     }}
                                 >
                                     {cat.label}
