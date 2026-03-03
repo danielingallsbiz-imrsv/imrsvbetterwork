@@ -119,135 +119,83 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     style={{ pointerEvents: 'none', objectFit: 'cover' }}
                 />
 
-                {/* CENTERED LOGIN CARD */}
+                {/* LOGIN CARD */}
                 <div style={{
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
+                    top: '50%', left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '100%',
-                    maxWidth: '300px',
-                    padding: '0 20px',
+                    width: '100%', maxWidth: '280px',
+                    padding: '0 24px',
                     zIndex: 10,
                 }}>
-                    <form
-                        onSubmit={handleHeroLogin}
-                        style={{
-                            background: 'rgba(8,8,8,0.38)',
-                            backdropFilter: 'blur(28px)',
-                            WebkitBackdropFilter: 'blur(28px)',
-                            borderTop: '1px solid rgba(255,255,255,0.12)',
-                            borderBottom: '1px solid rgba(255,255,255,0.06)',
-                            borderLeft: '1px solid rgba(255,255,255,0.08)',
-                            borderRight: '1px solid rgba(255,255,255,0.04)',
-                            borderRadius: '2px',
-                            padding: '32px 28px 24px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '0px',
-                        }}
-                    >
+                    <form onSubmit={handleHeroLogin} style={{
+                        background: 'rgba(6,6,6,0.42)',
+                        backdropFilter: 'blur(24px)',
+                        WebkitBackdropFilter: 'blur(24px)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        borderRadius: '4px',
+                        padding: '28px 24px 22px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '18px',
+                    }}>
                         {/* Logo */}
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
-                            <img src="/logo.svg" alt="" style={{ height: '18px', filter: 'invert(1)', opacity: 0.85 }} />
-                            <div style={{ width: '32px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(247,208,49,0.5), transparent)' }} />
-                        </div>
-
+                        <img src="/logo.svg" alt="imrsv" style={{ height: '15px', filter: 'invert(1)', opacity: 1, alignSelf: 'center', marginBottom: '6px' }} />
 
                         {/* Email */}
-                        <div style={{ marginBottom: '22px' }}>
-                            <label style={{ fontSize: '0.52rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Email</label>
-                            <input
-                                type="email"
-                                value={loginEmail}
-                                onChange={e => setLoginEmail(e.target.value)}
-                                placeholder="your@email.com"
-                                style={{
-                                    background: 'transparent',
-                                    border: 'none',
-                                    borderBottom: '1px solid rgba(255,255,255,0.18)',
-                                    padding: '8px 0',
-                                    color: '#FFF',
-                                    fontSize: '0.95rem',
-                                    fontWeight: 300,
-                                    letterSpacing: '0.02em',
-                                    outline: 'none',
-                                    width: '100%',
-                                    boxSizing: 'border-box',
-                                }}
-                            />
-                        </div>
+                        <input
+                            type="email"
+                            value={loginEmail}
+                            onChange={e => setLoginEmail(e.target.value)}
+                            placeholder="Email"
+                            style={{
+                                background: 'transparent', border: 'none',
+                                borderBottom: '1px solid rgba(255,255,255,0.2)',
+                                padding: '8px 0', color: '#FFF',
+                                fontSize: '0.88rem', fontWeight: 300,
+                                outline: 'none', width: '100%', boxSizing: 'border-box',
+                            }}
+                        />
 
                         {/* Password */}
-                        <div style={{ marginBottom: '28px' }}>
-                            <label style={{ fontSize: '0.52rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Password</label>
-                            <input
-                                type="password"
-                                value={loginPassword}
-                                onChange={e => setLoginPassword(e.target.value)}
-                                placeholder="••••••••"
-                                style={{
-                                    background: 'transparent',
-                                    border: 'none',
-                                    borderBottom: '1px solid rgba(255,255,255,0.18)',
-                                    padding: '8px 0',
-                                    color: '#FFF',
-                                    fontSize: '0.95rem',
-                                    fontWeight: 300,
-                                    letterSpacing: '0.12em',
-                                    outline: 'none',
-                                    width: '100%',
-                                    boxSizing: 'border-box',
-                                }}
-                            />
-                        </div>
-
-                        {loginError && (
-                            <p style={{ margin: '0 0 16px', fontSize: '0.65rem', color: 'rgba(255,100,100,0.8)', letterSpacing: '0.05em', textAlign: 'center' }}>{loginError}</p>
-                        )}
-
-                        {/* CTA button */}
-                        <button
-                            type="submit"
-                            disabled={loginLoading}
+                        <input
+                            type="password"
+                            value={loginPassword}
+                            onChange={e => setLoginPassword(e.target.value)}
+                            placeholder="Password"
                             style={{
-                                background: loginLoading ? 'rgba(247,208,49,0.5)' : '#F7D031',
-                                color: '#111',
-                                border: 'none',
-                                borderRadius: '40px',
-                                padding: '13px 0',
-                                fontSize: '0.65rem',
-                                fontWeight: 800,
-                                letterSpacing: '0.16em',
-                                textTransform: 'uppercase',
-                                cursor: loginLoading ? 'not-allowed' : 'pointer',
-                                transition: 'all 0.22s ease',
-                                width: '100%',
-                                marginBottom: '20px',
+                                background: 'transparent', border: 'none',
+                                borderBottom: '1px solid rgba(255,255,255,0.2)',
+                                padding: '8px 0', color: '#FFF',
+                                fontSize: '0.88rem', fontWeight: 300,
+                                outline: 'none', width: '100%', boxSizing: 'border-box',
                             }}
-                        >
-                            {loginLoading ? 'One moment...' : 'Enter →'}
+                        />
+
+                        {loginError && <p style={{ margin: 0, fontSize: '0.65rem', color: 'rgba(255,90,90,0.8)', textAlign: 'center' }}>{loginError}</p>}
+
+                        {/* Button */}
+                        <button type="submit" disabled={loginLoading} style={{
+                            background: '#F7D031', color: '#111', border: 'none',
+                            borderRadius: '30px', padding: '12px 0',
+                            fontSize: '0.63rem', fontWeight: 800, letterSpacing: '0.14em',
+                            textTransform: 'uppercase', cursor: 'pointer',
+                            transition: 'opacity 0.2s', opacity: loginLoading ? 0.5 : 1,
+                            marginTop: '4px',
+                        }}>
+                            {loginLoading ? '...' : 'Enter'}
                         </button>
 
-                        {/* Footer links */}
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
-                            <span
-                                onClick={navigateToLogin}
-                                style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.28)', cursor: 'pointer', letterSpacing: '0.06em' }}
-                            >
-                                Forgot password
-                            </span>
-                            <span style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.15)' }}>|</span>
-                            <span
-                                onClick={navigateToApply}
-                                style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.28)', cursor: 'pointer', letterSpacing: '0.06em' }}
-                            >
-                                Apply to join
-                            </span>
+                        {/* Links */}
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '14px' }}>
+                            <span onClick={navigateToLogin} style={{ fontSize: '0.57rem', color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>Forgot password</span>
+                            <span style={{ color: 'rgba(255,255,255,0.12)', fontSize: '0.57rem' }}>·</span>
+                            <span onClick={navigateToApply} style={{ fontSize: '0.57rem', color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>Apply</span>
                         </div>
                     </form>
                 </div>
             </section>
+
 
 
             {/* THE MISSION */}
