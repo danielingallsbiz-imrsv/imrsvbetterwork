@@ -92,6 +92,9 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     <span onClick={navigateToJournal} style={{ cursor: 'pointer', opacity: 0.8, letterSpacing: '0.15em' }}>
                         <InteractiveText text="Journal." />
                     </span>
+                    <span onClick={handleLoginClick} style={{ cursor: 'pointer', opacity: 0.8, letterSpacing: '0.15em' }}>
+                        <InteractiveText text="Login" />
+                    </span>
                 </div>
             </nav>
 
@@ -119,70 +122,6 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     className="hero-video-bg"
                     style={{ pointerEvents: 'none', objectFit: 'cover' }}
                 />
-
-                {/* Soft overlay for text contrast */}
-                <div style={{
-                    position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
-                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.55))',
-                }} />
-
-                {/* LOGIN CARD */}
-                <div style={{
-                    position: 'absolute',
-                    top: '44%', left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '100%', maxWidth: '420px',
-                    padding: '0 24px',
-                    zIndex: 10,
-                }}>
-                    <form onSubmit={handleHeroLogin} style={{
-                        background: 'rgba(18,18,18,0.55)',
-                        backdropFilter: 'blur(30px)',
-                        WebkitBackdropFilter: 'blur(30px)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '20px',
-                        padding: '48px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '0',
-                        boxShadow: '0 40px 100px rgba(0,0,0,0.5)',
-                    }}>
-                        {/* Logo */}
-                        <img src="/logo.svg" alt="imrsv" style={{ height: '15px', filter: 'invert(1)', opacity: 0.25, alignSelf: 'center', marginBottom: '32px' }} />
-
-                        {/* Email */}
-                        <input
-                            type="email"
-                            value={loginEmail}
-                            onChange={e => setLoginEmail(e.target.value)}
-                            placeholder="Email"
-                            className="hero-login-input"
-                        />
-
-                        {/* Password */}
-                        <input
-                            type="password"
-                            value={loginPassword}
-                            onChange={e => setLoginPassword(e.target.value)}
-                            placeholder="Password"
-                            className="hero-login-input"
-                        />
-
-                        {loginError && <p style={{ margin: '0 0 16px', fontSize: '0.65rem', color: 'rgba(255,90,90,0.8)', textAlign: 'center' }}>{loginError}</p>}
-
-                        {/* Button */}
-                        <button type="submit" disabled={loginLoading} className="hero-login-btn">
-                            {loginLoading ? '...' : 'Enter'}
-                        </button>
-
-                        {/* Links */}
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', marginTop: '20px' }}>
-                            <span onClick={navigateToLogin} style={{ fontSize: '0.57rem', color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>Forgot password</span>
-                            <span style={{ color: 'rgba(255,255,255,0.12)', fontSize: '0.57rem' }}>·</span>
-                            <span onClick={navigateToApply} style={{ fontSize: '0.57rem', color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }}>Apply</span>
-                        </div>
-                    </form>
-                </div>
             </section>
 
 
