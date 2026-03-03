@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import { supabase } from './lib/supabase';
+import { AvatarUploader, PhotoGalleryUploader } from './App';
+import './App.css';
 import './Home.css';
 
 const WelcomeBriefing = ({ onAcknowledge }) => (
@@ -124,25 +126,43 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            if (!user?.email) return;
+            if (!user?.id) return;
             const { data } = await supabase
-                .from('applications')
-                .select('id, full_name, profession, bio, photos, contribution_amount, credit_balance, renewal_date')
-                .ilike('email', user.email.trim())
+                .from('profiles')
+                .select('id, full_name, profession, bio, avatar_path')
+                .eq('id', user.id)
                 .single();
             if (data) {
                 setProfileData({
                     full_name: data.full_name || '',
                     profession: data.profession || '',
                     bio: data.bio || '',
-                    photos: data.photos?.length ? [...data.photos, ...['', '', '']].slice(0, 3) : ['', '', '']
+                    avatar_path: data.avatar_path || ''
                 });
-                setCreditData(data);
-                if (data.id) {
+            }
+
+            // Also fetch gallery from profile_photos
+            const { data: photos } = await supabase
+                .from('profile_photos')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('sort_order', { ascending: true });
+
+            setGallery(photos || []);
+
+            // Fetch credit data from applications (legacy but still used for balance)
+            const { data: appData } = await supabase
+                .from('applications')
+                .select('id, contribution_amount, credit_balance, renewal_date')
+                .ilike('email', user.email.trim())
+                .single();
+            if (appData) {
+                setCreditData(appData);
+                if (appData.id) {
                     const { data: txns } = await supabase
                         .from('transactions')
                         .select('*')
-                        .eq('member_id', data.id)
+                        .eq('member_id', appData.id)
                         .order('created_at', { ascending: false })
                         .limit(5);
                     setTransactions(txns || []);
@@ -152,44 +172,27 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         fetchProfile();
     }, [user]);
 
+    const [gallery, setGallery] = useState([]);
+
     const saveProfile = async () => {
-        if (!user?.email) return;
+        if (!user?.id) return;
         setProfileSaving(true);
 
-        const updatedPhotos = [...profileData.photos];
+        const { error } = await supabase.from('profiles')
+            .update({
+                full_name: profileData.full_name,
+                profession: profileData.profession,
+                bio: profileData.bio
+            })
+            .eq('id', user.id);
 
-        for (let i = 0; i < updatedPhotos.length; i++) {
-            const photo = updatedPhotos[i];
-            if (photo instanceof File) {
-                const fileExt = photo.name.split('.').pop();
-                const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-
-                const { data, error } = await supabase.storage
-                    .from('applications')
-                    .upload(`visuals/${fileName}`, photo);
-
-                if (error) {
-                    console.error("Image upload failed:", error);
-                    updatedPhotos[i] = ''; // fallback
-                } else if (data) {
-                    const { data: publicUrlData } = supabase.storage
-                        .from('applications')
-                        .getPublicUrl(`visuals/${fileName}`);
-                    updatedPhotos[i] = publicUrlData.publicUrl;
-                }
-            }
+        if (error) {
+            console.error("Profile save error:", error);
+        } else {
+            setProfileSaved(true);
+            setTimeout(() => { setProfileSaved(false); setShowProfilePanel(false); }, 1500);
         }
-
-        const photosToSave = updatedPhotos.filter(p => typeof p === 'string' && p.trim() !== '');
-
-        await supabase.from('applications')
-            .update({ name: profileData.full_name, full_name: profileData.full_name, profession: profileData.profession, bio: profileData.bio, photos: photosToSave })
-            .ilike('email', user.email.trim());
-
-        setProfileData(prev => ({ ...prev, photos: updatedPhotos }));
         setProfileSaving(false);
-        setProfileSaved(true);
-        setTimeout(() => { setProfileSaved(false); setShowProfilePanel(false); }, 1500);
     };
 
     useEffect(() => {
@@ -556,113 +559,94 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                 <div style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '0.7rem' }}>PROTOCOL: VERSION 2.0.4</div>
             </footer>
 
-            {/* PROFILE EDIT PANEL */}
+            {/* PROFILE EDIT PANEL overhaul */}
             <AnimatePresence>
                 {showProfilePanel && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(247,245,234,0.98)', zIndex: 5000, overflowY: 'auto', padding: '40px 20px' }}
+                        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'var(--bg)', zIndex: 5000, overflowY: 'auto', padding: '40px 20px' }}
                     >
-                        <div style={{ maxWidth: '560px', margin: '0 auto', paddingTop: '60px', paddingBottom: '100px' }}>
-                            <button onClick={() => setShowProfilePanel(false)} style={{ background: 'none', border: 'none', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', color: '#1A1A1A', cursor: 'pointer', opacity: 0.5, marginBottom: '40px', padding: 0 }}>[ CLOSE ]</button>
-                            <span style={{ fontSize: '0.65rem', color: 'rgba(26,26,26,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>MEMBER PROFILE</span>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '10px 0 40px', color: '#1A1A1A' }}>EDIT PROFILE.</h2>
+                        <div style={{ maxWidth: '640px', margin: '0 auto', paddingTop: '60px', paddingBottom: '100px' }}>
+                            <button onClick={() => setShowProfilePanel(false)} style={{ background: 'none', border: 'none', fontSize: '10px', fontWeight: 800, letterSpacing: '0.14em', color: 'var(--muted)', cursor: 'pointer', marginBottom: '20px', padding: 0, textTransform: 'uppercase' }}>[ CLOSE ]</button>
 
-                            {/* PROFILE PICTURE — tap to upload */}
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                                <label style={{ cursor: 'pointer', position: 'relative' }}>
-                                    <div style={{
-                                        width: '100px', height: '100px', borderRadius: '50%',
-                                        background: '#1A1A1A',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        overflow: 'hidden',
-                                        border: '3px solid rgba(247,208,49,0.4)',
-                                        transition: 'border-color 0.2s',
-                                    }}>
-                                        {profileData.photos[0] ? (
-                                            <img
-                                                src={typeof profileData.photos[0] === 'string' ? profileData.photos[0] : URL.createObjectURL(profileData.photos[0])}
-                                                alt="Profile"
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            />
-                                        ) : (
-                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F7D031" strokeWidth="1.5">
-                                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                                                <circle cx="12" cy="13" r="4" />
-                                            </svg>
-                                        )}
-                                    </div>
-                                    <div style={{
-                                        position: 'absolute', bottom: 0, right: 0,
-                                        width: '28px', height: '28px', borderRadius: '50%',
-                                        background: '#F7D031', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    }}>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" strokeWidth="2.5">
-                                            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                    </div>
-                                    <input type="file" accept="image/*" style={{ display: 'none' }} onChange={e => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            const p = [...profileData.photos];
-                                            p[0] = file;
-                                            setProfileData(prev => ({ ...prev, photos: p }));
-                                        }
-                                    }} />
-                                </label>
-                                <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', opacity: 0.4, textTransform: 'uppercase' }}>
-                                    Tap to change photo
-                                </span>
+                            <div style={{ marginBottom: '40px' }}>
+                                <span className="label" style={{ marginBottom: '4px', display: 'block' }}>MEMBER PROFILE</span>
+                                <h1 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, color: 'var(--ink)', letterSpacing: '-0.02em', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>EDIT PROFILE.</h1>
                             </div>
 
-                            {/* Full Name */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
-                                <input value={profileData.full_name} onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))} placeholder="Your full name" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
-                            </div>
-                            {/* Profession */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Profession *</label>
-                                <input value={profileData.profession} onChange={e => setProfileData(p => ({ ...p, profession: e.target.value }))} placeholder="e.g. Photographer, Architect" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.2)', padding: '10px 0', fontSize: '1.1rem', outline: 'none' }} />
-                            </div>
-                            {/* Bio */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Bio</label>
-                                    <span style={{ fontSize: '0.65rem', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.4)' }}>{bioWordCount} / 120 words</span>
+                            <div className="profileCard">
+                                {/* Avatar Uploader */}
+                                <div style={{ marginBottom: '32px' }}>
+                                    <AvatarUploader
+                                        userId={user.id}
+                                        currentPath={profileData.avatar_path}
+                                        onUploadSuccess={(url, path) => setProfileData(prev => ({ ...prev, avatar_path: path }))}
+                                    />
                                 </div>
-                                <textarea value={profileData.bio} onChange={e => setProfileData(p => ({ ...p, bio: e.target.value }))} placeholder="Tell the collective who you are..." rows={5} style={{ background: 'transparent', border: 'none', borderBottom: `1px solid ${bioOverLimit ? '#FF453A' : 'rgba(26,26,26,0.2)'}`, padding: '10px 0', fontSize: '1rem', outline: 'none', resize: 'none', lineHeight: 1.7 }} />
-                                {bioOverLimit && <p style={{ fontSize: '0.65rem', color: '#FF453A', margin: 0 }}>Bio must be under 120 words.</p>}
-                            </div>
-                            {/* Additional Photos (2 + 3) */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                <label style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Additional Photos</label>
-                                {[1, 2].map(i => (
-                                    <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                        <span style={{ fontSize: '0.6rem', opacity: 0.4, letterSpacing: '0.05em' }}>PHOTO {i + 1}</span>
-                                        <input type="file" accept="image/*" onChange={e => {
-                                            const file = e.target.files[0];
-                                            if (file) {
-                                                const p = [...profileData.photos];
-                                                p[i] = file;
-                                                setProfileData(prev => ({ ...prev, photos: p }));
-                                            }
-                                        }} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26,26,26,0.15)', padding: '8px 0', fontSize: '0.9rem', outline: 'none', color: '#1A1A1A', maxWidth: '300px' }} />
-                                        {profileData.photos[i] && (
-                                            <img src={typeof profileData.photos[i] === 'string' ? profileData.photos[i] : URL.createObjectURL(profileData.photos[i])} alt={`Preview ${i + 1}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginTop: '4px' }} onError={e => e.target.style.display = 'none'} />
-                                        )}
+
+                                {/* Identity Fields */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                                    <div>
+                                        <label className="label">Full Name</label>
+                                        <input
+                                            className="input"
+                                            value={profileData.full_name}
+                                            onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))}
+                                            placeholder="Your full name"
+                                        />
                                     </div>
-                                ))}
+
+                                    <div>
+                                        <label className="label">Profession</label>
+                                        <input
+                                            className="input"
+                                            value={profileData.profession}
+                                            onChange={e => setProfileData(p => ({ ...p, profession: e.target.value }))}
+                                            placeholder="e.g. Photographer, Architect"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="label">Bio</label>
+                                        <textarea
+                                            className="textarea"
+                                            value={profileData.bio}
+                                            onChange={e => setProfileData(p => ({ ...p, bio: e.target.value }))}
+                                            placeholder="Tell the collective who you are..."
+                                        />
+                                        <div style={{ textAlign: 'right', marginTop: '8px' }}>
+                                            <span style={{ fontSize: '11px', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{bioWordCount} / 120 words</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Gallery Uploader */}
+                                    <div>
+                                        <label className="label">Additional Photos</label>
+                                        <PhotoGalleryUploader
+                                            userId={user.id}
+                                            photos={gallery}
+                                            onUpdate={async () => {
+                                                const { data } = await supabase
+                                                    .from('profile_photos')
+                                                    .select('*')
+                                                    .eq('user_id', user.id)
+                                                    .order('sort_order', { ascending: true });
+                                                setGallery(data || []);
+                                            }}
+                                        />
+                                    </div>
+
+                                    <button
+                                        className="saveBtn"
+                                        onClick={saveProfile}
+                                        disabled={profileSaving || bioOverLimit || !profileData.profession.trim()}
+                                    >
+                                        {profileSaved ? '[ SAVED ✓ ]' : profileSaving ? '[ SAVING... ]' : '[ SAVE CHANGES ]'}
+                                    </button>
+                                </div>
                             </div>
-                            <button
-                                onClick={saveProfile}
-                                disabled={profileSaving || bioOverLimit || !profileData.profession.trim()}
-                                style={{ background: profileSaved ? '#2ECC71' : '#1A1A1A', color: '#FFF', border: 'none', padding: '18px', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.1em', cursor: 'pointer', borderRadius: '4px', opacity: (profileSaving || bioOverLimit || !profileData.profession.trim()) ? 0.4 : 1, transition: 'background 0.3s' }}
-                            >
-                                {profileSaved ? '[ SAVED ✓ ]' : profileSaving ? '[ SAVING... ]' : '[ SAVE PROFILE ]'}
-                            </button>
                         </div>
                     </motion.div>
                 )}

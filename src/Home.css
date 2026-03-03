@@ -79,7 +79,7 @@ svg {
     text-align: left;
     position: relative;
     overflow: hidden;
-    padding: 0 80px 100px 80px;
+    padding: 0 80px 60px 80px;
 }
 
 .hero-section::after {

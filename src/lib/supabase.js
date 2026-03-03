@@ -1,23 +1,10 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Only create the client if the URL and Key are valid strings to prevent crashing
-export const supabase = (supabaseUrl && supabaseAnonKey && supabaseUrl !== 'your_supabase_project_url')
-    ? createClient(supabaseUrl, supabaseAnonKey)
-    : {
-        from: () => ({
-            select: () => ({ order: () => Promise.resolve({ data: [], error: null }) }),
-            insert: () => ({ select: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }) }),
-            delete: () => ({ eq: () => Promise.resolve({ error: new Error('Supabase not configured') }) })
-        }),
-        auth: {
-            getSession: () => Promise.resolve({ data: { session: null }, error: null }),
-            onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
-            signInWithPassword: () => Promise.resolve({ data: { user: null, session: null }, error: new Error('Supabase not configured (Check .env)') }),
-            signUp: () => Promise.resolve({ data: { user: null, session: null }, error: new Error('Supabase not configured (Check .env)') }),
-            resend: () => Promise.resolve({ data: { user: null, session: null }, error: new Error('Supabase not configured (Check .env)') }),
-            signOut: () => Promise.resolve({ error: null })
-        }
-    };
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.warn('Supabase credentials missing. Please check your .env file.');
+}
+
+export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
