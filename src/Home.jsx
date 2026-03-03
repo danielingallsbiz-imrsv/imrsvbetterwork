@@ -8,6 +8,10 @@ import './Home.css';
 const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJournal }) => {
     const { scrollY } = useScroll();
     const [isPastHero, setIsPastHero] = useState(false);
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const [loginLoading, setLoginLoading] = useState(false);
+    const [loginError, setLoginError] = useState('');
 
     const [subscribeEmail, setSubscribeEmail] = useState('');
     const [subscribeStatus, setSubscribeStatus] = useState('');
@@ -43,6 +47,27 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
         navigateToLogin();
     };
 
+    const handleHeroLogin = async (e) => {
+        e.preventDefault();
+        if (!loginEmail || !loginPassword) return;
+        setLoginLoading(true);
+        setLoginError('');
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email: loginEmail.trim().toLowerCase(),
+                password: loginPassword,
+            });
+            if (error) {
+                setLoginError('Invalid credentials.');
+            }
+            // onAuthStateChange in App.jsx will handle redirect
+        } catch {
+            setLoginError('Something went wrong.');
+        } finally {
+            setLoginLoading(false);
+        }
+    };
+
     useEffect(() => {
         const unsubscribe = scrollY.on("change", (latest) => {
             setIsPastHero(latest > window.innerHeight - 100);
@@ -65,15 +90,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                 </div>
                 <div className="nav-links">
                     <span onClick={navigateToJournal} style={{ cursor: 'pointer' }}>
-                        <span className="mobile-hide">
-                            <InteractiveText text="Journal." />
-                        </span>
-                        <span className="mobile-show">
-                            <InteractiveText text="Journal." />
-                        </span>
-                    </span>
-                    <span onClick={handleLoginClick} style={{ cursor: 'pointer' }}>
-                        <InteractiveText text="Login" />
+                        <InteractiveText text="Journal." />
                     </span>
                 </div>
             </nav>
@@ -101,6 +118,109 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     className="hero-video-bg"
                     style={{ pointerEvents: 'none', objectFit: 'cover' }}
                 />
+
+                {/* CENTERED LOGIN CARD */}
+                <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '100%',
+                    maxWidth: '320px',
+                    padding: '0 24px',
+                    zIndex: 10,
+                }}>
+                    <form
+                        onSubmit={handleHeroLogin}
+                        style={{
+                            background: 'rgba(10,10,10,0.52)',
+                            backdropFilter: 'blur(18px)',
+                            WebkitBackdropFilter: 'blur(18px)',
+                            border: '1px solid rgba(255,255,255,0.10)',
+                            borderRadius: '12px',
+                            padding: '28px 24px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '14px',
+                        }}
+                    >
+                        <p style={{ margin: 0, fontSize: '0.6rem', letterSpacing: '0.18em', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', textAlign: 'center' }}>
+                            Member Portal
+                        </p>
+                        <input
+                            type="email"
+                            value={loginEmail}
+                            onChange={e => setLoginEmail(e.target.value)}
+                            placeholder="Email"
+                            style={{
+                                background: 'rgba(255,255,255,0.07)',
+                                border: '1px solid rgba(255,255,255,0.12)',
+                                borderRadius: '6px',
+                                padding: '12px 14px',
+                                color: '#FFF',
+                                fontSize: '0.9rem',
+                                outline: 'none',
+                                width: '100%',
+                                boxSizing: 'border-box',
+                            }}
+                        />
+                        <input
+                            type="password"
+                            value={loginPassword}
+                            onChange={e => setLoginPassword(e.target.value)}
+                            placeholder="Password"
+                            style={{
+                                background: 'rgba(255,255,255,0.07)',
+                                border: '1px solid rgba(255,255,255,0.12)',
+                                borderRadius: '6px',
+                                padding: '12px 14px',
+                                color: '#FFF',
+                                fontSize: '0.9rem',
+                                outline: 'none',
+                                width: '100%',
+                                boxSizing: 'border-box',
+                            }}
+                        />
+                        {loginError && (
+                            <p style={{ margin: 0, fontSize: '0.7rem', color: '#FF6B6B', textAlign: 'center' }}>{loginError}</p>
+                        )}
+                        <button
+                            type="submit"
+                            disabled={loginLoading}
+                            style={{
+                                background: '#F7D031',
+                                color: '#111',
+                                border: 'none',
+                                borderRadius: '6px',
+                                padding: '12px',
+                                fontSize: '0.72rem',
+                                fontWeight: 800,
+                                letterSpacing: '0.1em',
+                                textTransform: 'uppercase',
+                                cursor: loginLoading ? 'not-allowed' : 'pointer',
+                                opacity: loginLoading ? 0.6 : 1,
+                                transition: 'opacity 0.2s',
+                            }}
+                        >
+                            {loginLoading ? 'Signing in...' : 'Enter Portal →'}
+                        </button>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '2px' }}>
+                            <span
+                                onClick={navigateToLogin}
+                                style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.35)', cursor: 'pointer', letterSpacing: '0.05em' }}
+                            >
+                                Forgot password?
+                            </span>
+                            <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.2)' }}>·</span>
+                            <span
+                                onClick={navigateToApply}
+                                style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.35)', cursor: 'pointer', letterSpacing: '0.05em' }}
+                            >
+                                Apply to join
+                            </span>
+                        </div>
+                    </form>
+                </div>
             </section>
 
             {/* THE MISSION */}

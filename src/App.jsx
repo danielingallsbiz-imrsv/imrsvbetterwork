@@ -11,6 +11,7 @@ import LoginLayer from './LoginLayer';
 import MemberLayer from './MemberLayer';
 import DirectoryLayer from './DirectoryLayer';
 import Directory from './FullfillmentFunnel/Directory';
+import ReferralJoin from './ReferralJoin';
 
 import { supabase } from './lib/supabase';
 import { sendNotificationEmail } from './lib/email';
@@ -377,6 +378,7 @@ function AppContent() {
           <Route path="/journal" element={
             <JournalLayer onBack={() => navigate('/')} />
           } />
+          <Route path="/join" element={<ReferralJoin />} />
         </Routes>
       </AnimatePresence>
     </div>
