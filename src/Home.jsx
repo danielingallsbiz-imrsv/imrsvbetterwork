@@ -140,7 +140,7 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                         gap: '18px',
                     }}>
                         {/* Logo */}
-                        <img src="/logo.svg" alt="imrsv" style={{ height: '15px', filter: 'invert(1)', opacity: 1, alignSelf: 'center', marginBottom: '6px' }} />
+                        <img src="/logo.svg" alt="imrsv" style={{ height: '15px', filter: 'invert(1)', opacity: 0.25, alignSelf: 'center', marginBottom: '6px' }} />
 
                         {/* Email */}
                         <input
