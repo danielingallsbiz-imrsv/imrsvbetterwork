@@ -8,7 +8,6 @@ import ApplicationLayer from './ApplicationLayer';
 import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
-import MemberLayer from './MemberLayer';
 import MemberPortal from './MemberPortal';
 import DirectoryLayer from './DirectoryLayer';
 import Directory from './FullfillmentFunnel/Directory';
