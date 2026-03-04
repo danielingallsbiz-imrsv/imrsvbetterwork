@@ -4,13 +4,12 @@ import { AnimatePresence } from 'framer-motion';
 import Home from './Home';
 import ImpactLayer from './ImpactLayer';
 import RestorationLayer from './RestorationLayer';
-import { MemberPortal } from './MemberPortal';
-import './App.css';
 import ApplicationLayer from './ApplicationLayer';
 import AdminLayer from './AdminLayer';
 import JournalLayer from './JournalLayer';
 import LoginLayer from './LoginLayer';
 import MemberLayer from './MemberLayer';
+import MemberPortal from './MemberPortal';
 import DirectoryLayer from './DirectoryLayer';
 import Directory from './FullfillmentFunnel/Directory';
 import ReferralJoin from './ReferralJoin';
@@ -214,15 +213,14 @@ function AppContent() {
       if (error) throw error;
       if (data) {
         setApplications(prev => [data[0], ...prev]);
+        sendNotificationEmail(data[0]);
       }
-      sendNotificationEmail(appData);
     } catch (e) {
       console.warn("Database sync failed, saving locally:", e);
       const newApp = { ...appData, id: Date.now(), date: new Date().toLocaleString() };
       const updated = [newApp, ...applications];
       setApplications(updated);
       localStorage.setItem('imrsv_applications', JSON.stringify(updated));
-      sendNotificationEmail(newApp);
       alert("NOTE: Your application has been saved to your local browser storage because the cloud database is currently unreachable. Our team will not see it until sync is restored.");
     }
   };
@@ -343,10 +341,9 @@ function AppContent() {
             )
           } />
           <Route path="/signup" element={<Navigate to="/createaccount" replace />} />
-          <Route path="/account" element={<MemberPortal />} />
           <Route path="/member" element={
             isMember ? (
-              <MemberLayer
+              <MemberPortal
                 user={user}
                 userName={userName}
                 members={members}

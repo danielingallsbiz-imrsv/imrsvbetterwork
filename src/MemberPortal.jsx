@@ -1728,7 +1728,7 @@ const AppStyles = `
   .light-theme .tab-search-pill:active { background: rgba(0,0,0,0.08); }
 `;
 
-export function MemberPortal() {
+export default function MemberPortal({ user, userName, members = [], onLogout, onBack }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isRecording, setIsRecording] = useState(false);
   const [showLedger, setShowLedger] = useState(false);

@@ -1,16 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line no-unused-vars
 import InteractiveText from './components/InteractiveText';
 import { supabase } from './lib/supabase';
-import { Camera, Plus, Loader2, Check, ArrowRight, ArrowLeft } from 'lucide-react';
-import './App.css';
 import './Home.css';
 
 const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
     const [status, setStatus] = useState('idle'); // idle, submitting, success
     const [currentStep, setCurrentStep] = useState(0);
-    const fileInputRef = useRef(null);
-    const [uploading, setUploading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -42,12 +38,6 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleFileChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            setFormData(prev => ({ ...prev, picture: e.target.files[0] }));
-        }
-    };
-
     const nextStep = (e) => {
         if (e) e.preventDefault();
         if (currentStep < steps.length - 1) {
@@ -72,7 +62,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
             let pictureUrl = formData.picture;
 
             // Handle native file upload to Supabase Storage
-            if (formData.picture instanceof File && supabase.storage) {
+            if (formData.picture instanceof File) {
                 const fileExt = formData.picture.name.split('.').pop();
                 const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
 
@@ -90,8 +80,6 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         .getPublicUrl(`visuals/${fileName}`);
                     pictureUrl = publicUrlData.publicUrl;
                 }
-            } else if (formData.picture instanceof File) {
-                console.warn("Supabase Storage unavailable, proceeding without upload.");
             }
 
             const finalData = { ...formData, picture: pictureUrl };
@@ -103,6 +91,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         } catch (error) {
             console.error("Submission failed:", error);
             setStatus('idle');
+            // You could add an error message here based on your UI needs
         }
     };
 
@@ -110,40 +99,40 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
         switch (currentStep) {
             case 0:
                 return (
-                    <div className="profile-fields-grid">
-                        <div className="input-field-wrap">
-                            <label className="label">Full Name</label>
-                            <input required name="name" type="text" className="input" value={formData.name} onChange={handleInputChange} placeholder="Alex Rivera" />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Full Name</label>
+                            <input required name="name" type="text" value={formData.name} onChange={handleInputChange} placeholder="Alex Rivera" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
-                        <div className="input-field-wrap">
-                            <label className="label">Email Address</label>
-                            <input required name="email" type="email" className="input" value={formData.email} onChange={handleInputChange} placeholder="alex@example.com" />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Email Address</label>
+                            <input required name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="alex@example.com" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
                     </div>
                 );
             case 1:
                 return (
-                    <div className="profile-fields-grid">
-                        <div className="input-field-wrap">
-                            <label className="label">Primary Hub / City</label>
-                            <input required name="hub" type="text" className="input" value={formData.hub} onChange={handleInputChange} placeholder="Los Angeles, California" />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Primary Hub / City</label>
+                            <input required name="hub" type="text" value={formData.hub} onChange={handleInputChange} placeholder="Los Angeles, California" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
-                        <div className="input-field-wrap">
-                            <label className="label">Social Link / Portfolio</label>
-                            <input required name="social" type="text" className="input" value={formData.social} onChange={handleInputChange} placeholder="@handle or url" />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Social Link / Portfolio</label>
+                            <input required name="social" type="text" value={formData.social} onChange={handleInputChange} placeholder="@handle or url" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
                     </div>
                 );
             case 2:
                 return (
-                    <div className="profile-fields-grid">
-                        <div className="input-field-wrap">
-                            <label className="label">Occupation</label>
-                            <input required name="occupation" type="text" className="input" value={formData.occupation} onChange={handleInputChange} placeholder="Architect, Builder, Creator, etc." />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Occupation</label>
+                            <input required name="occupation" type="text" value={formData.occupation} onChange={handleInputChange} placeholder="Architect, Builder, Creator, etc." style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
-                        <div className="input-field-wrap">
-                            <label className="label">Profession / Title</label>
-                            <input required name="profession" type="text" className="input" value={formData.profession} onChange={handleInputChange} placeholder="e.g. Photographer, Designer, Chef" />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Profession / Title</label>
+                            <input required name="profession" type="text" value={formData.profession} onChange={handleInputChange} placeholder="e.g. Photographer, Designer, Chef" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         </div>
                     </div>
                 );
@@ -151,107 +140,70 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                 const wordCount = formData.bio.trim() === '' ? 0 : formData.bio.trim().split(/\s+/).length;
                 const overLimit = wordCount > 120;
                 return (
-                    <div className="input-field-wrap">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                            <label className="label">Bio</label>
-                            <span style={{ fontSize: '10px', fontWeight: 800, color: overLimit ? '#EF4444' : 'var(--muted)', textTransform: 'uppercase' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Bio</label>
+                            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: overLimit ? '#FF453A' : 'rgba(26,26,26,0.4)' }}>
                                 {wordCount} / 120 words
                             </span>
                         </div>
                         <textarea
                             required
                             name="bio"
-                            className="textarea"
                             value={formData.bio}
                             onChange={handleInputChange}
                             placeholder="Tell the collective who you are in under 120 words..."
                             rows="6"
+                            style={{ background: 'transparent', border: 'none', borderBottom: `1px solid ${overLimit ? '#FF453A' : 'rgba(26, 26, 26, 0.2)'}`, padding: '10px 0', fontSize: '1.1rem', outline: 'none', resize: 'none', lineHeight: 1.6 }}
                         />
                         {overLimit && (
-                            <p style={{ fontSize: '10px', color: '#EF4444', marginTop: '4px', fontWeight: 700, textTransform: 'uppercase' }}>Bio must be under 120 words.</p>
+                            <p style={{ fontSize: '0.7rem', color: '#FF453A', margin: 0 }}>Bio must be under 120 words.</p>
                         )}
                     </div>
                 );
             }
             case 4:
                 return (
-                    <div className="profile-fields-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
-                        <div className="input-field-wrap">
-                            <label className="label">Gender</label>
-                            <select required name="gender" className="input" value={formData.gender} onChange={handleInputChange} style={{ color: 'var(--ink)' }}>
+                    <div style={{ display: 'flex', gap: '30px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Gender</label>
+                            <select required name="gender" value={formData.gender} onChange={handleInputChange} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', color: '#1A1A1A' }}>
                                 <option value="" disabled>Select</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
-                        <div className="input-field-wrap">
-                            <label className="label">Date of Birth</label>
-                            <input required name="birthday" type="date" className="input" value={formData.birthday} onChange={handleInputChange} style={{ color: 'var(--ink)' }} />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
+                            <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Date of Birth</label>
+                            <input required name="birthday" type="date" value={formData.birthday} onChange={handleInputChange} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '8px 0', fontSize: '1.2rem', outline: 'none', color: '#1A1A1A' }} />
                         </div>
                     </div>
                 );
             case 5:
                 return (
-                    <div className="input-field-wrap">
-                        <label className="label">Mailing Address</label>
-                        <input required name="address" type="text" className="input" value={formData.address} onChange={handleInputChange} placeholder="Street, City, State, ZIP, Country" />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Mailing Address</label>
+                        <input required name="address" type="text" value={formData.address} onChange={handleInputChange} placeholder="Street, City, State, ZIP, Country" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                     </div>
                 );
             case 6:
                 return (
-                    <div className="input-field-wrap">
-                        <label className="label">Contribution to Sunday Collection</label>
-                        <textarea required name="contribution" className="textarea" value={formData.contribution} onChange={handleInputChange} placeholder="How do you intend to participate?" rows="4" />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Contribution to Sunday Collection</label>
+                        <textarea required name="contribution" value={formData.contribution} onChange={handleInputChange} placeholder="How do you intend to participate?" rows="4" style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none', resize: 'none' }} />
                     </div>
                 );
             case 7:
                 return (
-                    <div className="input-field-wrap">
-                        <label className="label">Cultural Archive: Submit a Picture</label>
-                        <p style={{ fontSize: '0.9rem', color: 'var(--muted)', marginBottom: '20px', lineHeight: 1.5 }}>
-                            Upload the coolest picture you have been a part of or taken. This will be added to our journal.
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <label style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700 }}>Cultural Archive: Submit a Picture</label>
+                        <p style={{ fontSize: '0.9rem', opacity: 0.6, margin: '0 0 10px 0', lineHeight: 1.5 }}>
+                            Upload the coolest picture you have been a part of or taken. This is for cultural purposes and will be added to our journal.
                         </p>
-
-                        <div className="avatarWrap" style={{ width: '100%', height: '240px', borderRadius: '24px' }}>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                            />
-                            <div
-                                className="avatarCircle"
-                                style={{ width: '100%', height: '100%', borderRadius: '24px' }}
-                                onClick={() => fileInputRef.current.click()}
-                            >
-                                {formData.picture ? (
-                                    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                                        <img
-                                            src={formData.picture instanceof File ? URL.createObjectURL(formData.picture) : formData.picture}
-                                            alt="Preview"
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '24px' }}
-                                        />
-                                        <div className="avatarOverlay" style={{ borderRadius: '24px' }}>
-                                            <Camera size={32} color="#FFF" />
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-                                        <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Plus size={24} color="var(--muted)" />
-                                        </div>
-                                        <span style={{ fontSize: '10px', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase' }}>Select Visual Archive</span>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
+                        <input required name="picture" type="file" accept="image/*" onChange={(e) => setFormData(prev => ({ ...prev, picture: e.target.files[0] }))} style={{ background: 'transparent', border: 'none', borderBottom: '1px solid rgba(26, 26, 26, 0.2)', padding: '10px 0', fontSize: '1.2rem', outline: 'none' }} />
                         {formData.picture instanceof File && (
-                            <p style={{ fontSize: '10px', color: 'var(--accent-orange)', marginTop: '12px', fontWeight: 800, textTransform: 'uppercase' }}>
-                                File Selected: {formData.picture.name}
-                            </p>
+                            <p style={{ fontSize: '0.8rem', color: '#1A1A1A', marginTop: '10px', fontWeight: 500 }}>Selected: {formData.picture.name}</p>
                         )}
                     </div>
                 );
@@ -270,7 +222,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
             case 4: return formData.gender && formData.birthday;
             case 5: return formData.address;
             case 6: return formData.contribution;
-            case 7: return !!formData.picture;
+            case 7: return formData.picture;
             default: return false;
         }
     };
@@ -297,7 +249,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                 </div>
             </nav>
 
-            <section className="section" style={{ maxWidth: '600px', paddingTop: '160px', paddingBottom: '100px', flex: 1 }}>
+            <section className="section" style={{ maxWidth: '600px', paddingTop: '160px', flex: 1 }}>
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentStep}
@@ -305,61 +257,44 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -20, opacity: 0 }}
                         transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
-                        className="profileCard"
-                        style={{ padding: '40px', background: '#FFF' }}
                     >
-                        <span style={{ fontSize: '10px', fontWeight: 800, color: 'var(--muted)', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '16px', display: 'block' }}>
-                            {steps[currentStep].label}
+                        <span className="section-label" style={{ color: 'rgba(26, 26, 26, 0.4)' }}>
+                            <InteractiveText text={steps[currentStep].label} />
                         </span>
-                        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ink)', marginBottom: '40px', lineHeight: 1.1, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
-                            {steps[currentStep].title}
+                        <h1 className="concept-title" style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', color: '#1A1A1A', marginBottom: '40px', lineHeight: 1.1 }}>
+                            <InteractiveText text={steps[currentStep].title} />
                         </h1>
 
-                        <form onSubmit={nextStep}>
+                        <form style={{ display: 'flex', flexDirection: 'column', gap: '60px', marginTop: '60px' }} onSubmit={nextStep}>
                             {renderStep()}
 
-                            <div style={{ display: 'flex', gap: '16px', marginTop: '60px' }}>
+                            <div style={{ display: 'flex', gap: '20px', marginTop: '40px' }}>
                                 {currentStep > 0 && (
                                     <button
                                         type="button"
                                         onClick={prevStep}
+                                        className="gauntlet-btn"
                                         style={{
                                             flex: 1,
-                                            height: '56px',
-                                            borderRadius: '16px',
-                                            background: 'var(--border-color)',
-                                            color: 'var(--ink)',
-                                            fontWeight: 800,
-                                            fontSize: '12px',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '2px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '8px'
+                                            backgroundColor: 'transparent',
+                                            color: '#1A1A1A',
+                                            border: '1px solid rgba(26, 26, 26, 0.2)',
+                                            padding: '18px'
                                         }}
                                     >
-                                        <ArrowLeft size={16} />
-                                        Back
+                                        back
                                     </button>
                                 )}
                                 <button
                                     disabled={!isCurrentStepValid() || status === 'submitting'}
-                                    className="saveBtn"
+                                    className="gauntlet-btn"
                                     style={{
                                         flex: 2,
-                                        height: '56px',
-                                        opacity: (!isCurrentStepValid() || status === 'submitting') ? 0.3 : 1
+                                        opacity: (!isCurrentStepValid() || status === 'submitting') ? 0.3 : 1,
+                                        padding: '18px'
                                     }}
                                 >
-                                    {status === 'submitting' ? (
-                                        <Loader2 className="loading-ring" size={20} />
-                                    ) : (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <span>{currentStep === steps.length - 1 ? 'Submit Application' : 'Next Step'}</span>
-                                            <ArrowRight size={16} />
-                                        </div>
-                                    )}
+                                    {status === 'submitting' ? 'VERIFYING...' : (currentStep === steps.length - 1 ? 'submit application' : 'Next Step')}
                                 </button>
                             </div>
                         </form>
