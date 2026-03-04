@@ -72,7 +72,7 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
             let pictureUrl = formData.picture;
 
             // Handle native file upload to Supabase Storage
-            if (formData.picture instanceof File) {
+            if (formData.picture instanceof File && supabase.storage) {
                 const fileExt = formData.picture.name.split('.').pop();
                 const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
 
@@ -90,6 +90,8 @@ const ApplicationLayer = ({ navigateToHome, onSubmit }) => {
                         .getPublicUrl(`visuals/${fileName}`);
                     pictureUrl = publicUrlData.publicUrl;
                 }
+            } else if (formData.picture instanceof File) {
+                console.warn("Supabase Storage unavailable, proceeding without upload.");
             }
 
             const finalData = { ...formData, picture: pictureUrl };

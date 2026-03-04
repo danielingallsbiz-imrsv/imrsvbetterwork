@@ -63,11 +63,8 @@ const JournalLayer = ({ onBack }) => {
                         margin: 0,
                         fontFamily: '"Outfit", sans-serif'
                     }}>
-                        <InteractiveText text="SUNDAY" /><br />
-                        <InteractiveText text="COLLECTION 01." /><br />
-                        <span style={{ textDecoration: 'line-through', opacity: 0.4, display: 'inline-block', marginTop: '10px' }}>
-                            <InteractiveText text="PROJECT CULTURE" />
-                        </span>
+                        <InteractiveText text="PROJECT" /><br />
+                        <InteractiveText text="CULTURE." />
                     </h1>
                     <p style={{
                         marginTop: '20px',
@@ -86,28 +83,16 @@ const JournalLayer = ({ onBack }) => {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, delay: 0.3 }}
-                style={{ width: '100%', padding: '0 80px', maxWidth: '1400px', margin: '0 auto', display: 'flex', gap: '20px' }}
+                style={{ width: '100%', padding: '0 80px', maxWidth: '1400px', margin: '0 auto' }}
             >
                 <img
-                    src="/project-culture-poster.jpg"
-                    alt="Sunday Collection 01 — Project Culture Editorial"
-                    style={{
-                        width: '50%',
-                        height: 'auto',
-                        display: 'block',
-                        borderRadius: '2px',
-                        objectFit: 'contain'
-                    }}
-                />
-                <img
                     src="/journal-flyer-01.png"
-                    alt="Sunday Collection 01 — Project Culture Flyer"
+                    alt="Sunday Collection 01 — Project Culture"
                     style={{
-                        width: '50%',
+                        width: '100%',
                         height: 'auto',
                         display: 'block',
-                        borderRadius: '2px',
-                        objectFit: 'contain'
+                        borderRadius: '2px'
                     }}
                 />
             </motion.div>
@@ -157,22 +142,14 @@ const JournalLayer = ({ onBack }) => {
                                 opacity: 0.6,
                                 marginBottom: '20px'
                             }}>
-                                The first official drop from Sunday Collection lands in Medellín, Colombia. Project Culture is the opening statement — a curated weekend where sound, people, and place collide.
-                            </p>
-                            <p style={{
-                                fontSize: '0.95rem',
-                                lineHeight: 1.7,
-                                opacity: 0.6,
-                                marginBottom: '20px'
-                            }}>
-                                Here is the breakdown: We host open pre-events on Friday where everyone is welcome. Sunday begins with member-only wellness from 10:00 AM to 1:00 PM featuring run clubs, ice baths, and saunas. Following a community lunch at 1:00 PM, the rooftop Sunday party kicks off from 2:00 PM to 6:00 PM with DJs. The official "afters" then begin at 6:00 PM.
+                                The first official drop from Sunday Collection lands in Medellín, Colombia. Project Culture is the opening statement — a curated night where sound, people, and place collide in a way that doesn't exist anywhere else.
                             </p>
                             <p style={{
                                 fontSize: '0.95rem',
                                 lineHeight: 1.7,
                                 opacity: 0.6
                             }}>
-                                This isn't just a party, it's a blueprint. Every ticket feeds directly back into the local community through The IMRSV Project. You show up, you participate, the city benefits. Simple.
+                                This isn't a party. It's a blueprint. Every ticket sold feeds directly back into the local community through The IMRSV Project. You show up, you participate, the city benefits. Simple.
                             </p>
                         </div>
                         <div>
@@ -266,49 +243,7 @@ const JournalLayer = ({ onBack }) => {
                 </motion.div>
             </section>
 
-            {/* WEEKEND BREAKDOWN */}
-            <section style={{ padding: '0px 80px 80px 80px', maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-                <div style={{ borderTop: '1px solid rgba(247, 245, 234, 0.1)', paddingTop: '60px' }}>
-                    <h2 style={{
-                        fontSize: '1.8rem',
-                        fontWeight: 400,
-                        lineHeight: 1.1,
-                        marginBottom: '40px',
-                        fontFamily: '"Outfit", sans-serif'
-                    }}>
-                        <InteractiveText text="The Breakdown." />
-                    </h2>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                        {/* FRIDAY */}
-                        <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
-                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
-                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>10:00 AM <span style={{ opacity: 0.4, fontSize: '0.85rem' }}></span></h3>
-                            <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                Run Club
-                            </p>
-                        </div>
-
-                        {/* SUNDAY AM */}
-                        <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
-                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
-                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>12:00 PM - 5:00 PM <span style={{ opacity: 0.4, fontSize: '0.85rem' }}></span></h3>
-                            <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                Community Day (Ice baths, DJ, Open Bar, Tattoos, sauna)
-                            </p>
-                        </div>
-
-                        {/* SUNDAY PM */}
-                        <div style={{ background: '#1A1A1A', padding: '30px', borderLeft: '2px solid #F7D031' }}>
-                            <span style={{ fontSize: '0.65rem', letterSpacing: '0.15em', opacity: 0.5, textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Itinerary</span>
-                            <h3 style={{ fontSize: '1.25rem', margin: '0 0 10px 0', fontWeight: 400 }}>6:00 PM - 11:00 PM</h3>
-                            <p style={{ fontSize: '0.9rem', opacity: 0.6, lineHeight: 1.6, margin: 0 }}>
-                                After Hours Network
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* FOOTER */}
             <footer style={{
                 padding: '40px 80px',
                 borderTop: '1px solid rgba(247, 245, 234, 0.08)',

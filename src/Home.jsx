@@ -105,7 +105,8 @@ const Home = ({ navigateToApply, navigateToLogin, navigateToAdmin, navigateToJou
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
                     className="hero-content"
-                    style={{ marginBottom: '0' }}
+                    style={{ marginBottom: '40px' }}
+
                 >
                     <h1 className="hero-title" style={{ fontWeight: 700, lineHeight: 0.95, textShadow: '0 2px 24px rgba(0,0,0,0.18)' }}>
                         <InteractiveText text="Participation" /><br />

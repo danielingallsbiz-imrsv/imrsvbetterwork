@@ -1767,6 +1767,50 @@ export default function App() {
     setToasts(prev => prev.filter(t => t.id !== id));
   };
 
+  const [applications, setApplications] = useState(() => {
+    const saved = localStorage.getItem('imrsv_applications');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const sendNotificationEmail = async (appData) => {
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(appData)
+      });
+    } catch (e) {
+      console.error("Notification failed:", e);
+    }
+  };
+
+  const addApplication = async (appData) => {
+    try {
+      const { data, error } = await supabase
+        .from('applications')
+        .insert([{
+          ...appData,
+          created_at: new Date().toISOString()
+        }])
+        .select();
+
+      if (error) throw error;
+      if (data) {
+        setApplications(prev => [data[0], ...prev]);
+      }
+      sendNotificationEmail(appData);
+    } catch (e) {
+      console.warn("Database sync failed, saving locally:", e);
+      const newApp = { ...appData, id: Date.now(), date: new Date().toLocaleString() };
+      const updated = [newApp, ...applications];
+      setApplications(updated);
+      localStorage.setItem('imrsv_applications', JSON.stringify(updated));
+      sendNotificationEmail(newApp);
+      alert("NOTE: Your application has been saved to your local browser storage because the cloud database is currently unreachable. Our team will not see it until sync is restored.");
+    }
+  };
+
+
   return (
     <div className="preview-wrapper">
       <style>{AppStyles}</style>
