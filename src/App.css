@@ -1,7 +1,7 @@
 /* =========================================================================
    GLOBAL VARIABLES & RESET
 ========================================================================= */
-:root {
+.portal-theme {
   --bg-dark: #000000;
   --surface-dark: #121212;
 
@@ -33,16 +33,118 @@
   --font-sans: 'Outfit', 'Inter', sans-serif;
   --font-serif: 'Georgia', serif;
 
-  /* Premium UI Tokens */
-  --bg: #E9E5DB;
-  /* warm cream */
-  --ink: #111111;
-  --muted: rgba(17, 17, 17, 0.55);
-  --line: rgba(17, 17, 17, 0.10);
-  --card: rgba(255, 255, 255, 0.55);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-  --radius: 18px;
-  --gold: #D4AF37;
+  /* Premium UI Tokens - Soho Style */
+  --bg: #F7F5EA;
+  /* Warm beige reference base */
+  --ink: #1A1A1A;
+  --muted: rgba(26, 26, 26, 0.45);
+  --line: rgba(26, 26, 26, 0.10);
+  --card: rgba(255, 255, 255, 0.85);
+  --shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
+  --border: 1px solid rgba(26, 26, 26, 0.08);
+  --radius: 20px;
+  --gold: #C5A059;
+  --accent-soft-purple: rgba(192, 132, 252, 0.15);
+}
+
+/* Layout Utilities for Premium UI */
+.portal-theme .tab-layout {
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.portal-theme .premium-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.portal-theme .premium-card {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.portal-theme .label-caps {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.portal-theme .premium-input {
+  width: 100%;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0 16px;
+  font-size: 16px;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.portal-theme .premium-input:focus {
+  border-color: var(--gold);
+  background: #FFF;
+  box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1);
+}
+
+.portal-theme .premium-textarea {
+  width: 100%;
+  min-height: 120px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 16px;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  outline: none;
+  resize: none;
+  line-height: 1.6;
+}
+
+.portal-theme .premium-textarea:focus {
+  border-color: var(--gold);
+  background: #FFF;
+  box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1);
+}
+
+.portal-theme .save-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #10B981;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.3s;
+}
+
+.portal-theme .skeleton-pulse {
+  background: linear-gradient(90deg, #EFEFEF 25%, #F5F5F5 50%, #EFEFEF 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .light-theme {
@@ -74,7 +176,7 @@
   padding: 0;
 }
 
-body {
+.portal-theme {
   background-color: #000;
   /* Outer background remains black for the frame */
   margin: 0;
@@ -2178,6 +2280,7 @@ body {
   text-transform: uppercase;
   margin: 0;
 }
+
 /* =========================================================================
    PREMIUM PROFILE UI
 ========================================================================= */

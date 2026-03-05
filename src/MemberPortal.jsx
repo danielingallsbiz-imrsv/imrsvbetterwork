@@ -1409,17 +1409,17 @@ function PlannerTab({ onAction, onSettingsClick }) {
 
 // --- PREMIUM UPLOADER COMPONENTS ---
 
-export function AvatarUploader({ userId, currentPath, onUploadSuccess }) {
+export function AvatarUploader({ userId, currentUrl, onUploadSuccess }) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = React.useRef(null);
 
   const handleUpload = async (event) => {
     try {
-      setUploading(true);
       if (!event.target.files || event.target.files.length === 0) return;
+      setUploading(true);
 
       const file = event.target.files[0];
-      const options = { maxSizeMB: 1, maxWidthOrHeight: 800, useWebWorker: true };
+      const options = { maxSizeMB: 0.5, maxWidthOrHeight: 600, useWebWorker: true };
       const compressedFile = await imageCompression(file, options);
 
       const fileExt = file.name.split('.').pop();
@@ -1432,68 +1432,84 @@ export function AvatarUploader({ userId, currentPath, onUploadSuccess }) {
 
       if (uploadError) throw uploadError;
 
+      const { data: { publicUrl } } = supabase.storage.from('profile-images').getPublicUrl(filePath);
+
       const { error: dbError } = await supabase
         .from('profiles')
-        .update({ avatar_path: filePath, updated_at: new Date().toISOString() })
+        .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
         .eq('id', userId);
 
       if (dbError) throw dbError;
 
-      const { data: { publicUrl } } = supabase.storage.from('profile-images').getPublicUrl(filePath);
-      onUploadSuccess(publicUrl, filePath);
+      onUploadSuccess(publicUrl);
     } catch (error) {
       console.error('Error uploading avatar:', error);
-      alert('Error uploading avatar!');
+      alert('Upload failed. Check console for details.');
     } finally {
       setUploading(false);
     }
   };
 
-  const publicUrl = currentPath ? supabase.storage.from('profile-images').getPublicUrl(currentPath).data.publicUrl : null;
-
   return (
-    <div className="avatarWrap">
+    <div className="avatar-upload-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
       <input type="file" ref={fileInputRef} onChange={handleUpload} accept="image/*" style={{ display: 'none' }} />
-      <div className="avatarCircle" onClick={() => !uploading && fileInputRef.current.click()}>
+      <div
+        className="avatar-circle-premium"
+        onClick={() => !uploading && fileInputRef.current.click()}
+        style={{
+          width: '120px',
+          height: '120px',
+          borderRadius: '60px',
+          overflow: 'hidden',
+          position: 'relative',
+          cursor: 'pointer',
+          background: '#EEE',
+          border: '4px solid #FFF',
+          boxShadow: 'var(--shadow)'
+        }}
+      >
         <img
-          src={publicUrl || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"}
+          src={currentUrl || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"}
           alt="Avatar"
-          style={{ opacity: uploading ? 0.3 : 1, width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: uploading ? 0.3 : 1, transition: 'opacity 0.3s' }}
         />
-        <div className="avatarOverlay" style={{ opacity: uploading ? 1 : undefined, display: uploading ? 'grid' : undefined, placeItems: uploading ? 'center' : undefined }}>
-          {uploading ? <Loader2 className="loading-ring" size={32} color="var(--gold)" /> : <Camera size={24} color="#FFF" />}
-        </div>
-        <div className="avatarPlus">
-          <Plus size={18} />
+        <div className="avatar-overlay-premium" style={{
+          position: 'absolute', inset: 0,
+          background: 'rgba(0,0,0,0.4)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: uploading ? 1 : 0, transition: 'opacity 0.2s',
+          color: '#FFF', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase'
+        }}>
+          {uploading ? <Loader2 className="loading-ring" size={24} /> : 'Change'}
         </div>
       </div>
     </div>
   );
 }
 
-export function PhotoGalleryUploader({ userId, photos, onUpdate }) {
+export function PhotoGalleryUploader({ userId, photoUrls, onUpdate }) {
   const [uploadingSlot, setUploadingSlot] = useState(null);
   const fileInputRef = React.useRef(null);
   const [targetSlot, setTargetSlot] = useState(null);
 
-  const handleFileSelect = (slotIndex) => {
-    setTargetSlot(slotIndex);
+  const handleSlotClick = (idx) => {
+    setTargetSlot(idx);
     fileInputRef.current.click();
   };
 
   const handleUpload = async (event) => {
     try {
       if (!event.target.files || event.target.files.length === 0) return;
-      const slotIndex = targetSlot;
-      setUploadingSlot(slotIndex);
+      const slot = targetSlot;
+      setUploadingSlot(slot);
 
       const file = event.target.files[0];
-      const options = { maxSizeMB: 1, maxWidthOrHeight: 1200, useWebWorker: true };
+      const options = { maxSizeMB: 0.8, maxWidthOrHeight: 1200, useWebWorker: true };
       const compressedFile = await imageCompression(file, options);
 
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-      const filePath = `gallery/${userId}/${fileName}`;
+      const filePath = `gallery/${userId}/slot-${slot}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('profile-images')
@@ -1501,75 +1517,86 @@ export function PhotoGalleryUploader({ userId, photos, onUpdate }) {
 
       if (uploadError) throw uploadError;
 
-      const existingPhoto = photos.find(p => p.sort_order === slotIndex);
+      const { data: { publicUrl } } = supabase.storage.from('profile-images').getPublicUrl(filePath);
 
-      if (existingPhoto) {
-        // Update
-        const { error: dbError } = await supabase
-          .from('profile_photos')
-          .update({ photo_path: filePath })
-          .eq('id', existingPhoto.id);
-        if (dbError) throw dbError;
+      const newUrls = [...photoUrls];
+      newUrls[slot] = publicUrl;
 
-        // Cleanup old storage
-        await supabase.storage.from('profile-images').remove([existingPhoto.photo_path]);
-      } else {
-        // Insert
-        const { error: dbError } = await supabase
-          .from('profile_photos')
-          .insert({ user_id: userId, photo_path: filePath, sort_order: slotIndex });
-        if (dbError) throw dbError;
-      }
+      const { error: dbError } = await supabase
+        .from('profiles')
+        .update({ photo_urls: newUrls, updated_at: new Date().toISOString() })
+        .eq('id', userId);
 
-      onUpdate();
+      if (dbError) throw dbError;
+      onUpdate(newUrls);
     } catch (error) {
-      console.error('Error uploading photo:', error);
-      alert('Upload failed!');
+      console.error('Gallery upload error:', error);
+      alert('Failed to upload photo.');
     } finally {
       setUploadingSlot(null);
       setTargetSlot(null);
     }
   };
 
-  const handleRemove = async (photo) => {
+  const handleRemove = async (e, slot) => {
+    e.stopPropagation();
     try {
-      const { error: dbError } = await supabase.from('profile_photos').delete().eq('id', photo.id);
+      const newUrls = [...photoUrls];
+      newUrls[slot] = null;
+      // Filter out nulls to keep array compact if desired, or keep fixed length 3
+      // User requested max 3, so keeping it fixed index based is better for "slots"
+
+      const { error: dbError } = await supabase
+        .from('profiles')
+        .update({ photo_urls: newUrls, updated_at: new Date().toISOString() })
+        .eq('id', userId);
+
       if (dbError) throw dbError;
-      await supabase.storage.from('profile-images').remove([photo.photo_path]);
-      onUpdate();
+      onUpdate(newUrls);
     } catch (error) {
-      console.error('Error removing photo:', error);
+      console.error('Remove error:', error);
     }
   };
 
   return (
-    <div className="gallery">
+    <div className="gallery-grid-premium" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
       <input type="file" ref={fileInputRef} onChange={handleUpload} accept="image/*" style={{ display: 'none' }} />
       {[0, 1, 2].map((i) => {
-        const photo = photos.find(p => p.sort_order === i);
+        const url = photoUrls[i];
         const isUploading = uploadingSlot === i;
-        const publicUrl = photo ? supabase.storage.from('profile-images').getPublicUrl(photo.photo_path).data.publicUrl : null;
-
         return (
-          <div key={i} className="slot" onClick={() => !isUploading && handleFileSelect(i)}>
+          <div
+            key={i}
+            className="gallery-slot-premium"
+            onClick={() => !isUploading && handleSlotClick(i)}
+            style={{
+              aspectRatio: '1/1',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              background: 'rgba(0,0,0,0.03)',
+              border: '1px dashed var(--line)',
+              cursor: 'pointer',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
             {isUploading ? (
-              <Loader2 className="loading-ring" size={24} color="var(--gold)" />
-            ) : photo ? (
+              <Loader2 className="loading-ring" size={24} />
+            ) : url ? (
               <>
-                <img src={publicUrl} alt={`Slot ${i}`} />
-                <div className="slotActions">
-                  <button className="slot-action-btn" onClick={(e) => { e.stopPropagation(); handleFileSelect(i); }}>
-                    <Repeat size={14} color="#111" />
-                  </button>
-                  <button className="slot-action-btn" onClick={(e) => { e.stopPropagation(); handleRemove(photo); }}>
-                    <Trash2 size={14} color="#EF4444" />
+                <img src={url} alt={`Slot ${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div className="slot-actions-premium" style={{ position: 'absolute', bottom: '8px', right: '8px', display: 'flex', gap: '4px' }}>
+                  <button className="slot-mini-btn" onClick={(e) => handleRemove(e, i)} style={{ background: 'rgba(239, 68, 68, 0.9)', color: '#FFF', border: 'none', borderRadius: '6px', padding: '4px' }}>
+                    <Trash2 size={12} />
                   </button>
                 </div>
               </>
             ) : (
-              <div style={{ textAlign: 'center' }}>
-                <Plus size={20} color="var(--muted)" style={{ marginBottom: '4px' }} />
-                <div style={{ fontSize: '9px', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase' }}>Add Photo</div>
+              <div style={{ textAlign: 'center', color: 'var(--muted)' }}>
+                <Plus size={20} style={{ marginBottom: '4px' }} />
+                <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' }}>Add</div>
               </div>
             )}
           </div>
@@ -1580,123 +1607,181 @@ export function PhotoGalleryUploader({ userId, photos, onUpdate }) {
 }
 
 function ProfileTab({ onAction }) {
-  const [profile, setProfile] = useState({ full_name: '', profession: '', bio: '', avatar_path: '' });
-  const [gallery, setGallery] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState(''); // 'saving', 'saved', ''
+  const saveTimeoutRef = React.useRef(null);
 
-  // Mock current user ID - In real app, get from auth
-  const userId = '00000000-0000-0000-0000-000000000000';
-
-  const fetchProfile = async () => {
-    try {
-      const { data: prof, error: profError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
-      if (profError && profError.code !== 'PGRST116') throw profError;
-      setProfile(prof || { full_name: '', profession: '', bio: '', avatar_path: '' });
-
-      const { data: photos, error: photoError } = await supabase
-        .from('profile_photos')
-        .select('*')
-        .eq('user_id', userId)
-        .order('sort_order', { ascending: true });
-
-      if (photoError) throw photoError;
-      setGallery(photos || []);
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // In a real app, this comes from auth context
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    fetchProfile();
+    const initProfile = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          setLoading(false);
+          return;
+        }
+        setUserId(user.id);
+
+        let { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (error && error.code === 'PGRST116') {
+          // Profile doesn't exist, create it
+          const newProfile = {
+            id: user.id,
+            full_name: '',
+            profession: '',
+            bio: '',
+            photo_urls: [null, null, null],
+            updated_at: new Date().toISOString()
+          };
+          const { data: created, error: createError } = await supabase
+            .from('profiles')
+            .insert([newProfile])
+            .select()
+            .single();
+
+          if (createError) throw createError;
+          data = created;
+        } else if (error) {
+          throw error;
+        }
+
+        // Ensure photo_urls has length 3
+        const fixedUrls = [...(data.photo_urls || [])];
+        while (fixedUrls.length < 3) fixedUrls.push(null);
+
+        setProfile({ ...data, photo_urls: fixedUrls });
+      } catch (err) {
+        console.error("Profile load error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initProfile();
   }, []);
 
-  const handleSave = async (data) => {
-    try {
-      setSaving(true);
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          full_name: data.full_name,
-          profession: data.profession,
-          bio: data.bio,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', userId);
+  const triggerAutoSave = (updatedData) => {
+    setSaveStatus('saving');
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
 
-      if (error) throw error;
-      setProfile(prev => ({ ...prev, ...data }));
-      onAction('Profile Updated ✓');
-    } catch (error) {
-      console.error('Error saving profile:', error);
-      alert('Error saving profile!');
-    } finally {
-      setSaving(false);
-    }
+    saveTimeoutRef.current = setTimeout(async () => {
+      try {
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            full_name: updatedData.full_name,
+            profession: updatedData.profession,
+            bio: updatedData.bio,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', userId);
+
+        if (error) throw error;
+        setSaveStatus('saved');
+        setTimeout(() => setSaveStatus(''), 2000);
+      } catch (err) {
+        console.error("Auto-save failed:", err);
+        setSaveStatus('error');
+      }
+    }, 800);
   };
 
-  if (loading) return <div style={{ height: '100%', display: 'grid', placeItems: 'center' }}><Loader2 className="loading-ring" /></div>;
+  const handleFieldChange = (field, value) => {
+    const updated = { ...profile, [field]: value };
+    setProfile(updated);
+    triggerAutoSave(updated);
+  };
+
+  if (loading) {
+    return (
+      <div className="tab-layout">
+        <div className="premium-container">
+          <div className="premium-card skeleton-pulse" style={{ height: '400px' }}></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!userId) {
+    return (
+      <div className="tab-layout" style={{ display: 'grid', placeItems: 'center' }}>
+        <p>Please log in to view your profile.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="tab-layout">
-      <AppHeader title="Profile" subtitle="Personal Identity" showPulse onSettingsClick={() => { }} />
-      <div className="content-pad scroll-y" style={{ background: 'var(--bg)' }}>
-        <div className="profileCard">
-          <AvatarUploader
-            userId={userId}
-            currentPath={profile?.avatar_path}
-            onUploadSuccess={(url, path) => setProfile(prev => ({ ...prev, avatar_path: path }))}
-          />
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginTop: '32px' }}>
-            <div>
-              <label className="label">Full Name</label>
-              <input
-                className="input"
-                value={profile?.full_name}
-                onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
-              />
-            </div>
-
-            <div>
-              <label className="label">Profession</label>
-              <input
-                className="input"
-                value={profile?.profession}
-                onChange={(e) => setProfile({ ...profile, profession: e.target.value })}
-              />
-            </div>
-
-            <div>
-              <label className="label">Biography</label>
-              <textarea
-                className="textarea"
-                value={profile?.bio}
-                onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-              />
-            </div>
-
-            <div>
-              <label className="label">Featured Photography</label>
-              <PhotoGalleryUploader userId={userId} photos={gallery} onUpdate={fetchProfile} />
-            </div>
-
-            <button
-              className="saveBtn"
-              onClick={() => handleSave(profile)}
-              disabled={saving}
-            >
-              {saving ? 'Syncing...' : 'Update Explorer Profile'}
-            </button>
+    <div className="tab-layout scroll-y">
+      <div className="premium-container">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '32px' }}>
+          <div>
+            <h1 style={{ fontSize: '32px', fontWeight: 800, color: 'var(--ink)' }}>Member Profile</h1>
+            <p style={{ color: 'var(--muted)', fontSize: '14px' }}>Manage your global identity.</p>
+          </div>
+          <div style={{ height: '24px' }}>
+            {saveStatus === 'saving' && <div className="save-badge" style={{ color: 'var(--muted)' }}><Loader2 size={14} className="loading-ring" /> Saving...</div>}
+            {saveStatus === 'saved' && <div className="save-badge"><CheckCircle2 size={14} /> Saved</div>}
+            {saveStatus === 'error' && <div className="save-badge" style={{ color: '#EF4444' }}><XCircle size={14} /> Error</div>}
           </div>
         </div>
+
+        <section className="premium-card">
+          <label className="label-caps">Identity</label>
+          <AvatarUploader
+            userId={userId}
+            currentUrl={profile?.avatar_url}
+            onUploadSuccess={(url) => setProfile(prev => ({ ...prev, avatar_url: url }))}
+          />
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <label className="label-caps">Display Name</label>
+              <input
+                className="premium-input"
+                value={profile?.full_name || ''}
+                onChange={(e) => handleFieldChange('full_name', e.target.value)}
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label className="label-caps">Profession</label>
+              <input
+                className="premium-input"
+                value={profile?.profession || ''}
+                onChange={(e) => handleFieldChange('profession', e.target.value)}
+                placeholder="e.g. Founder, Photographer"
+              />
+            </div>
+            <div>
+              <label className="label-caps">Biography</label>
+              <textarea
+                className="premium-textarea"
+                value={profile?.bio || ''}
+                onChange={(e) => handleFieldChange('bio', e.target.value)}
+                placeholder="Tell the community about yourself..."
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="premium-card">
+          <label className="label-caps">Featured Photography</label>
+          <p style={{ color: 'var(--muted)', fontSize: '13px', marginBottom: '20px' }}>Showcase your perspective. Max 3 photos.</p>
+          <PhotoGalleryUploader
+            userId={userId}
+            photoUrls={profile?.photo_urls || [null, null, null]}
+            onUpdate={(urls) => setProfile(prev => ({ ...prev, photo_urls: urls }))}
+          />
+        </section>
+
         <div style={{ height: '100px' }}></div>
       </div>
     </div>
@@ -1812,195 +1897,197 @@ export default function MemberPortal({ user, userName, members = [], onLogout, o
 
 
   return (
-    <div className="preview-wrapper">
-      <style>{AppStyles}</style>
-      <div className="iphone-frame">
-        <div className="iphone-notch"></div>
-        <div className={`mobile-app-container ${theme === 'light' ? 'light-theme' : ''}`}>
-          <AnimatePresence>
-            {showSplash && (
-              <motion.div style={{ position: 'absolute', inset: 0, background: '#000', zIndex: 10000, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} exit={{ opacity: 0 }}>
-                <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
-                  <Logo size={80} />
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <div className="toast-container">
-            {toasts.map(t => <Toast key={t.id} message={t.message} icon={t.icon} onRemove={() => removeToast(t.id)} />)}
-          </div>
-
-          <AnimatePresence>
-            {isRecording && (
-              <motion.div className="live-recording-banner" initial={{ y: -50 }} animate={{ y: 0 }} exit={{ y: -50 }}>
-                <div className="lrb-pulse"></div><span>Recording Active GPS...</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <main className="mobile-main-wrapper" style={{ paddingTop: isRecording ? '40px' : '0' }}>
-            <AnimatePresence mode="wait">
-              {activeTab === 'dashboard' && <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><DashboardTab onAction={addToast} onSettingsClick={() => setIsSettingsOpen(true)} selectedUser={selectedUser} setSelectedUser={setSelectedUser} selectedExperience={selectedExperience} setSelectedExperience={setSelectedExperience} showUnlockOverlay={showUnlockOverlay} setShowUnlockOverlay={setShowUnlockOverlay} showUserGallery={showUserGallery} setShowUserGallery={setShowUserGallery} connections={connections} setConnections={setConnections} /></motion.div>}
-              {activeTab === 'planner' && <motion.div key="plan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><PlannerTab onAction={addToast} onSettingsClick={() => setIsSettingsOpen(true)} /></motion.div>}
-              {activeTab === 'profile' && <motion.div key="prof" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><ProfileTab onAction={addToast} /></motion.div>}
-              {activeTab === 'pro' && <motion.div key="pro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><ProTab isUnlocked={isFounderUnlocked} setUnlocked={setIsFounderUnlocked} onAction={addToast} onSettingsClick={() => setIsSettingsOpen(true)} isClaimed={isClaimed} setIsClaimed={setIsClaimed} /></motion.div>}
-            </AnimatePresence>
-          </main>
-
-          <SettingsOverlay isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} theme={theme} setTheme={setTheme} profileData={profileData} setProfileData={setProfileData} />
-
-          <SearchOverlay
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-            onAction={addToast}
-            onSelectUser={setSelectedUser}
-            onSelectExp={setSelectedExperience}
-          />
-
-          <AppTabBar activeTab={activeTab} setActiveTab={setActiveTab} onSearchOpen={() => setIsSearchOpen(true)} />
-
-          <AnimatePresence>
-            {showUnlockOverlay && (
-              <motion.div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(20px)', zIndex: 6500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <div style={{ maxWidth: '400px', width: '100%', background: 'var(--surface-color)', borderRadius: '30px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
-                  <div style={{ height: '200px', position: 'relative' }}>
-                    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Hidden" />
-                    <button style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(0,0,0,0.5)', border: 'none', borderRadius: '50%', padding: '8px' }} onClick={() => setShowUnlockOverlay(false)}><X size={20} color="#FFF" /></button>
-                    <div style={{ position: 'absolute', bottom: '20px', left: '20px', textAlign: 'center', width: 'calc(100% - 40px)' }}><Lock size={32} color="#C084FC" /><h2 style={{ color: '#FFF' }}>Restricted Coordinates</h2></div>
-                  </div>
-                  <div style={{ padding: '24px', textAlign: 'center' }}>
-                    <p style={{ color: 'var(--text-sub)', marginBottom: '24px' }}>Requires IMRSV Founder Access to view hidden coordinate drops.</p>
-                    <button className="lu-btn" style={{ background: 'var(--accent-orange)', color: '#000', width: '100%', padding: '16px', borderRadius: '12px', fontWeight: 800 }}>Upgrade to Founder</button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {selectedExperience && (
-              <motion.div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(20px)', zIndex: 6500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <div style={{ maxWidth: '400px', width: '100%', background: 'var(--surface-color)', borderRadius: '30px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
-                  <img src={selectedExperience.img} style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="Exp" />
-                  <div style={{ padding: '24px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                      <h2 style={{ color: 'var(--text-main)', fontSize: '1.4rem' }}>{selectedExperience.title}</h2>
-                      <span style={{ color: 'var(--accent-orange)', fontWeight: 800, fontSize: '1.2rem' }}>{selectedExperience.price}</span>
-                    </div>
-
-                    <div style={{ marginBottom: '24px' }}>
-                      <p style={{ color: 'var(--accent-orange)', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '12px', letterSpacing: '1px' }}>Community Intelligence</p>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        {(selectedExperience.reviews || ["Verified coordinate.", "Highly recommended by local partners."]).map((rev, i) => (
-                          <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-orange)', marginTop: '6px' }}></div>
-                            <p style={{ color: '#888', fontSize: '0.9rem', fontStyle: 'italic' }}>"{rev}"</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <button onClick={() => { addToast("Experience Reserved! ⚡️"); setSelectedExperience(null); }} style={{ width: '100%', background: 'var(--accent-orange)', color: '#000', padding: '18px', borderRadius: '16px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Reserve Spot</button>
-                    <button onClick={() => setSelectedExperience(null)} style={{ width: '100%', background: 'none', color: '#666', padding: '12px', marginTop: '8px', fontSize: '0.8rem', fontWeight: 800 }}>CLOSE</button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {selectedUser && (
-              <motion.div
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '100%' }}
-                transition={{ type: 'spring', damping: 25 }}
-                style={{ position: 'absolute', inset: 0, background: '#000', zIndex: 6500, display: 'flex', flexDirection: 'column' }}
-              >
-                <div style={{ padding: '50px 24px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-color)', backdropFilter: 'blur(10px)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <img src={selectedUser.avatar} style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid var(--accent-orange)' }} alt="User" />
-                    <div>
-                      <h2 style={{ color: 'var(--text-main)', fontSize: '1.4rem' }}>{selectedUser.user}</h2>
-                      <p style={{ color: 'var(--accent-orange)', fontWeight: 700, fontSize: '0.8rem' }}>{selectedUser.points}</p>
-                    </div>
-                  </div>
-                  <button style={{ background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', padding: '12px' }} onClick={() => setSelectedUser(null)}><X size={24} color="#FFF" /></button>
-                </div>
-
-                <div className="scroll-y content-pad">
-                  <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
-                    <button
-                      className="lu-btn"
-                      style={{ flex: 1.2, background: 'linear-gradient(135deg, var(--accent-orange), #ff7a3a)', color: '#000', height: '64px', fontSize: '0.9rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
-                      onClick={() => { addToast(`Following ${selectedUser.user}! ⚡️`); setSelectedUser(null); }}
-                    >
-                      <Users size={20} style={{ marginBottom: '4px' }} />
-                      Follow Partner
-                    </button>
-                    <button
-                      className="lu-btn"
-                      style={{ flex: 1, background: 'var(--border-color)', color: 'var(--text-main)', height: '64px', border: '1px solid var(--border-color)', fontSize: '0.9rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                      <MessageCircle size={20} style={{ marginBottom: '4px' }} />
-                      Message
-                    </button>
-                  </div>
-
-                  <div className="stats-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '8px' }}>
-                    <div style={{ background: 'var(--surface-color)', padding: '16px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-                      <span style={{ display: 'block', color: 'var(--text-sub)', fontSize: '0.75rem', marginBottom: '4px' }}>COLLECTED DROPS</span>
-                      <span style={{ fontSize: '1.2rem', color: 'var(--text-main)', fontWeight: 800 }}>{selectedUser.likes}+</span>
-                    </div>
-                    <div style={{ background: 'var(--surface-color)', padding: '16px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-                      <span style={{ display: 'block', color: 'var(--text-sub)', fontSize: '0.75rem', marginBottom: '4px' }}>LOCATION</span>
-                      <span style={{ fontSize: '0.9rem', color: 'var(--text-main)', fontWeight: 700 }}>{selectedUser.location}</span>
-                    </div>
-                  </div>
-
-                  <p style={{ color: '#A0A0A0', lineHeight: 1.5, fontSize: '0.9rem', marginBottom: '32px' }}>{selectedUser.bio}</p>
-
-                  <h3 style={{ color: 'var(--text-main)', fontWeight: 800, marginBottom: '16px' }}>Global Footprint</h3>
-                  <motion.div
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setShowUserGallery(true)}
-                    style={{ height: '180px', background: '#080808', borderRadius: '20px', overflow: 'hidden', position: 'relative', marginBottom: '16px', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.05)' }}
-                  >
-                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Map" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        style={{ position: 'absolute', top: '40%', left: '60%', width: '12px', height: '12px', background: 'var(--accent-orange)', borderRadius: '50%' }}
-                      />
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
-                        style={{ position: 'absolute', top: '70%', left: '30%', width: '10px', height: '10px', background: '#00E5FF', borderRadius: '50%' }}
-                      />
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                        style={{ position: 'absolute', top: '20%', left: '80%', width: '8px', height: '8px', background: 'var(--accent-orange)', borderRadius: '50%' }}
-                      />
-                      <Globe size={48} color="var(--accent-orange)" />
-                    </div>
-                    <div style={{ position: 'absolute', bottom: '12px', left: 0, right: 0, textAlign: 'center', color: 'var(--accent-orange)', fontSize: '0.75rem', fontWeight: 800 }}>Tap for full footprint →</div>
+    <div className="portal-theme">
+      <div className="preview-wrapper">
+        <style>{AppStyles}</style>
+        <div className="iphone-frame">
+          <div className="iphone-notch"></div>
+          <div className={`mobile-app-container ${theme === 'light' ? 'light-theme' : ''}`}>
+            <AnimatePresence>
+              {showSplash && (
+                <motion.div style={{ position: 'absolute', inset: 0, background: '#000', zIndex: 10000, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} exit={{ opacity: 0 }}>
+                  <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
+                    <Logo size={80} />
                   </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-                  <h3 style={{ color: 'var(--text-main)', fontWeight: 800, marginBottom: '16px' }}>Recent Drops</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', paddingBottom: '40px' }}>
-                    {[selectedUser.image, ...GALLERY_DROPS.slice(0, 3).map(g => g.img)].map((img, idx) => (
-                      <div key={idx} style={{ aspectRatio: '1/1', borderRadius: '12px', overflow: 'hidden', background: '#111' }}>
-                        <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Drop" />
-                      </div>
-                    ))}
+            <div className="toast-container">
+              {toasts.map(t => <Toast key={t.id} message={t.message} icon={t.icon} onRemove={() => removeToast(t.id)} />)}
+            </div>
+
+            <AnimatePresence>
+              {isRecording && (
+                <motion.div className="live-recording-banner" initial={{ y: -50 }} animate={{ y: 0 }} exit={{ y: -50 }}>
+                  <div className="lrb-pulse"></div><span>Recording Active GPS...</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <main className="mobile-main-wrapper" style={{ paddingTop: isRecording ? '40px' : '0' }}>
+              <AnimatePresence mode="wait">
+                {activeTab === 'dashboard' && <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><DashboardTab onAction={addToast} onSettingsClick={() => setIsSettingsOpen(true)} selectedUser={selectedUser} setSelectedUser={setSelectedUser} selectedExperience={selectedExperience} setSelectedExperience={setSelectedExperience} showUnlockOverlay={showUnlockOverlay} setShowUnlockOverlay={setShowUnlockOverlay} showUserGallery={showUserGallery} setShowUserGallery={setShowUserGallery} connections={connections} setConnections={setConnections} /></motion.div>}
+                {activeTab === 'planner' && <motion.div key="plan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><PlannerTab onAction={addToast} onSettingsClick={() => setIsSettingsOpen(true)} /></motion.div>}
+                {activeTab === 'profile' && <motion.div key="prof" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><ProfileTab onAction={addToast} /></motion.div>}
+                {activeTab === 'pro' && <motion.div key="pro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="page-wrapper"><ProTab isUnlocked={isFounderUnlocked} setUnlocked={setIsFounderUnlocked} onAction={addToast} onSettingsClick={() => setIsSettingsOpen(true)} isClaimed={isClaimed} setIsClaimed={setIsClaimed} /></motion.div>}
+              </AnimatePresence>
+            </main>
+
+            <SettingsOverlay isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} theme={theme} setTheme={setTheme} profileData={profileData} setProfileData={setProfileData} />
+
+            <SearchOverlay
+              isOpen={isSearchOpen}
+              onClose={() => setIsSearchOpen(false)}
+              onAction={addToast}
+              onSelectUser={setSelectedUser}
+              onSelectExp={setSelectedExperience}
+            />
+
+            <AppTabBar activeTab={activeTab} setActiveTab={setActiveTab} onSearchOpen={() => setIsSearchOpen(true)} />
+
+            <AnimatePresence>
+              {showUnlockOverlay && (
+                <motion.div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(20px)', zIndex: 6500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <div style={{ maxWidth: '400px', width: '100%', background: 'var(--surface-color)', borderRadius: '30px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
+                    <div style={{ height: '200px', position: 'relative' }}>
+                      <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Hidden" />
+                      <button style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(0,0,0,0.5)', border: 'none', borderRadius: '50%', padding: '8px' }} onClick={() => setShowUnlockOverlay(false)}><X size={20} color="#FFF" /></button>
+                      <div style={{ position: 'absolute', bottom: '20px', left: '20px', textAlign: 'center', width: 'calc(100% - 40px)' }}><Lock size={32} color="#C084FC" /><h2 style={{ color: '#FFF' }}>Restricted Coordinates</h2></div>
+                    </div>
+                    <div style={{ padding: '24px', textAlign: 'center' }}>
+                      <p style={{ color: 'var(--text-sub)', marginBottom: '24px' }}>Requires IMRSV Founder Access to view hidden coordinate drops.</p>
+                      <button className="lu-btn" style={{ background: 'var(--accent-orange)', color: '#000', width: '100%', padding: '16px', borderRadius: '12px', fontWeight: 800 }}>Upgrade to Founder</button>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {selectedExperience && (
+                <motion.div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(20px)', zIndex: 6500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <div style={{ maxWidth: '400px', width: '100%', background: 'var(--surface-color)', borderRadius: '30px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
+                    <img src={selectedExperience.img} style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="Exp" />
+                    <div style={{ padding: '24px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <h2 style={{ color: 'var(--text-main)', fontSize: '1.4rem' }}>{selectedExperience.title}</h2>
+                        <span style={{ color: 'var(--accent-orange)', fontWeight: 800, fontSize: '1.2rem' }}>{selectedExperience.price}</span>
+                      </div>
+
+                      <div style={{ marginBottom: '24px' }}>
+                        <p style={{ color: 'var(--accent-orange)', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '12px', letterSpacing: '1px' }}>Community Intelligence</p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          {(selectedExperience.reviews || ["Verified coordinate.", "Highly recommended by local partners."]).map((rev, i) => (
+                            <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-orange)', marginTop: '6px' }}></div>
+                              <p style={{ color: '#888', fontSize: '0.9rem', fontStyle: 'italic' }}>"{rev}"</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button onClick={() => { addToast("Experience Reserved! ⚡️"); setSelectedExperience(null); }} style={{ width: '100%', background: 'var(--accent-orange)', color: '#000', padding: '18px', borderRadius: '16px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px' }}>Reserve Spot</button>
+                      <button onClick={() => setSelectedExperience(null)} style={{ width: '100%', background: 'none', color: '#666', padding: '12px', marginTop: '8px', fontSize: '0.8rem', fontWeight: 800 }}>CLOSE</button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {selectedUser && (
+                <motion.div
+                  initial={{ y: '100%' }}
+                  animate={{ y: 0 }}
+                  exit={{ y: '100%' }}
+                  transition={{ type: 'spring', damping: 25 }}
+                  style={{ position: 'absolute', inset: 0, background: '#000', zIndex: 6500, display: 'flex', flexDirection: 'column' }}
+                >
+                  <div style={{ padding: '50px 24px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-color)', backdropFilter: 'blur(10px)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <img src={selectedUser.avatar} style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid var(--accent-orange)' }} alt="User" />
+                      <div>
+                        <h2 style={{ color: 'var(--text-main)', fontSize: '1.4rem' }}>{selectedUser.user}</h2>
+                        <p style={{ color: 'var(--accent-orange)', fontWeight: 700, fontSize: '0.8rem' }}>{selectedUser.points}</p>
+                      </div>
+                    </div>
+                    <button style={{ background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', padding: '12px' }} onClick={() => setSelectedUser(null)}><X size={24} color="#FFF" /></button>
+                  </div>
+
+                  <div className="scroll-y content-pad">
+                    <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
+                      <button
+                        className="lu-btn"
+                        style={{ flex: 1.2, background: 'linear-gradient(135deg, var(--accent-orange), #ff7a3a)', color: '#000', height: '64px', fontSize: '0.9rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                        onClick={() => { addToast(`Following ${selectedUser.user}! ⚡️`); setSelectedUser(null); }}
+                      >
+                        <Users size={20} style={{ marginBottom: '4px' }} />
+                        Follow Partner
+                      </button>
+                      <button
+                        className="lu-btn"
+                        style={{ flex: 1, background: 'var(--border-color)', color: 'var(--text-main)', height: '64px', border: '1px solid var(--border-color)', fontSize: '0.9rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                      >
+                        <MessageCircle size={20} style={{ marginBottom: '4px' }} />
+                        Message
+                      </button>
+                    </div>
+
+                    <div className="stats-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '8px' }}>
+                      <div style={{ background: 'var(--surface-color)', padding: '16px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                        <span style={{ display: 'block', color: 'var(--text-sub)', fontSize: '0.75rem', marginBottom: '4px' }}>COLLECTED DROPS</span>
+                        <span style={{ fontSize: '1.2rem', color: 'var(--text-main)', fontWeight: 800 }}>{selectedUser.likes}+</span>
+                      </div>
+                      <div style={{ background: 'var(--surface-color)', padding: '16px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                        <span style={{ display: 'block', color: 'var(--text-sub)', fontSize: '0.75rem', marginBottom: '4px' }}>LOCATION</span>
+                        <span style={{ fontSize: '0.9rem', color: 'var(--text-main)', fontWeight: 700 }}>{selectedUser.location}</span>
+                      </div>
+                    </div>
+
+                    <p style={{ color: '#A0A0A0', lineHeight: 1.5, fontSize: '0.9rem', marginBottom: '32px' }}>{selectedUser.bio}</p>
+
+                    <h3 style={{ color: 'var(--text-main)', fontWeight: 800, marginBottom: '16px' }}>Global Footprint</h3>
+                    <motion.div
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setShowUserGallery(true)}
+                      style={{ height: '180px', background: '#080808', borderRadius: '20px', overflow: 'hidden', position: 'relative', marginBottom: '16px', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.05)' }}
+                    >
+                      <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Map" />
+                      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          style={{ position: 'absolute', top: '40%', left: '60%', width: '12px', height: '12px', background: 'var(--accent-orange)', borderRadius: '50%' }}
+                        />
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+                          style={{ position: 'absolute', top: '70%', left: '30%', width: '10px', height: '10px', background: '#00E5FF', borderRadius: '50%' }}
+                        />
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                          style={{ position: 'absolute', top: '20%', left: '80%', width: '8px', height: '8px', background: 'var(--accent-orange)', borderRadius: '50%' }}
+                        />
+                        <Globe size={48} color="var(--accent-orange)" />
+                      </div>
+                      <div style={{ position: 'absolute', bottom: '12px', left: 0, right: 0, textAlign: 'center', color: 'var(--accent-orange)', fontSize: '0.75rem', fontWeight: 800 }}>Tap for full footprint →</div>
+                    </motion.div>
+
+                    <h3 style={{ color: 'var(--text-main)', fontWeight: 800, marginBottom: '16px' }}>Recent Drops</h3>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', paddingBottom: '40px' }}>
+                      {[selectedUser.image, ...GALLERY_DROPS.slice(0, 3).map(g => g.img)].map((img, idx) => (
+                        <div key={idx} style={{ aspectRatio: '1/1', borderRadius: '12px', overflow: 'hidden', background: '#111' }}>
+                          <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Drop" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>

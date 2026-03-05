@@ -1,158 +1,163 @@
-import React, { useState } from 'react';
-import { useScroll, useTransform, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
-import ClippingText from './components/ClippingText';
-import InteractiveText from './components/InteractiveText';
+import React, { useState, useEffect } from 'react';
+import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion";
+import { X, MapPin, Globe, Loader2, ChevronRight, User, Camera, Shield, Star, Activity, Plus, Search, Trash2 } from 'lucide-react';
+import { supabase } from './lib/supabase';
 import './Home.css';
 
-const DirectoryLayer = ({ members = [], onBack, onLogout }) => {
-    const { scrollY } = useScroll();
-    const brandingOpacity = useTransform(scrollY, [100, 250], [1, 0]);
+const DirectoryLayer = ({ onBack, onLogout }) => {
+    const [profiles, setProfiles] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedProfile, setSelectedProfile] = useState(null);
 
-    const filteredMembers = members.filter(member => {
+    useEffect(() => {
+        const fetchProfiles = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .order('full_name', { ascending: true });
+
+                if (error) throw error;
+                setProfiles(data || []);
+            } catch (err) {
+                console.error("Error fetching profiles:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfiles();
+    }, []);
+
+    const filteredProfiles = profiles.filter(p => {
         const query = searchQuery.toLowerCase();
         return (
-            (member.full_name && member.full_name.toLowerCase().includes(query)) ||
-            (member.name && member.name.toLowerCase().includes(query)) ||
-            (member.id && member.id.toLowerCase().includes(query)) ||
-            (member.profession && member.profession.toLowerCase().includes(query))
+            (p.full_name && p.full_name.toLowerCase().includes(query)) ||
+            (p.profession && p.profession.toLowerCase().includes(query))
         );
     });
+
+    if (loading) {
+        return (
+            <div className="portal-theme" style={{ display: 'grid', placeItems: 'center', background: '#F7F5EA' }}>
+                <Loader2 className="loading-ring" size={40} color="#C5A059" />
+            </div>
+        );
+    }
 
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="home-container"
-            style={{ backgroundColor: '#F7F5EA', minHeight: '100vh', color: '#1A1A1A', display: 'flex', flexDirection: 'column' }}
+            className="portal-theme tab-layout"
         >
-            {/* SOHO STYLE TOP BAR */}
-            <div className="topBar">
-                <div className="topBarInner">
-                    {/* Left: Logo/Back */}
-                    <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={onBack}>
-                        <img src="/logo.svg" alt="" style={{ height: '14px', width: 'auto', filter: 'invert(1)' }} />
+            <div className="premium-container">
+                {/* TOP BAR */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '60px' }}>
+                    <div style={{ cursor: 'pointer' }} onClick={onBack}>
+                        <img src="/logo.svg" alt="IMRSV" style={{ height: '14px', width: 'auto', filter: 'brightness(0)' }} />
                     </div>
+                    <div style={{ fontSize: '10px', fontWeight: 800, letterSpacing: '2px', opacity: 0.4 }}>MEMBER DIRECTORY</div>
+                    <button onClick={onLogout} style={{ background: 'none', border: 'none', fontSize: '10px', fontWeight: 800, cursor: 'pointer', opacity: 0.6 }}>LOG OUT</button>
+                </div>
 
-                    {/* Center: Brand Anchor */}
-                    <div className="brandMark">
-                        SUNDAY COLLECTION
+                <div style={{ marginBottom: '60px' }}>
+                    <h1 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.04em', color: 'var(--ink)' }}>The Directory.</h1>
+                    <p style={{ color: 'var(--muted)', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', marginTop: '12px' }}>{profiles.length} Active Collective Members</p>
+
+                    <div style={{ marginTop: '40px', position: 'relative', maxWidth: '400px' }}>
+                        <Search size={18} style={{ position: 'absolute', top: '50%', left: '16px', transform: 'translateY(-50%)', opacity: 0.3 }} />
+                        <input
+                            type="text"
+                            placeholder="Find a member..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="premium-input"
+                            style={{ paddingLeft: '48px' }}
+                        />
                     </div>
+                </div>
 
-                    {/* Right: Log Out */}
-                    <div style={{ justifySelf: 'end' }}>
-                        <motion.span
-                            onClick={onLogout}
-                            whileHover={{ opacity: 1 }}
-                            style={{
-                                cursor: 'pointer',
-                                color: '#1A1A1A',
-                                fontWeight: 800,
-                                fontSize: '10px',
-                                letterSpacing: '0.1em',
-                                opacity: 0.6,
-                                textTransform: 'uppercase'
-                            }}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
+                    {filteredProfiles.map((p, i) => (
+                        <motion.div
+                            key={p.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                            className="premium-card"
+                            onClick={() => setSelectedProfile(p)}
+                            style={{ cursor: 'pointer', padding: '24px' }}
                         >
-                            LOG OUT
-                        </motion.span>
-                    </div>
+                            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                                <img
+                                    src={p.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"}
+                                    style={{ width: '64px', height: '64px', borderRadius: '32px', objectFit: 'cover' }}
+                                    alt={p.full_name}
+                                />
+                                <div style={{ minWidth: 0 }}>
+                                    <h4 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--ink)', marginBottom: '4px' }}>{p.full_name || 'Anonymous'}</h4>
+                                    <p style={{ fontSize: '12px', color: 'var(--gold)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>{p.profession || 'Explorer'}</p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
 
-            <section className="pageWrap" style={{ paddingTop: '10px', flex: 1 }}>
-                <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <div style={{ marginBottom: '60px' }}>
-                        <div className="sectionHeader" style={{ padding: 0, marginTop: 0 }}>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: '#1A1A1A', lineHeight: 1 }}>MEMBERS.</h2>
-                            <span className="sectionMetaCount">({members.filter(m => m.status === 'approved').length})</span>
-                        </div>
-                        <p style={{ opacity: 0.4, fontSize: '0.7rem', letterSpacing: '0.15em', marginTop: '10px' }}>THE ACTIVE COLLECTIVE</p>
+            {/* MEMBER DETAIL OVERLAY */}
+            <AnimatePresence>
+                {selectedProfile && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{ position: 'fixed', inset: 0, background: 'rgba(247, 245, 234, 0.95)', backdropFilter: 'blur(10px)', zIndex: 9000, overflowY: 'auto' }}
+                    >
+                        <div className="premium-container" style={{ paddingTop: '80px' }}>
+                            <button
+                                onClick={() => setSelectedProfile(null)}
+                                style={{ position: 'fixed', top: '40px', right: '40px', background: '#FFF', border: '1px solid var(--line)', borderRadius: '50%', padding: '12px', cursor: 'pointer', boxShadow: 'var(--shadow)' }}
+                            >
+                                <X size={24} />
+                            </button>
 
-                        <div style={{ marginTop: '40px', position: 'relative', maxWidth: '400px' }}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: 'absolute', top: '50%', left: '16px', transform: 'translateY(-50%)', opacity: 0.3 }}>
-                                <circle cx="11" cy="11" r="8" />
-                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                            </svg>
-                            <input
-                                type="text"
-                                placeholder="Search by name, ID, or profession..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                style={{
-                                    width: '100%',
-                                    padding: '16px 16px 16px 46px',
-                                    fontSize: '0.9rem',
-                                    border: '1px solid rgba(0,0,0,0.1)',
-                                    borderRadius: '12px',
-                                    background: '#FFF',
-                                    color: '#1A1A1A',
-                                    outline: 'none',
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-                                    fontFamily: 'inherit'
-                                }}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="bucket-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
-                        {filteredMembers.length > 0 ? (
-                            filteredMembers.map((member, i) => {
-                                const bioExcerpt = member.bio
-                                    ? member.bio.trim().split(/\s+/).slice(0, 20).join(' ') + (member.bio.trim().split(/\s+/).length > 20 ? '…' : '')
-                                    : null;
-                                const avatarUrl = member.photos?.find(p => p);
-                                const joinedDate = member.joined_date || member.created_at;
-                                return (
-                                    <motion.div
-                                        key={member.id}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: i * 0.05 }}
-                                        className="bucket-card"
-                                        style={{ background: '#FFF', border: '1px solid rgba(0, 0, 0, 0.08)', padding: '30px' }}
-                                    >
-                                        <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', marginBottom: '16px' }}>
-                                            {avatarUrl ? (
-                                                <img src={avatarUrl} alt={member.name} style={{ width: '52px', height: '52px', objectFit: 'cover', borderRadius: '50%', flexShrink: 0, border: '2px solid rgba(0,0,0,0.06)' }} onError={e => e.target.style.display = 'none'} />
-                                            ) : (
-                                                <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: '#F7D031', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 800, color: '#111', flexShrink: 0 }}>
-                                                    {(member.full_name || member.name || '?')[0].toUpperCase()}
-                                                </div>
-                                            )}
-                                            <div style={{ flex: 1, minWidth: 0 }}>
-                                                <span className="bucket-num" style={{ color: '#F7D031', fontSize: '0.65rem' }}>{(i + 1).toString().padStart(2, '0')}.</span>
-                                                <h3 style={{ color: '#1A1A1A', fontSize: '1.1rem', fontWeight: 700, margin: '2px 0 4px', lineHeight: 1.2 }}>{member.full_name || member.name}</h3>
-                                                {member.profession && (
-                                                    <span style={{ fontSize: '0.65rem', color: '#F7D031', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{member.profession}</span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        {bioExcerpt && (
-                                            <p style={{ fontSize: '0.8rem', opacity: 0.6, lineHeight: 1.6, margin: '0 0 14px', fontStyle: 'italic' }}>"{bioExcerpt}"</p>
-                                        )}
-                                        <div style={{ height: '1px', background: 'rgba(0,0,0,0.05)', margin: '12px 0' }} />
-                                        <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', opacity: 0.35, letterSpacing: '0.05em' }}>
-                                            {joinedDate ? `Joined ${new Date(joinedDate).toLocaleDateString()}` : 'Active Member'}
-                                        </p>
-                                    </motion.div>
-                                );
-                            })
-                        ) : (
-                            <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '100px 0', opacity: 0.3 }}>
-                                <p>No members found in orbit.</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '60px' }}>
+                                <img
+                                    src={selectedProfile.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"}
+                                    style={{ width: '160px', height: '160px', borderRadius: '80px', objectFit: 'cover', border: '4px solid #FFF', boxShadow: 'var(--shadow)', marginBottom: '32px' }}
+                                    alt=""
+                                />
+                                <h2 style={{ fontSize: '48px', fontWeight: 800, letterSpacing: '-0.04em', color: 'var(--ink)' }}>{selectedProfile.full_name}</h2>
+                                <p style={{ fontSize: '16px', color: 'var(--gold)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '4px', marginTop: '8px' }}>{selectedProfile.profession}</p>
+                                {selectedProfile.bio && (
+                                    <div style={{ maxWidth: '600px', margin: '40px auto' }}>
+                                        <p style={{ fontSize: '18px', lineHeight: 1.6, color: 'var(--ink)', opacity: 0.8 }}>{selectedProfile.bio}</p>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                </motion.div>
-            </section>
 
-            <footer className="footer" style={{ borderTop: '1px solid rgba(0, 0, 0, 0.05)' }}>
+                            {/* PHOTO GALLERY */}
+                            {selectedProfile.photo_urls && selectedProfile.photo_urls.some(u => u) && (
+                                <div style={{ marginBottom: '100px' }}>
+                                    <label className="label-caps" style={{ textAlign: 'center', marginBottom: '32px' }}>Perspective & Drops</label>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+                                        {selectedProfile.photo_urls.filter(u => u).map((url, i) => (
+                                            <div key={i} style={{ aspectRatio: '4/5', borderRadius: '24px', overflow: 'hidden', boxShadow: 'var(--shadow)' }}>
+                                                <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <footer className="footer" style={{ borderTop: '1px solid rgba(0, 0, 0, 0.05)', marginTop: 'auto', padding: '20px 0' }}>
                 <div style={{ opacity: 0.4, fontSize: '0.7rem', color: '#1A1A1A' }}>the imrsv project / member directory</div>
                 <div style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: '0.7rem' }}>PROTOCOL: VERSION 2.0.4</div>
             </footer>
