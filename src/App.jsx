@@ -177,7 +177,25 @@ function AppContent() {
 
       if (error) throw error;
       setApplications(data || []);
-      setMembers((data || []).filter(a => a.status === 'approved'));
+
+      // Fetch rich profiles for members
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('*');
+
+      const approvedApps = (data || []).filter(a => a.status === 'approved');
+
+      // Join profile data with approved applications
+      const richMembers = approvedApps.map(app => {
+        const profile = (profileData || []).find(p => p.id === app.user_id || p.full_name === app.name);
+        return {
+          ...app,
+          ...(profile || {}),
+          id: app.id // Keep app ID for legacy checks if needed
+        };
+      });
+
+      setMembers(richMembers);
       setDbStatus('connected');
     } catch (e) {
       console.warn("Supabase connection failed, using local storage:", e.message);

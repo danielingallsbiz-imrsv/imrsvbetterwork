@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, useScroll, useTransform, motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
+import { AnimatePresence, useScroll, useTransform, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import InteractiveText from './components/InteractiveText';
 import ClippingText from './components/ClippingText';
 import { supabase } from './lib/supabase';
-import { AvatarUploader, PhotoGalleryUploader } from './App';
+import { AvatarUploader, PhotoGalleryUploader } from './components/ProfileUploaders';
+import { Camera, Plus, Trash2, Loader2, X, CheckCircle2, XCircle, User, Shield, Navigation, Map, Lock, Zap, Globe, Users, Star } from 'lucide-react';
 import './App.css';
 import './Home.css';
 
@@ -67,12 +68,15 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
     // Profile panel
     const [showProfilePanel, setShowProfilePanel] = useState(false);
-    const [profileSaving, setProfileSaving] = useState(false);
-    const [profileSaved, setProfileSaved] = useState(false);
+    const [saveStatus, setSaveStatus] = useState(''); // 'saving', 'saved', ''
+    const saveTimeoutRef = useRef(null);
+
     const [profileData, setProfileData] = useState({
         full_name: '', profession: '', bio: '',
-        photos: ['', '', '']
+        avatar_url: '', photo_urls: [null, null, null]
     });
+
+    const [loadingProfile, setLoadingProfile] = useState(true);
     const [selectedMember, setSelectedMember] = useState(null);
     const [referCopied, setReferCopied] = useState(false);
 
@@ -126,31 +130,49 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            if (!user?.id) return;
-            const { data } = await supabase
-                .from('profiles')
-                .select('id, full_name, profession, bio, avatar_path')
-                .eq('id', user.id)
-                .single();
-            if (data) {
-                setProfileData({
-                    full_name: data.full_name || '',
-                    profession: data.profession || '',
-                    bio: data.bio || '',
-                    avatar_path: data.avatar_path || ''
-                });
+            if (!user?.id) {
+                setLoadingProfile(false);
+                return;
+            }
+            try {
+                let { data, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (error && error.code === 'PGRST116') {
+                    // Create profile if missing
+                    const newProfile = {
+                        id: user.id,
+                        full_name: user.user_metadata?.full_name || '',
+                        profession: '',
+                        bio: '',
+                        photo_urls: [null, null, null],
+                        updated_at: new Date().toISOString()
+                    };
+                    const { data: created } = await supabase.from('profiles').insert([newProfile]).select().single();
+                    data = created;
+                }
+
+                if (data) {
+                    const fixedUrls = [...(data.photo_urls || [])];
+                    while (fixedUrls.length < 3) fixedUrls.push(null);
+                    setProfileData({
+                        full_name: data.full_name || '',
+                        profession: data.profession || '',
+                        bio: data.bio || '',
+                        avatar_url: data.avatar_url || '',
+                        photo_urls: fixedUrls
+                    });
+                }
+            } catch (err) {
+                console.error("Profile fetch error:", err);
+            } finally {
+                setLoadingProfile(false);
             }
 
-            // Also fetch gallery from profile_photos
-            const { data: photos } = await supabase
-                .from('profile_photos')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('sort_order', { ascending: true });
-
-            setGallery(photos || []);
-
-            // Fetch credit data from applications (legacy but still used for balance)
+            // Fetch credit data from applications
             const { data: appData } = await supabase
                 .from('applications')
                 .select('id, contribution_amount, credit_balance, renewal_date')
@@ -172,27 +194,46 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
         fetchProfile();
     }, [user]);
 
-    const [gallery, setGallery] = useState([]);
+    const triggerAutoSave = (updated) => {
+        setSaveStatus('saving');
+        if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
 
-    const saveProfile = async () => {
-        if (!user?.id) return;
-        setProfileSaving(true);
+        saveTimeoutRef.current = setTimeout(async () => {
+            try {
+                const { error } = await supabase
+                    .from('profiles')
+                    .update({
+                        full_name: updated.full_name,
+                        profession: updated.profession,
+                        bio: updated.bio,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', user.id);
 
-        const { error } = await supabase.from('profiles')
-            .update({
-                full_name: profileData.full_name,
-                profession: profileData.profession,
-                bio: profileData.bio
-            })
-            .eq('id', user.id);
+                if (error) throw error;
+                setSaveStatus('saved');
+                setTimeout(() => setSaveStatus(''), 2000);
+            } catch (err) {
+                console.error("Auto-save failed:", err);
+                setSaveStatus('error');
+            }
+        }, 1000);
+    };
 
-        if (error) {
-            console.error("Profile save error:", error);
-        } else {
-            setProfileSaved(true);
-            setTimeout(() => { setProfileSaved(false); setShowProfilePanel(false); }, 1500);
-        }
-        setProfileSaving(false);
+    const handleFieldChange = (field, value) => {
+        const updated = { ...profileData, [field]: value };
+        setProfileData(updated);
+        triggerAutoSave(updated);
+    };
+
+    const handlePhotoUpdate = async (newUrls) => {
+        setProfileData(prev => ({ ...prev, photo_urls: newUrls }));
+        await supabase.from('profiles').update({ photo_urls: newUrls, updated_at: new Date().toISOString() }).eq('id', user.id);
+    };
+
+    const handleAvatarUpdate = async (url) => {
+        setProfileData(prev => ({ ...prev, avatar_url: url }));
+        await supabase.from('profiles').update({ avatar_url: url, updated_at: new Date().toISOString() }).eq('id', user.id);
     };
 
     useEffect(() => {
@@ -316,8 +357,8 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                             {profileData.profession || 'GUEST'}
                                         </p>
                                     </div>
-                                    {profileData.photos && profileData.photos[0] ? (
-                                        <img src={profileData.photos[0]} alt="Member Avatar" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(0,0,0,0.1)' }} />
+                                    {profileData.avatar_url ? (
+                                        <img src={profileData.avatar_url} alt="Member Avatar" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(0,0,0,0.1)' }} />
                                     ) : (
                                         <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#F5F5F3', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                                             <span style={{ fontSize: '1.5rem', opacity: 0.2 }}>?</span>
@@ -513,15 +554,15 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                                 <div className="memberTop">
                                                     {/* Avatar */}
                                                     <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.2rem', fontWeight: 800, flexShrink: 0, overflow: 'hidden' }}>
-                                                        {member.photos?.[0] ? (
-                                                            <img src={member.photos[0]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                        {member.avatar_url ? (
+                                                            <img src={member.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                         ) : (
-                                                            member.name ? member.name.charAt(0).toUpperCase() : '?'
+                                                            (member.full_name || member.name || '?').charAt(0).toUpperCase()
                                                         )}
                                                     </div>
                                                     <div>
                                                         <h3 style={{ fontSize: '1.1rem', margin: '0 0 2px 0', fontWeight: 800, color: '#1A1A1A', letterSpacing: '-0.01em', fontFamily: 'serif' }}>
-                                                            {member.name || member.full_name}
+                                                            {member.full_name || member.name}
                                                         </h3>
                                                         <div className="memberMeta">
                                                             <span style={{ fontSize: '0.6rem', color: '#F7D031', letterSpacing: '0.1em', fontWeight: 800 }}>
@@ -567,86 +608,96 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'var(--bg)', zIndex: 5000, overflowY: 'auto', padding: '40px 20px' }}
+                            className="portal-theme"
+                            style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'var(--bg)', zIndex: 5000, overflowY: 'auto' }}
                         >
-                            <div style={{ maxWidth: '640px', margin: '0 auto', paddingTop: '60px', paddingBottom: '100px' }}>
-                                <button onClick={() => setShowProfilePanel(false)} style={{ background: 'none', border: 'none', fontSize: '10px', fontWeight: 800, letterSpacing: '0.14em', color: 'var(--muted)', cursor: 'pointer', marginBottom: '20px', padding: 0, textTransform: 'uppercase' }}>[ CLOSE ]</button>
+                            <div className="tab-layout" style={{ minHeight: '100vh', padding: '40px 20px' }}>
+                                <div className="premium-container" style={{ paddingTop: '60px', paddingBottom: '100px' }}>
 
-                                <div style={{ marginBottom: '40px' }}>
-                                    <span className="label" style={{ marginBottom: '4px', display: 'block' }}>MEMBER PROFILE</span>
-                                    <h1 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, color: 'var(--ink)', letterSpacing: '-0.02em', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>EDIT PROFILE.</h1>
-                                </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
+                                        <button
+                                            onClick={() => setShowProfilePanel(false)}
+                                            style={{ background: 'none', border: 'none', fontSize: '10px', fontWeight: 800, letterSpacing: '0.14em', color: 'var(--muted)', cursor: 'pointer', padding: 0, textTransform: 'uppercase' }}
+                                        >
+                                            [ CLOSE ]
+                                        </button>
+                                        <div style={{ textAlign: 'right' }}>
+                                            {saveStatus === 'saving' && <div className="save-badge" style={{ color: 'var(--muted)', fontSize: '10px' }}><Loader2 size={12} className="loading-ring" /> SAVING...</div>}
+                                            {saveStatus === 'saved' && <div className="save-badge" style={{ fontSize: '10px' }}><CheckCircle2 size={12} /> SAVED</div>}
+                                            {saveStatus === 'error' && <div className="save-badge" style={{ color: '#EF4444', fontSize: '10px' }}><XCircle size={12} /> ERROR</div>}
+                                        </div>
+                                    </div>
 
-                                <div className="profileCard">
-                                    {/* Avatar Uploader */}
-                                    <div style={{ marginBottom: '32px' }}>
-                                        <AvatarUploader
+                                    <div style={{ marginBottom: '48px' }}>
+                                        <span className="label-caps">Identity Protocol</span>
+                                        <h2 style={{ fontSize: '3rem', fontWeight: 900, margin: 0, color: 'var(--ink)', letterSpacing: '-0.04em', textTransform: 'uppercase', lineHeight: 0.9 }}>
+                                            Edit <br />Member Profile.
+                                        </h2>
+                                    </div>
+
+                                    <div className="premium-card">
+                                        <div style={{ marginBottom: '40px' }}>
+                                            <label className="label-caps">Avatar</label>
+                                            <AvatarUploader
+                                                userId={user.id}
+                                                currentUrl={profileData.avatar_url}
+                                                onUploadSuccess={handleAvatarUpdate}
+                                            />
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                            <div>
+                                                <label className="label-caps">Full Name</label>
+                                                <input
+                                                    className="premium-input"
+                                                    value={profileData.full_name}
+                                                    onChange={e => handleFieldChange('full_name', e.target.value)}
+                                                    placeholder="Your full name"
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <label className="label-caps">Profession</label>
+                                                <input
+                                                    className="premium-input"
+                                                    value={profileData.profession}
+                                                    onChange={e => handleFieldChange('profession', e.target.value)}
+                                                    placeholder="e.g. Photographer, Architect"
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <label className="label-caps">Bio</label>
+                                                <textarea
+                                                    className="premium-textarea"
+                                                    style={{ width: '100%', minHeight: '120px', padding: '16px', background: 'rgba(255,255,255,0.5)', border: '1px solid var(--line)', borderRadius: '14px', outline: 'none', fontSize: '16px' }}
+                                                    value={profileData.bio}
+                                                    onChange={e => handleFieldChange('bio', e.target.value)}
+                                                    placeholder="Tell the collective who you are..."
+                                                />
+                                                <div style={{ textAlign: 'right', marginTop: '8px' }}>
+                                                    <span style={{ fontSize: '10px', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{bioWordCount} / 120 words</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="premium-card">
+                                        <label className="label-caps">Featured Photography</label>
+                                        <p style={{ color: 'var(--muted)', fontSize: '13px', marginBottom: '24px' }}>Showcase your perspective. Maximum 3 slots.</p>
+                                        <PhotoGalleryUploader
                                             userId={user.id}
-                                            currentPath={profileData.avatar_path}
-                                            onUploadSuccess={(url, path) => setProfileData(prev => ({ ...prev, avatar_path: path }))}
+                                            photoUrls={profileData.photo_urls}
+                                            onUpdate={handlePhotoUpdate}
                                         />
                                     </div>
 
-                                    {/* Identity Fields */}
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                                        <div>
-                                            <label className="label">Full Name</label>
-                                            <input
-                                                className="input"
-                                                value={profileData.full_name}
-                                                onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))}
-                                                placeholder="Your full name"
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className="label">Profession</label>
-                                            <input
-                                                className="input"
-                                                value={profileData.profession}
-                                                onChange={e => setProfileData(p => ({ ...p, profession: e.target.value }))}
-                                                placeholder="e.g. Photographer, Architect"
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className="label">Bio</label>
-                                            <textarea
-                                                className="textarea"
-                                                value={profileData.bio}
-                                                onChange={e => setProfileData(p => ({ ...p, bio: e.target.value }))}
-                                                placeholder="Tell the collective who you are..."
-                                            />
-                                            <div style={{ textAlign: 'right', marginTop: '8px' }}>
-                                                <span style={{ fontSize: '11px', fontWeight: 700, color: bioOverLimit ? '#FF453A' : 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{bioWordCount} / 120 words</span>
-                                            </div>
-                                        </div>
-
-                                        {/* Gallery Uploader */}
-                                        <div>
-                                            <label className="label">Additional Photos</label>
-                                            <PhotoGalleryUploader
-                                                userId={user.id}
-                                                photos={gallery}
-                                                onUpdate={async () => {
-                                                    const { data } = await supabase
-                                                        .from('profile_photos')
-                                                        .select('*')
-                                                        .eq('user_id', user.id)
-                                                        .order('sort_order', { ascending: true });
-                                                    setGallery(data || []);
-                                                }}
-                                            />
-                                        </div>
-
-                                        <button
-                                            className="saveBtn"
-                                            onClick={saveProfile}
-                                            disabled={profileSaving || bioOverLimit || !profileData.profession.trim()}
-                                        >
-                                            {profileSaved ? '[ SAVED ✓ ]' : profileSaving ? '[ SAVING... ]' : '[ SAVE CHANGES ]'}
-                                        </button>
-                                    </div>
+                                    <button
+                                        onClick={() => setShowProfilePanel(false)}
+                                        style={{ width: '100%', padding: '20px', background: 'var(--ink)', color: '#FFF', border: 'none', borderRadius: '14px', fontWeight: 800, letterSpacing: '0.1em', cursor: 'pointer', marginTop: '24px' }}
+                                    >
+                                        [ RETURN TO DASHBOARD ]
+                                    </button>
                                 </div>
                             </div>
                         </motion.div>
@@ -665,7 +716,6 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                 top: 0,
                                 left: 0,
                                 width: '100%',
-
                                 height: '100%',
                                 backgroundColor: 'rgba(247, 245, 234, 0.98)',
                                 zIndex: 4000,
@@ -762,10 +812,10 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
                         </motion.div>
                     )}
-                </AnimatePresence >
+                </AnimatePresence>
 
                 {/* TRIPS MODAL */}
-                < AnimatePresence >
+                <AnimatePresence>
                     {showTripsModal && (
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -916,9 +966,9 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </div>
                         </motion.div>
                     )}
-                </AnimatePresence >
+                </AnimatePresence>
                 {/* MEMBER PROFILE MODAL */}
-                < AnimatePresence >
+                <AnimatePresence>
                     {selectedMember && (
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -942,15 +992,15 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
 
                                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', marginBottom: '30px' }}>
                                     <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F7D031', fontSize: '1.8rem', fontWeight: 800, flexShrink: 0, overflow: 'hidden' }}>
-                                        {selectedMember.photos?.[0] ? (
-                                            <img src={selectedMember.photos[0]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        {selectedMember.avatar_url ? (
+                                            <img src={selectedMember.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         ) : (
-                                            (selectedMember.name || selectedMember.full_name || '?').charAt(0).toUpperCase()
+                                            (selectedMember.full_name || selectedMember.name || 'Member').charAt(0).toUpperCase()
                                         )}
                                     </div>
                                     <div>
                                         <h2 style={{ margin: '0 0 4px 0', fontSize: '1.5rem', fontWeight: 800, color: '#1A1A1A', fontFamily: 'serif' }}>
-                                            {selectedMember.name || selectedMember.full_name || 'Member'}
+                                            {selectedMember.full_name || selectedMember.name || 'Member'}
                                         </h2>
                                         {selectedMember.profession && (
                                             <span style={{ fontSize: '0.65rem', color: '#F7D031', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{selectedMember.profession}</span>
@@ -965,9 +1015,9 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                                     </div>
                                 )}
 
-                                {selectedMember.photos?.filter(p => p).length > 1 && (
+                                {selectedMember.photo_urls?.filter(p => p).length > 0 && (
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '30px' }}>
-                                        {selectedMember.photos.filter(p => p).map((photo, i) => (
+                                        {selectedMember.photo_urls.filter(p => p).map((photo, i) => (
                                             <img key={i} src={photo} alt="" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: '4px' }} />
                                         ))}
                                     </div>
@@ -979,7 +1029,7 @@ const MemberLayer = ({ user, userName, members = [], onLogout, onBack }) => {
                             </motion.div>
                         </motion.div>
                     )}
-                </AnimatePresence >
+                </AnimatePresence>
             </motion.div >
         </div>
     );
